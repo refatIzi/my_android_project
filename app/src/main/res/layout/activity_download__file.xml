@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".download_File"
+    android:background="#232323">
+
+
+    <!--ListView
+
+        android:id="@+id/NewsListView"
+        android:layout_width="wrap_content"
+        android:layout_height="260dp"
+        android:layout_marginBottom="10dp"
+        android:background="#232323"
+        android:divider="@null"
+        android:dividerHeight="5dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/switch1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ListView-->
+    <!--Switch
+    android:id="@+id/switch1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:text="Send a message by ssx turn left or right if you want by TCP  "
+    android:textColor="#4c776a"
+    app:layout_constraintBottom_toTopOf="@+id/txt"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" /-->
+
+
+    <TextView
+        android:id="@+id/txt"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:background="#232323"
+        android:gravity="bottom"
+        android:inputType="none"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:scrollbars="vertical"
+        android:textColor="#4c776a"
+        android:textIsSelectable="false"
+        android:textSize="12dp"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toTopOf="@+id/textSend"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/textSend"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="bottom"
+        android:inputType="textMultiLine"
+        android:text=""
+        android:textColor="#ffffff"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Storege"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/send"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/ic_sendmessage_"
+        app:layout_constraintBottom_toBottomOf="@+id/textSend"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textSend"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageButton
+        android:id="@+id/Storege"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/ic_file_send"
+        app:layout_constraintBottom_toBottomOf="@+id/send"
+        app:layout_constraintEnd_toStartOf="@+id/send"
+        app:layout_constraintTop_toTopOf="@+id/send"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/curved_style"
+
+    >
+
+
+    <ListView
+        android:id="@+id/OpenListView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="#1d2124"
+        android:dividerHeight="5dp"
+        android:scrollbars="none"
+        android:divider="@null"
+        ></ListView>
+
+    <!--TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Let's implement our ideas!"
+        android:textSize="25dp"
+        android:textColor="#0c61a4"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        >
+
+
+        <Button
+            android:id="@+id/New_File"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:textSize="10dp"
+            android:text="New File"
+            android:layout_marginLeft="5dp"
+            android:textColor="#fff"
+            android:typeface="monospace"
+            android:background="@drawable/button_styl"/>
+
+        <Button
+            android:id="@+id/Run"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:textSize="10dp"
+            android:text="Exit"
+            android:layout_marginLeft="5dp"
+            android:textColor="#fff"
+            android:typeface="monospace"
+            android:background="@drawable/button_styl"/>
+    </LinearLayout>
+</LinearLayout>

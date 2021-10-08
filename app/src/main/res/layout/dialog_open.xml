@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/curved_style"
+
+
+
+    >
+<ListView
+    android:id="@+id/OpenListView"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:background="#1d2124"
+    android:dividerHeight="5dp"
+    android:scrollbars="none"
+    android:divider="@null"
+    ></ListView>
+
+  <FrameLayout
+      android:id="@+id/fragment_open"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentBottom="true"
+      android:background="#1d2124">
+    <ImageButton
+        android:id="@+id/SendFile"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="60dp"
+        android:background="#1d2124"
+        android:src="@drawable/ic_send_file_c" />
+
+    <ImageButton
+        android:id="@+id/deleteFile"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="right"
+        android:background="#1d2124"
+        android:src="@drawable/ic_delete" />
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="left"
+        android:background="#1d2124"
+        android:src="@drawable/ic_caret_left" />
+    <ImageButton
+        android:id="@+id/cancel"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="left"
+        android:background="#1d2124"
+        android:src="@drawable/ic_signout" />
+
+
+  </FrameLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/button_burved.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/button_styl.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/button_white_line_pressed.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_applicat.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_application.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_applicationxdesigner.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_archive.xml" value="0.17401315789473684" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_audiofile.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_augmen.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_braces.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_butload.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_caret_left.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_cub.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_dinoicon.xml" value="0.1388157894736842" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_dropbox.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_file_send.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_filepython.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_folder_python.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_folder_python_3.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_jetbrainstoolbox.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_newprog.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_project.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_python.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_python_prog.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_python_project.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/ic_search.xml" value="0.24407894736842106" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/activity_download__file.xml" value="0.67" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/activity_storege.xml" value="0.2338815789473684" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/dialog_open.xml" value="0.33" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/dialog_save.xml" value="0.2338815789473684" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/dialog_save_file.xml" value="0.67" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/dialog_setting.xml" value="0.2338815789473684" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/horizontal_list.xml" value="0.152" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/new_file.xml" value="0.1290983606557377" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/menu/main_menu.xml" value="0.2338815789473684" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/menu/menu_download.xml" value="0.2338815789473684" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.24407894736842106" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

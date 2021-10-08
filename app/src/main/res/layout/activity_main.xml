@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#191919"
+    tools:context=".MainActivity"
+    >
+   <!--androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/recyclerView"
+       android:gravity="center"
+       android:layout_width="match_parent"
+       android:layout_height="38dp"
+       android:background="#191919"
+       /!-->
+
+   <ScrollView
+       android:id="@+id/scroll"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+
+       android:layout_marginBottom="50dp"
+       >
+
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:windowSoftInputMode="adjustResize">
+
+         <TextView
+             android:id="@+id/numberCode"
+             android:layout_width="30dp"
+             android:layout_height="fill_parent"
+             android:layout_alignParentStart="true"
+
+
+             android:layout_alignParentLeft="true"
+             android:background="#191919"
+             android:gravity="center_horizontal"
+             android:scrollbars="none"
+             android:textColor="#0260e8"
+             android:textSize="13dp"
+             android:typeface="monospace"
+             android:windowSoftInputMode="adjustResize" />
+
+         <HorizontalScrollView
+
+             android:id="@+id/scrol"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#191919"
+             android:fillViewport="true"
+             android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+               <EditText
+                   android:id="@+id/txtCode"
+                   android:layout_width="2000dp"
+                   android:layout_height="match_parent"
+                   android:layout_alignParentEnd="true"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginEnd="0dp"
+                   android:layout_marginRight="0dp"
+                   android:background="#191919"
+                   android:fastScrollEnabled="true"
+                   android:fillViewport="true"
+
+                   android:gravity="top"
+                   android:hyphenationFrequency="none"
+                   android:inputType="textMultiLine"
+                   android:scrollbars="vertical"
+
+                   android:scrollHorizontally="true"
+                   android:singleLine="false"
+                   android:textColor="#dfd6cf"
+                   android:textSize="13dp"
+                   android:typeface="monospace" />
+
+            </LinearLayout>
+         </HorizontalScrollView>
+      </LinearLayout>
+   </ScrollView>
+
+   <LinearLayout
+       android:id="@+id/linerId"
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:gravity="center"
+       android:layout_alignParentBottom="true"
+       android:background="#191919"
+       android:orientation="horizontal">
+
+      <ImageButton
+          android:id="@+id/Table"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="40dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_tab" />
+      <ImageButton
+          android:id="@+id/sc_1"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_caret_left" />
+      <ImageButton
+          android:id="@+id/sc_2"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_caret_right" />
+
+      <ImageButton
+          android:id="@+id/divide"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_divide" />
+
+      <ImageButton
+          android:id="@+id/procent"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_percent" />
+
+
+      <ImageButton
+          android:id="@+id/hashtag"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_hashtag" />
+      <ImageButton
+          android:id="@+id/plas"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_plus" />
+
+      <ImageButton
+          android:id="@+id/minus"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_minus" />
+      <ImageButton
+          android:id="@+id/equals"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_equals" />
+      <ImageButton
+          android:id="@+id/down_left"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_down_left" />
+      <ImageButton
+          android:id="@+id/down_right"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:background="@drawable/ic_down_right" />
+   </LinearLayout>
+</RelativeLayout>
