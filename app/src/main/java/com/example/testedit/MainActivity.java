@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivityForResult(intent, 2296);
             }
         } else {
-            //below android 11
             ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         }
     }
@@ -752,7 +751,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Back();
             }
         });
-        browseTo(Directory);
+        ShowDirectory(Directory);
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -793,9 +792,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         if (new_Directory.equals(Environment.getExternalStorageDirectory().toString())) {
             new_Directory = Environment.getExternalStorageDirectory().toString() + "/python";
-            browseTo(new_Directory + "/");
+            ShowDirectory(new_Directory + "/");
         } else {
-            browseTo(new_Directory + "/");
+            ShowDirectory(new_Directory + "/");
         }
         Directory = new_Directory + "/";
     }
@@ -804,7 +803,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * Проводник для погказа сохраненных файлов в папке
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void browseTo(String aDirectory) {
+    private void ShowDirectory(String aDirectory) {
         mLista.clear();
         File dir = new File(aDirectory);
 
@@ -847,7 +846,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } else {
             Directory = Directory + mAdapter.getItem(position).getNomber() + "/";
             // project_Name = mAdapter.getItem(position).getNomber();
-            browseTo(Directory + "/");
+            ShowDirectory(Directory + "/");
         }
     }
 
@@ -873,7 +872,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             s++;
         }
-        browseTo(Directory);
+        ShowDirectory(Directory);
     }
 
     public static void recursiveDelete(File file) {
