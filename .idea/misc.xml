@@ -37,10 +37,12 @@
         <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/dialog_save_file.xml" value="0.67" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/dialog_setting.xml" value="0.2338815789473684" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/horizontal_list.xml" value="0.152" />
+        <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/iteam_row.xml" value="0.2338815789473684" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/layout/new_file.xml" value="0.1290983606557377" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/menu/main_menu.xml" value="0.2338815789473684" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/menu/menu_download.xml" value="0.2338815789473684" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.24407894736842106" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22467105263157894" />
       </map>
     </option>
   </component>

@@ -1,6 +1,9 @@
 package com.example.testedit;
 
-import android.Manifest;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.os.Build.VERSION.SDK_INT;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -13,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -34,6 +38,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
@@ -46,6 +51,8 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+
+    private static final int PERMISSION_REQUEST_CODE =1 ;
     EditText editText;
     TextView numberCode;
     ImageButton tab, sc_1, sc_2, divide, procent, hashtag, plas, minus, equals, down_left, down_right;
@@ -57,20 +64,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ListAdapter mAdapter;
     private ListView mListView;
     String project_Name = "no project";
-    /**
-     * Строка проект идентифицирует если у нас имеетса папка под проект
-     * то мы его записываем в project и отпровляем в в активити download
-     * чтобы создать папку попапку под названием проета в мервере
-     */
 
 
-    public final String[] EXTERNAL_PERMS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    public final String[] EXTERNAL_PERMS = {WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE};
     public final int EXTERNAL_REQUEST = 42;
 
     public boolean requestForPermission() {
 
         boolean isPermissionOn = true;
-        final int version = Build.VERSION.SDK_INT;
+        final int version = SDK_INT;
         if (version >= 23) {
             if (!canAccessExternalSd()) {
                 isPermissionOn = false;
@@ -82,13 +84,56 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public boolean canAccessExternalSd() {
-        return (hasPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE));
+        return (hasPermission(WRITE_EXTERNAL_STORAGE));
     }
 
     private boolean hasPermission(String perm) {
         return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm));
 
     }
+
+
+
+
+
+
+
+    private boolean checkPermission() {
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            return Environment.isExternalStorageManager();
+        } else {
+            int result = ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE);
+            int result1 = ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
+        }
+    }
+
+
+
+    private void requestPermission() {
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.setData(Uri.parse(String.format("package:%s",getApplicationContext().getPackageName())));
+                startActivityForResult(intent, 2296);
+            } catch (Exception e) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivityForResult(intent, 2296);
+            }
+        } else {
+            //below android 11
+            ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
+
+
+
+
+
+
+
 
 
     @SuppressLint("WrongViewCast")
@@ -100,7 +145,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         /**Запрет на поворот экрана*/
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        requestForPermission();
+        /**разрешения  которые я тут исползовал*/
+        //requestForPermission();
+
+        checkPermission();
         orientation = new orientation();
         orientation.execute();
         numberCode = findViewById(R.id.numberCode);
