@@ -52,7 +52,7 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
 
-    private static final int PERMISSION_REQUEST_CODE =1 ;
+    private static final int PERMISSION_REQUEST_CODE = 1;
     EditText editText;
     TextView numberCode;
     ImageButton tab, sc_1, sc_2, divide, procent, hashtag, plas, minus, equals, down_left, down_right;
@@ -93,11 +93,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
-
-
-
-
     private boolean checkPermission() {
         if (SDK_INT >= Build.VERSION_CODES.R) {
             return Environment.isExternalStorageManager();
@@ -109,13 +104,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
     private void requestPermission() {
         if (SDK_INT >= Build.VERSION_CODES.R) {
             try {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                 intent.addCategory("android.intent.category.DEFAULT");
-                intent.setData(Uri.parse(String.format("package:%s",getApplicationContext().getPackageName())));
+                intent.setData(Uri.parse(String.format("package:%s", getApplicationContext().getPackageName())));
                 startActivityForResult(intent, 2296);
             } catch (Exception e) {
                 Intent intent = new Intent();
@@ -129,13 +123,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
-
-
-
-
-
-
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -143,12 +130,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        if(!checkPermission())
+        {
+            requestPermission();
+        }
+
         /**Запрет на поворот экрана*/
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         /**разрешения  которые я тут исползовал*/
-        //requestForPermission();
 
-        checkPermission();
         orientation = new orientation();
         orientation.execute();
         numberCode = findViewById(R.id.numberCode);
@@ -494,23 +484,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (id) {
             case R.id.loading:
                 if (FileName == null || FileName.equals("")) {
-                    if(ProgramName[0].endsWith("_project"))
-                    {
+                    if (ProgramName[0].endsWith("_project")) {
                         newFile();
-                    }
-                    else
-                    {
+                    } else {
                         newProject();
                     }
 
-                    Toast.makeText(MainActivity.this, ""+project_Name, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
                 } else {
                     //   Toast.makeText(MainActivity.this,FileName,Toast.LENGTH_LONG).show();
                     File Path = new File(Directory);
                     Work_with_File.saveFile(FileName, editText.getText().toString(), Directory);
                     Path = new File(Path.getAbsolutePath());
                     download(Directory + ":" + FileName + ":" + project_Name);
-                    Toast.makeText(MainActivity.this, ""+project_Name, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.new_progect:
@@ -559,8 +546,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
     }
 
-    private void newFile()
-    {
+    private void newFile() {
         final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(MainActivity.this);
         final View linearlayout = getLayoutInflater().inflate(R.layout.dialog_save_file, null);
         ratingdialog.setView(linearlayout);
@@ -577,11 +563,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Work_with_File.saveFile(FileName_.getText().toString() + ".py", editText.getText().toString(), Directory);
                 FileName = FileName_.getText().toString() + ".py";
                 ab.cancel();
-                Toast.makeText(MainActivity.this, ""+Directory, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "" + Directory, Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+
     /**
      * Метод сохранение фаила
      */
@@ -622,7 +609,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Work_with_File.saveFile(SaveEdit.getText().toString() + ".py", editText.getText().toString(), Directory);
                 FileName = SaveEdit.getText().toString() + ".py";
                 ab.cancel();
-                Toast.makeText(MainActivity.this, ""+Directory, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "" + Directory, Toast.LENGTH_SHORT).show();
             }
         });
         ratingdialog.create();
@@ -859,7 +846,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             alertDialog.cancel();
         } else {
             Directory = Directory + mAdapter.getItem(position).getNomber() + "/";
-           // project_Name = mAdapter.getItem(position).getNomber();
+            // project_Name = mAdapter.getItem(position).getNomber();
             browseTo(Directory + "/");
         }
     }
