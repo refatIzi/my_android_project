@@ -710,6 +710,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ratingdialog.setView(linearlayout);
         alertDialog = ratingdialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ratingdialog.create();
         mListView = linearlayout.findViewById(R.id.OpenListView);
         mListView.setOnItemClickListener(this);
         ImageButton SendFile = linearlayout.findViewById(R.id.SendFile);
@@ -923,7 +924,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * метод который принимает данные со второго активити
-     * // форум в котоом можно прочитать про использваония этого метода с картинкаминиже внизу вот ссылка /|\
+     * // форум в котоом можно прочитать про использваония этого метода 
      * https://javarush.ru/groups/posts/regulyarnye-vyrazheniya-v-java регулятор віражения
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
