@@ -5,12 +5,10 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.os.Build.VERSION.SDK_INT;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -38,6 +36,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.testedit.dialogwindows.NewFile;
+import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.dialogwindows.Setting;
 
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 editText.setTextSize(Integer.parseInt(separated[6]));
                 numberCode.setTextSize(Integer.parseInt(separated[6]));
             }
-            new Open(MainActivity.this);
+            new Open(MainActivity.this,Directory);
 
         }
         editText.addTextChangedListener(new TextWatcher() {
@@ -483,9 +483,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.loading:
                 if (FileName == null || FileName.equals("")) {
                     if (ProgramName[0].endsWith("_project")) {
-                        newFile();
+                        new NewFile(MainActivity.this,Directory);
                     } else {
-                        newProject();
+                       new NewProject(MainActivity.this);
                     }
 
                     Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
@@ -498,9 +498,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
                 }
                 return true;
-            case R.id.new_progect:
+            case R.id.new_file:
                 editText.getText().clear();
-                newSheet();
+              //  newSheet();
+                new NewFile(MainActivity.this,Directory);
                 FileName = null;
                 return true;
             case R.id.action_settings:
@@ -508,14 +509,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             case R.id.open:
                 try {
-                    new Open(MainActivity.this);
+                    new Open(MainActivity.this,Directory);
                 } catch (Exception e) {
 
                 }
                 return true;
-            case R.id.save_settings:
+            case R.id.new_project:
                 input = editText.getText().toString();
-                newProject();
+                new NewProject(MainActivity.this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -544,75 +545,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
     }
 
-    private void newFile() {
-        final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(MainActivity.this);
-        final View linearlayout = getLayoutInflater().inflate(R.layout.dialog_save_file, null);
-        ratingdialog.setView(linearlayout);
-        final AlertDialog ab = ratingdialog.show();
-        /**установка прозрачного фона вашего диалога*/
-        ab.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        final EditText FileName_ = linearlayout.findViewById(R.id.saveEdit_file);
-        ImageButton buttonSend_file = linearlayout.findViewById(R.id.buttonsave_file);
-        buttonSend_file.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText.clearFocus();
-                editText.setText("print(\"Hello FEBO\")");
-                Work_with_File.saveFile(FileName_.getText().toString() + ".py", editText.getText().toString(), Directory);
-                FileName = FileName_.getText().toString() + ".py";
-                ab.cancel();
-                Toast.makeText(MainActivity.this, "" + Directory, Toast.LENGTH_SHORT).show();
-            }
-        });
 
-    }
-
-    /**
-     * Метод сохранение фаила
-     */
-    private void newProject() {
-        final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(MainActivity.this);
-        final View linearlayout = getLayoutInflater().inflate(R.layout.dialog_save, null);
-        ratingdialog.setView(linearlayout);
-        final AlertDialog ab = ratingdialog.show();
-        /**установка прозрачного фона вашего диалога*/
-        ab.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        final EditText SaveEdit = linearlayout.findViewById(R.id.saveEdit);
-        final EditText Project = linearlayout.findViewById(R.id.Project);
-        ImageButton buttonsend = linearlayout.findViewById(R.id.buttonsave);
-        buttonsend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Project.getText().length() > 0) {
-                    Directory = Environment.getExternalStorageDirectory().toString() + "/python/";
-                    Directory = Directory + Project.getText() + "_project/";
-                    /**Create new Directory */
-                    File theDir = new File(Directory);
-                    if (!theDir.exists()) {
-                        theDir.mkdirs();
-                    }
-                    //      Toast.makeText(MainActivity.this, "" + directory, Toast.LENGTH_LONG).show();
-                } else {
-                }
-
-                /*if (editText.getText().length() == 0) {
-                    editText.setText("print(\"Hello FEBO\")");
-                    Work_with_File.saveFile(SaveEdit.getText().toString() + ".py", editText.getText().toString(), Directory);
-                } else {
-                    Work_with_File.saveFile(SaveEdit.getText().toString() + ".py", editText.getText().toString(), Directory);
-                }
-                 */
-                editText.clearFocus();
-                editText.setText("print(\"Hello FEBO\")");
-                Work_with_File.saveFile(SaveEdit.getText().toString() + ".py", editText.getText().toString(), Directory);
-                FileName = SaveEdit.getText().toString() + ".py";
-                ab.cancel();
-                Toast.makeText(MainActivity.this, "" + Directory, Toast.LENGTH_SHORT).show();
-            }
-        });
-        ratingdialog.create();
-
-    }
 
 
     public void setNumberCode(int progress) {

@@ -10,14 +10,14 @@
         android:icon="@drawable/ic_play"
         app:showAsAction="always" />
     <item
-        android:id="@+id/save_settings"
+        android:id="@+id/new_project"
         android:icon="@drawable/ic_newproject"
         android:orderInCategory="2"
         app:showAsAction="always"
 
         android:title="TODO" />
     <item
-        android:id="@+id/new_progect"
+        android:id="@+id/new_file"
         android:orderInCategory="3"
         android:title="newfile"
         android:icon="@drawable/ic_newprog"

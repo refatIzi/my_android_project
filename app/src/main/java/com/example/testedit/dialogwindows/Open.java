@@ -36,12 +36,13 @@ public class Open implements AdapterView.OnItemClickListener {
     private List<Model> mLista = new ArrayList<>();
     private ListAdapter mAdapter;
     private ListView mListView;
-    String Directory = Environment.getExternalStorageDirectory() + "/python/";
+    String Directory;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Open(Activity context)
+    public Open(Activity context,String Directory)
     {
+        this.Directory=Directory;
         this.context=context;
         mainInterface=(MainInterface) context;
 
