@@ -45,6 +45,11 @@
         <entry key="app/src/main/res/drawable/ic_code.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/drawable/ic_cub.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/drawable/ic_jetbrainstoolbox.xml" value="0.23355263157894737" />
+        <entry key="app/src/main/res/drawable/ic_newprog.xml" value="0.23355263157894737" />
+        <entry key="app/src/main/res/drawable/ic_newproject.xml" value="0.23355263157894737" />
+        <entry key="app/src/main/res/drawable/ic_play.xml" value="0.23355263157894737" />
+        <entry key="app/src/main/res/drawable/ic_python.xml" value="0.23355263157894737" />
+        <entry key="app/src/main/res/drawable/ic_python_project.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22467105263157894" />
         <entry key="app/src/main/res/layout/iteam_row.xml" value="0.22467105263157894" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.22335526315789472" />

@@ -7,41 +7,36 @@
         android:id="@+id/loading"
         android:orderInCategory="1"
         android:title="Deploy"
-        android:icon="@drawable/ic_jetbrainstoolbox"
+        android:icon="@drawable/ic_play"
         app:showAsAction="always" />
     <item
-        android:id="@+id/new_progect"
+        android:id="@+id/save_settings"
+        android:icon="@drawable/ic_newproject"
         android:orderInCategory="2"
+        app:showAsAction="always"
+
+        android:title="TODO" />
+    <item
+        android:id="@+id/new_progect"
+        android:orderInCategory="3"
         android:title="newfile"
         android:icon="@drawable/ic_newprog"
         app:showAsAction="always" />
     <item
         android:id="@+id/open"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         android:title="Open"
         android:icon="@drawable/ic_search"
         app:showAsAction="always"/>
-    <item android:id="@+id/action_notification1"
-        android:icon="@drawable/ic_python_project"
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_setting1"
         android:orderInCategory="5"
         app:showAsAction="always"
         
         android:title="action_notification">
-        <menu>
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="1"
-        android:title="Setting"
-        app:showAsAction="always"
 
-       />
 
-    <item
-        android:id="@+id/save_settings"
-        android:orderInCategory="2"
-        app:showAsAction="always"
-        android:title="Save"
-      />
-        </menu>
+
     </item>
 </menu>

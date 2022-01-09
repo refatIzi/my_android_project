@@ -1,4 +1,4 @@
-package com.example.testedit;
+package com.example.testedit.dialogwindows;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.example.testedit.MainInterface;
+import com.example.testedit.R;
+import com.example.testedit.Work_with_File;
 
 public class Setting {
     MainInterface mainInterface;

@@ -35,7 +35,7 @@ public class Model {
     public void  setImage(int image){ this.image=image;}
 
     public  boolean getChecket(){return checket;}
-    boolean setChecket(boolean checket){
+    public boolean setChecket(boolean checket){
         this.checket=checket;
         return checket;
 
