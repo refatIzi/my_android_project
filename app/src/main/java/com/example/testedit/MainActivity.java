@@ -32,7 +32,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +48,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener,MainInterface {
 
 
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -454,7 +453,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 text.setSpan(style, error, error + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
                 numberCode.setText(text);
             } else {
-                //  numberCode.setText(number);
             }
 
 
@@ -505,7 +503,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 FileName = null;
                 return true;
             case R.id.action_settings:
-                seting();
+            new Setting(MainActivity.this);
                 return true;
             case R.id.open:
                 try {
@@ -619,83 +617,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * Диалоговое окно Настроек
      * информация как его реализовать
      */
-    private void seting() {
-        final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(MainActivity.this);
-        final View linearlayout = getLayoutInflater().inflate(R.layout.dialog_setting, null);
-        ratingdialog.setView(linearlayout);
-        final AlertDialog ab = ratingdialog.show();
-        /**установка прозрачного фона вашего диалога*/
-        ab.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ImageButton SeveButton = linearlayout.findViewById(R.id.Setting_save);
-        final EditText IpAddress = linearlayout.findViewById(R.id.IPaddress);
-        final EditText Port = linearlayout.findViewById(R.id.port);
-        final EditText Username = linearlayout.findViewById(R.id.username);
-        final EditText Password = linearlayout.findViewById(R.id.password);
-        final EditText Urls = linearlayout.findViewById(R.id.urls);
-        final EditText Python = linearlayout.findViewById(R.id.pythver);
-        final SeekBar TextSizeBar = linearlayout.findViewById(R.id.TextSizeBar);
-        final TextView textSize = linearlayout.findViewById(R.id.textSize);
-        TextView Information = linearlayout.findViewById(R.id.Information);
-
-        TextSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                textSize.setText("Text size = " + progress);
-                numberCode.setTextSize(progress);
-                editText.setTextSize(progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        String[] separated;
-        String info = Work_with_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
-        separated = info.split(":");
-        if (separated.length > 0) {
-            IpAddress.setText(separated[0]);
-        }
-        if (separated.length > 1) {
-            Port.setText(separated[1]);
-        }
-        if (separated.length > 2) {
-            Username.setText(separated[2]);
-        }
-        if (separated.length > 3) {
-            Password.setText(separated[3]);
-        }
-        if (separated.length > 4) {
-            Urls.setText(separated[4]);
-        }
-        if (separated.length > 5) {
-            Python.setText(separated[5]);
-        }
-        if (separated.length > 6) {
-            TextSizeBar.setProgress(Integer.parseInt(separated[6]));
-        }
-
-        if (TextSizeBar.getProgress() == 0) {
-            numberCode.setTextSize(20);
-            editText.setTextSize(20);
-        }
-        SeveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Work_with_File.saveFile("connect.txt", IpAddress.getText().toString() + ":" + Port.getText().toString()
-                        + ":" + Username.getText().toString() + ":" + Password.getText().toString()
-                        + ":" + Urls.getText().toString() + ":" + Python.getText().toString() + ":" + TextSizeBar.getProgress(), Environment.getExternalStorageDirectory().toString() + "/python/");
-                ab.cancel();
-            }
-        });
-        ratingdialog.create();
+    public void setNumberCode(int progress) {
+        numberCode.setTextSize(progress);
     }
+    public void setTextSize(int progress)
+    {
+        editText.setTextSize(progress);
+    }
+
 
     /**
      * Диалоговое окно для открытия фаилов
@@ -924,7 +853,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * метод который принимает данные со второго активити
-     * // форум в котоом можно прочитать про использваония этого метода 
+     * // форум в котоом можно прочитать про использваония этого метода
      * https://javarush.ru/groups/posts/regulyarnye-vyrazheniya-v-java регулятор віражения
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
