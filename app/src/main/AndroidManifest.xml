@@ -25,11 +25,7 @@
         android:roundIcon="@drawable/ic_jetbrainstoolbox"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".Storege"
-            android:label="@string/title_activity_stirege"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".download_File" />
+        <activity android:name=".download" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize">

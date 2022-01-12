@@ -50,8 +50,12 @@
         <entry key="app/src/main/res/drawable/ic_play.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/drawable/ic_python.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/drawable/ic_python_project.xml" value="0.23355263157894737" />
+        <entry key="app/src/main/res/layout/activity_download.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_download__file.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22467105263157894" />
+        <entry key="app/src/main/res/layout/dialog_open.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/iteam_row.xml" value="0.22467105263157894" />
+        <entry key="app/src/main/res/layout/terminal.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.22335526315789472" />
       </map>
     </option>

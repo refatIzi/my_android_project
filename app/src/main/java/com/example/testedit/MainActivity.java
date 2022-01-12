@@ -40,6 +40,8 @@ import com.example.testedit.dialogwindows.NewFile;
 import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.dialogwindows.Setting;
+import com.example.testedit.search.ListAdapter;
+import com.example.testedit.search.Search;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,7 +50,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,MainInterface {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MainInterface {
 
 
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String FileName = "";
     orientation orientation;
     private String Directory;
-    private List<Model> mLista = new ArrayList<>();
+    private List<Search> mLista = new ArrayList<>();
     private ListAdapter mAdapter;
     private ListView mListView;
     String project_Name = "no project";
@@ -128,8 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        if(!checkPermission())
-        {
+        if (!checkPermission()) {
             requestPermission();
         }
 
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 editText.setTextSize(Integer.parseInt(separated[6]));
                 numberCode.setTextSize(Integer.parseInt(separated[6]));
             }
-            new Open(MainActivity.this,Directory);
+            new Open(MainActivity.this, Directory);
 
         }
         editText.addTextChangedListener(new TextWatcher() {
@@ -348,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //tab,sc_1,sc_2,divide,procent,hashtag,plas,minus,equals,down_left,down_right;
             case R.id.Table:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "     ");
+                editText.getText().insert(editText.getSelectionStart(), "    ");
                 //  Toast.makeText(getApplicationContext(), sesion+" ", Toast.LENGTH_LONG).show();
                 break;
             case R.id.sc_1:
@@ -483,33 +484,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.loading:
                 if (FileName == null || FileName.equals("")) {
                     if (ProgramName[0].endsWith("_project")) {
-                        new NewFile(MainActivity.this,Directory);
+                        new NewFile(MainActivity.this, Directory);
                     } else {
-                       new NewProject(MainActivity.this);
+                        new NewProject(MainActivity.this);
                     }
 
                     Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
                 } else {
                     //   Toast.makeText(MainActivity.this,FileName,Toast.LENGTH_LONG).show();
-                   // File Path = new File(Directory);
+                    // File Path = new File(Directory);
                     Work_with_File.saveFile(FileName, editText.getText().toString(), Directory);
-                  //  Path = new File(Path.getAbsolutePath());
+                    //  Path = new File(Path.getAbsolutePath());
                     download(Directory + ":" + FileName + ":" + project_Name);
                     Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.new_file:
                 editText.getText().clear();
-              //  newSheet();
-                new NewFile(MainActivity.this,Directory);
+                //  newSheet();
+                new NewFile(MainActivity.this, Directory);
                 FileName = null;
                 return true;
             case R.id.action_settings:
-            new Setting(MainActivity.this);
+                new Setting(MainActivity.this);
                 return true;
             case R.id.open:
                 try {
-                    new Open(MainActivity.this,Directory);
+                    new Open(MainActivity.this, Directory);
                 } catch (Exception e) {
 
                 }
@@ -522,16 +523,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Метод создает новый лис
-     */
-    private void newSheet() {
-        String Line = "";
-        for (int i = 0; i <= 10; i++) {
-            Line = Line + "\n";
-        }
-        editText.setText(Line);
-    }
 
     /**
      * метот который перадает окну downaload путь к файлу и открывает окно downaload
@@ -539,35 +530,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
 
     public void download(String comand) {
-        //  Toast.makeText(MainActivity.this,comand,Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, download_File.class);
+        Intent intent = new Intent(this, download.class);
         intent.putExtra("downaload", comand);
         startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
     }
 
 
-
-
     public void setNumberCode(int progress) {
         numberCode.setTextSize(progress);
     }
-    public void setTextSize(int progress)
-    {
+
+    public void setTextSize(int progress) {
         editText.setTextSize(progress);
     }
-    public void setFileName(String FileName)
-    {
-        this.FileName=FileName;
+
+    public void setFileName(String FileName) {
+        this.FileName = FileName;
     }
-    public void setDirectory(String Directory){
-        this.Directory=Directory;
+
+    public void setDirectory(String Directory) {
+        this.Directory = Directory;
     }
-    public void setEditText(String text){
+
+    public void setEditText(String text) {
         editText.getText().clear();
         editText.append(text);
         editText.append("\n");
     }
-
 
 
     /**

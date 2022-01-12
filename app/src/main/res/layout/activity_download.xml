@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".download_File"
+    tools:context=".download"
     android:background="#232323">
 
 
@@ -56,11 +56,10 @@
 
     <EditText
         android:id="@+id/textSend"
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
+        android:layout_width="310dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="100dp"
         android:layout_marginBottom="10dp"
         android:gravity="bottom"
         android:inputType="textMultiLine"
@@ -68,7 +67,7 @@
         android:textColor="#ffffff"
         android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Storege"
+        app:layout_constraintEnd_toStartOf="@+id/send"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
@@ -85,18 +84,6 @@
         app:layout_constraintTop_toTopOf="@+id/textSend"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-    <ImageButton
-        android:id="@+id/Storege"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/ic_file_send"
-        app:layout_constraintBottom_toBottomOf="@+id/send"
-        app:layout_constraintEnd_toStartOf="@+id/send"
-        app:layout_constraintTop_toTopOf="@+id/send"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

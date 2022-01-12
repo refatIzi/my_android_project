@@ -1,6 +1,6 @@
-package com.example.testedit;
+package com.example.testedit.search;
 
-public class Model {
+public class Search {
     public boolean isChecked;
     public boolean box;
     private String nomber;
@@ -11,7 +11,7 @@ public class Model {
 
 
 
-    public Model (String nomber, String edad,String information, int image, boolean checket){
+    public Search(String nomber, String edad, String information, int image, boolean checket){
 
 
         this.nomber=nomber;

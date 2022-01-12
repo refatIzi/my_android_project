@@ -1,4 +1,4 @@
-package com.example.testedit;
+package com.example.testedit.search;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,14 +11,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.testedit.R;
+
 import java.util.List;
 
-public class ListAdapter extends ArrayAdapter<Model> {
-    private List<Model> mList;
+public class ListAdapter extends ArrayAdapter<Search> {
+    private List<Search> mList;
     private Context mContext;
-    Model model;
+    Search search;
     private int resourseLayoute;
-    public ListAdapter (@NonNull Context context, int resourse, List<Model> objects){
+    public ListAdapter (@NonNull Context context, int resourse, List<Search> objects){
 
         super(context,resourse,objects);
         this.mList=objects;
@@ -31,15 +33,15 @@ public class ListAdapter extends ArrayAdapter<Model> {
         View view=convertView;
         if(view==null)
             view= LayoutInflater.from(mContext).inflate(resourseLayoute,null);
-           model =mList.get(position);
+           search =mList.get(position);
         ImageView image=view.findViewById(R.id.imageView);
-        image.setImageResource(model.getImage());
+        image.setImageResource(search.getImage());
         TextView textNomber=view.findViewById(R.id.txtNomber);
-        textNomber.setText(model.getNomber());
+        textNomber.setText(search.getNomber());
         TextView textEdad=view.findViewById(R.id.txtViewEdad);
-        textEdad.setText(model.getEdad());
+        textEdad.setText(search.getEdad());
         TextView infirmation=view.findViewById(R.id.inform);
-        infirmation.setText(model.getInformation());
+        infirmation.setText(search.getInformation());
 
         final CheckBox checkBox=view.findViewById(R.id.check);
         // пока Чек бокс мы не будет задействовать он нам будет нужен попоже

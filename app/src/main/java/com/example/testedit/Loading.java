@@ -147,7 +147,7 @@ class Loading extends AsyncTask<Void, Void, String> {
                             printWriter.println(message);
                             printWriter.flush();
 
-                            download_File.ClearText();
+                            download.ClearText();
 
                             message = null;
                             Thread.sleep(100);
@@ -166,7 +166,7 @@ class Loading extends AsyncTask<Void, Void, String> {
                         }
 
                         str = str + s.replaceAll(patterns, "");
-                        download_File.sendText(str);
+                        download.sendText(str);
 
                         Matcher matcher = pattern.matcher(str);
                         if (message != null) {

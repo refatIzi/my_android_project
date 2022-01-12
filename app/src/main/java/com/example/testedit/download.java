@@ -30,12 +30,12 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class download_File extends AppCompatActivity implements View.OnClickListener {
+public class download extends AppCompatActivity implements View.OnClickListener {
 //https://icon-icons.com/ru/pack/Papirus-Apps/1381
 
 
     String Return = "", urls;
-    ImageButton send, Storege;
+    ImageButton send;
 
     static EditText textsend;
     static TextView txt;
@@ -44,20 +44,21 @@ public class download_File extends AppCompatActivity implements View.OnClickList
     String[] Incoming_Data = null;
     Loading loading;
     String Directory = Environment.getExternalStorageDirectory().toString() + "/python/";
-
+    int cnt;
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download__file);
+        setContentView(R.layout.activity_download);
 
 
         send = findViewById(R.id.send);
         textsend = findViewById(R.id.textSend);
         txt = findViewById(R.id.txt);
-        Storege = findViewById(R.id.Storege);
 
-        Storege.setOnClickListener(this);
+
+
+
         send.setOnClickListener(this);
         /**Тут мы вычилсяем высоту и ширину экрана потом отнимаем от высоты 53dp переведенное в пиксели
          * и задаем ноовую высоту для ТХТ так как если не определенный размер для ТХТ то он не рабоатет
@@ -154,15 +155,17 @@ public class download_File extends AppCompatActivity implements View.OnClickList
             Incoming_Data = store.split(":");
         }
         setTitle("Loading " + Incoming_Data[1]);
+
+
         Start();
     }
     public void SetResult(String Return)
     {
         this.Return=Return;
     }
-
+   // String[] NewDir;
     private void Start() {
-        NewDir = Incoming_Data[0].split("python");
+    //    NewDir = Incoming_Data[0].split("python");
         String[] Connection_Data;
         String info = Work_with_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
         Connection_Data = info.split(":");
@@ -185,7 +188,7 @@ public class download_File extends AppCompatActivity implements View.OnClickList
 
     }
 
-    String[] NewDir;
+
 
     @Override
     public void onClick(View v) {
@@ -193,18 +196,10 @@ public class download_File extends AppCompatActivity implements View.OnClickList
             case R.id.send:
                 loading.setMessage(textsend.getText().toString());
                 break;
-            case R.id.Storege:
-                OpneStor();
-                break;
+
         }
-
     }
 
-    private void OpneStor() {
-        Intent intent = new Intent(this, Storege.class);
-        intent.putExtra("downaload", "comand");
-        startActivityForResult(intent, 0);
-    }
 
 
     @Override
@@ -228,7 +223,7 @@ public class download_File extends AppCompatActivity implements View.OnClickList
                     loading.cancel(true);
                     loading.StopConnect();
                     SendMessage();
-                    finish();
+                 //   finish();
                 } catch (Exception e) {
 
                 }
@@ -282,12 +277,9 @@ public class download_File extends AppCompatActivity implements View.OnClickList
                 boolean isIntentSafe = activities.size() > 0;
 
                 if (isIntentSafe) {
-
                     startActivity(mapIntent);
                 }
-
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -302,7 +294,6 @@ public class download_File extends AppCompatActivity implements View.OnClickList
             txt.scrollTo(0, scrollAmount);
         else
             txt.scrollTo(0, 0);
-
     }
 
     public static void ClearText() {
@@ -314,13 +305,22 @@ public class download_File extends AppCompatActivity implements View.OnClickList
         /**
          * отправка обратна данных
          */
-        Intent intent = new Intent();
+        Intent intent = new Intent(download.this,MainActivity.class);
         intent.putExtra(Intent.EXTRA_TEXT, loading.getResult());
         setResult(RESULT_OK, intent);
-      //  Toast.makeText(download_File.this, ""+Return, Toast.LENGTH_SHORT).show();
+
 
 
     }
 
-
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("count", cnt);
+     //   Log.d(LOG_TAG, "onSaveInstanceState");
+    }
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        cnt = savedInstanceState.getInt("count");
+      //  Log.d(LOG_TAG, "onRestoreInstanceState");
+    }
 }
