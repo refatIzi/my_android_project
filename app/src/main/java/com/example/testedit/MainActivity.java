@@ -40,6 +40,7 @@ import com.example.testedit.dialogwindows.NewFile;
 import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.dialogwindows.Setting;
+import com.example.testedit.dialogwindows.Terminal;
 import com.example.testedit.search.ListAdapter;
 import com.example.testedit.search.Search;
 
@@ -473,7 +474,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
+    Terminal terminal;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -496,6 +497,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Work_with_File.saveFile(FileName, editText.getText().toString(), Directory);
                     //  Path = new File(Path.getAbsolutePath());
                     download(Directory + ":" + FileName + ":" + project_Name);
+
                     Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -529,13 +531,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void download(String comand) {
-        Intent intent = new Intent(this, download.class);
-        intent.putExtra("downaload", comand);
-        startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+       // Intent intent = new Intent(this, download.class);
+      //  intent.putExtra("downaload", comand);
+      //  startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+        terminal=   new Terminal(MainActivity.this);
+        terminal.setSetting(comand);
     }
 
-
+    public void setTerminal(String message){
+        terminal.setTerminal(message);
+    }
     public void setNumberCode(int progress) {
         numberCode.setTextSize(progress);
     }

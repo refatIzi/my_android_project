@@ -55,7 +55,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22467105263157894" />
         <entry key="app/src/main/res/layout/dialog_open.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/iteam_row.xml" value="0.22467105263157894" />
-        <entry key="app/src/main/res/layout/terminal.xml" value="0.22335526315789472" />
+        <entry key="app/src/main/res/layout/terminal.xml" value="0.25" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.22335526315789472" />
       </map>
     </option>

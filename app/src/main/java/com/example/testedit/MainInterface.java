@@ -6,6 +6,7 @@ public interface MainInterface {
     void setFileName(String FileName);
     void setEditText(String text);
     void setDirectory(String Directory);
+    void setTerminal(String message);
 
 
 }

@@ -178,7 +178,7 @@ public class download extends AppCompatActivity implements View.OnClickListener 
          * */
         urls = Connection_Data[4];
 
-        loading = new Loading(Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
+        loading = new Loading(download.this,Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
         loading.executeOnExecutor(Executors.newScheduledThreadPool(1));
         String[] ProgramName = Incoming_Data[0].replace(Environment.getExternalStorageDirectory().toString() + "/python/", "").split("/");
         String ProgramDirectory = Directory + ProgramName[0];

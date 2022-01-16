@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#1f2e41">
+   >
 
     <LinearLayout
         android:id="@+id/dsd"
@@ -52,7 +52,56 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/terminal"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_above="@+id/Butt"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="5dp"
+        android:background="#CC232323"
+        android:gravity="bottom"
+        android:inputType="none"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:scrollbars="vertical"
+        android:textColor="#4c776a"
+        android:textIsSelectable="false"
+        android:textSize="11dp"
+        android:typeface="monospace"
+        tools:layout_editor_absoluteX="0dp">
 
+
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/Butt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#24303f"
+        android:gravity="left"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/textSend"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="40dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:typeface="monospace"
+            />
+        <ImageButton
+            android:id="@+id/send"
+            android:layout_marginTop="5dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/ic_sendmessage_"
+          />
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

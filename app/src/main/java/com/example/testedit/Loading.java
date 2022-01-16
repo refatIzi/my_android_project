@@ -1,5 +1,6 @@
 package com.example.testedit;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
@@ -23,23 +24,32 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Loading extends AsyncTask<Void, Void, String> {
+public class Loading extends AsyncTask<Void, Void, String> {
     JSch jsch = new JSch();
     Properties prop;
     Session session;
     ChannelShell channelShell;
     ChannelSftp sftpChannel;
     String Result;
+    MainInterface mainInterface;
+    private boolean States;
 
 
-    Loading(String user, String password, String ipadress, int port) {
+    public Loading(Activity content,String user, String password, String ipadress, int port) {
         try {
+            mainInterface=(MainInterface)content;
             session = jsch.getSession(user, ipadress, port);
         } catch (JSchException e) {
             e.printStackTrace();
         }
         session.setPassword(password);
 
+    }
+    public void setStates(boolean Start){
+        this.States =Start;
+    }
+    public boolean getStates(){
+        return States;
     }
 
     @Override
@@ -147,7 +157,7 @@ class Loading extends AsyncTask<Void, Void, String> {
                             printWriter.println(message);
                             printWriter.flush();
 
-                            download.ClearText();
+                          //  download.ClearText();
 
                             message = null;
                             Thread.sleep(100);
@@ -166,7 +176,8 @@ class Loading extends AsyncTask<Void, Void, String> {
                         }
 
                         str = str + s.replaceAll(patterns, "");
-                        download.sendText(str);
+                       // download.sendText(str);
+                        mainInterface.setTerminal(str);
 
                         Matcher matcher = pattern.matcher(str);
                         if (message != null) {
