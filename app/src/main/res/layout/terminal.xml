@@ -59,7 +59,6 @@
         android:layout_above="@+id/Butt"
         android:layout_alignParentTop="true"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="5dp"
         android:background="#CC232323"
         android:gravity="bottom"
         android:inputType="none"
@@ -81,22 +80,30 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="#24303f"
-        android:gravity="left"
+        android:gravity="right"
         android:orientation="horizontal">
         <EditText
             android:id="@+id/textSend"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="10dp"
             android:text=""
-            android:textColor="#ffffff"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_gravity="center"
+            android:hint="Enter Message"
+            android:maxHeight="105dp"
+            android:textColor="#ebecd3"
+            android:textSize="15dip"
             android:typeface="monospace"
+
             />
         <ImageButton
             android:id="@+id/send"
-            android:layout_marginTop="5dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="10dp"
+
             android:background="@drawable/ic_sendmessage_"
           />
 

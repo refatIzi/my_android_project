@@ -11,7 +11,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/new_project"
-        android:icon="@drawable/ic_newproject"
+        android:icon="@drawable/ic_python_project"
         android:orderInCategory="2"
         app:showAsAction="always"
 
@@ -30,7 +30,7 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_settings"
-        android:icon="@drawable/ic_setting1"
+        android:icon="@drawable/ic_setting_connect"
         android:orderInCategory="5"
         app:showAsAction="always"
         

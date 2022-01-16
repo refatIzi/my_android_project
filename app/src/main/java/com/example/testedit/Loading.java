@@ -187,6 +187,7 @@ public class Loading extends AsyncTask<Void, Void, String> {
                         if (matcher.find()) {
                             Result = Result + s;
                             //download.SetResult(Return);
+                            mainInterface.setReseult(Result);
                         } else {
                             Result = "Excellent";
                             matcher.reset();

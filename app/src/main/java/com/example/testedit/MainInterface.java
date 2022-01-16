@@ -7,6 +7,7 @@ public interface MainInterface {
     void setEditText(String text);
     void setDirectory(String Directory);
     void setTerminal(String message);
+    void setReseult(String message);
 
 
 }

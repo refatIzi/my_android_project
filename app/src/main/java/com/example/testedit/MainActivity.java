@@ -601,5 +601,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+    /**
+     * метод который принимает данные со второго активити
+     * // форум в котоом можно прочитать про использваония этого метода
+     * https://javarush.ru/groups/posts/regulyarnye-vyrazheniya-v-java регулятор віражения
+     */
+    public void setReseult(String message)
+    {
+        if (message.equals("Excellent")) {
 
+        } else {
+            Pattern pattern = Pattern.compile("line(([^\\n+',']+))");
+            Matcher matcher = pattern.matcher(message);
+            while (matcher.find()) {
+                String[] line = message.substring(matcher.start(), matcher.end()).split(" ");
+                try {
+                    int l = Integer.parseInt(String.valueOf(new Scanner(line[1]).useDelimiter("[^\\d]+").nextInt()));
+                    if (l > 0) {
+                        NumberOfConstruction(l);
+
+                    } else {
+                        NumberOfConstruction(0);
+                    }
+                } catch (NumberFormatException e) {
+                }
+
+            }
+        }
+    }
 }

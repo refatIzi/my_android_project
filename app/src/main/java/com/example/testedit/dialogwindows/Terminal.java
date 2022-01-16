@@ -7,7 +7,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.CharacterStyle;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +28,17 @@ import com.example.testedit.R;
 import com.example.testedit.Work_with_File;
 
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Terminal {
     AlertDialog alertDialog;
-
-    String Return = "", urls;
+    String[] Incoming_Data = null;
+    Loading loading;
+    String Directory = Environment.getExternalStorageDirectory().toString() + "/python/";
     Context context;
-    String str="";
     TextView terminal;
-    EditText textsend;
+    EditText textSend;
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Terminal(Activity context) {
         this.context = context;
@@ -53,11 +60,86 @@ public class Terminal {
         final View linearlayout = inflater.inflate(R.layout.terminal, null);
         ImageButton sent=linearlayout.findViewById(R.id.send);
         terminal=linearlayout.findViewById(R.id.terminal);
-        textsend =linearlayout.findViewById(R.id.textSend);
+        textSend =linearlayout.findViewById(R.id.textSend);
         terminal.setVerticalScrollBarEnabled(true);
         terminal.setMovementMethod(new ScrollingMovementMethod());
         terminal.setFocusable(false);/**Отключаем ввод текста*/
         terminal.setCursorVisible(false);/**Отключаем курсор*/
+        terminal.addTextChangedListener(new TextWatcher() {
+            ColorScheme numbers = new ColorScheme(
+                    Pattern.compile("(\\b(\\d*[.]?\\d+)\\b)"),
+                    Color.parseColor("#2f5f93")
+            );
+            ColorScheme error = new ColorScheme(
+                    Pattern.compile(
+                            "\\b(Traceback|NameError|line|module|SyntaxError)\\b"),
+                    Color.parseColor("#3e9cca")
+            );
+            ColorScheme errorName = new ColorScheme(
+                    Pattern.compile(
+                            "\\b(name|File|python|python3)\\b"),
+                    Color.parseColor("#fb4f4f")
+            );
+            ColorScheme World = new ColorScheme(
+                    Pattern.compile(
+                            "\\b(Omega|ifconfig|ls|ls -al|cd|pwd|mkdir|rm|rm -r|cp -r|cat >|more|head|tail|)\\b"),
+                    Color.parseColor("#2f5f93")
+            );
+
+            ColorScheme Name = new ColorScheme(
+                    Pattern.compile(
+                            "\\b(root|invalid|syntax)\\b"),
+                    Color.parseColor("#ffc82d")
+            );
+            ColorScheme kovichki = new ColorScheme(
+                    Pattern.compile("\"([^\"]+)\""),
+                    Color.parseColor("#b4794c")
+            );
+
+            final ColorScheme[] schemes = {error, errorName, Name, kovichki, World,numbers};
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                removeSpans(s, ForegroundColorSpan.class);
+                for (ColorScheme scheme : schemes) {
+                    for (Matcher m = scheme.pattern.matcher(s); m.find(); ) {
+                        s.setSpan(new ForegroundColorSpan(scheme.color),
+                                m.start(),
+                                m.end(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    }
+                }
+
+            }
+
+            void removeSpans(Editable e, Class<? extends CharacterStyle> type) {
+                CharacterStyle[] spans = e.getSpans(0, e.length(), type);
+                for (CharacterStyle span : spans) {
+                    e.removeSpan(span);
+                }
+            }
+
+            class ColorScheme {
+                final Pattern pattern;
+                final int color;
+
+                ColorScheme(Pattern pattern, int color) {
+                    this.pattern = pattern;
+                    this.color = color;
+                }
+            }
+        });
         ratingdialog.setView(linearlayout);
         alertDialog = ratingdialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#151d27")));
@@ -72,7 +154,8 @@ public class Terminal {
                // str=str+"seteeeeeeeeee steeeeeeeeeeeeee\n";
               //  terminal.setText(str);
                // Start();
-                loading.setMessage(textsend.getText().toString());
+                loading.setMessage(textSend.getText().toString());
+                textSend.getText().clear();
             }
         });
 
@@ -80,8 +163,6 @@ public class Terminal {
 
     }
     public void setSetting(String message){
-      //  str=str+setting+"\n";
-      //  terminal.setText(str);
         Incoming_Data = message.split(":");
         Start();
 
@@ -104,7 +185,6 @@ public class Terminal {
 
 */
     public void setTerminal(String message){
-          str=str+message+"\n";
           terminal.setText(message);
         /** Метод  с помошью которого можно скорлить пермешать коретку вниз автоматически
          * при заполении данных в окно*/
@@ -115,11 +195,9 @@ public class Terminal {
         else
             terminal.scrollTo(0, 0);
     }
-    String[] Incoming_Data = null;
-    Loading loading;
-    String Directory = Environment.getExternalStorageDirectory().toString() + "/python/";
+
+
     private void Start() {
-        //    NewDir = Incoming_Data[0].split("python");
         String[] Connection_Data;
         String info = Work_with_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
         Connection_Data = info.split(":");
@@ -130,8 +208,6 @@ public class Terminal {
          * Connection_Data[4]=usls=exemple=(home/kali/python or home/kali/documents/python
          * Connection_Data[5]=command Python (python3 if pthon>3.0 or if python<3 python
          * */
-        urls = Connection_Data[4];
-
         loading = new Loading((Activity) context,Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
         loading.executeOnExecutor(Executors.newScheduledThreadPool(1));
         String[] ProgramName = Incoming_Data[0].replace(Environment.getExternalStorageDirectory().toString() + "/python/", "").split("/");
