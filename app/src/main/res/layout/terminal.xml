@@ -38,15 +38,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
-            android:gravity="right"
+            android:gravity="center|right"
             >
-            <Button
-                android:layout_width="70dp"
+            <ImageButton
+                android:id="@+id/off"
+                android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:background="@drawable/ic_signout"
+                android:layout_marginRight="20dp"
+                />
+            <ImageButton
+                android:id="@+id/restart"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_restart"
+                android:layout_marginRight="20dp"
+
+                />
+            <ImageButton
+                android:id="@+id/other_terminal"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_terminal"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-
-
                 />
         </LinearLayout>
 
@@ -67,7 +81,7 @@
         android:scrollbars="vertical"
         android:textColor="#4c776a"
         android:textIsSelectable="false"
-        android:textSize="11dp"
+        android:textSize="10dp"
         android:typeface="monospace"
         tools:layout_editor_absoluteX="0dp">
 

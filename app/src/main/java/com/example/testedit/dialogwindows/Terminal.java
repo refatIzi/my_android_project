@@ -39,10 +39,10 @@ public class Terminal {
     Context context;
     TextView terminal;
     EditText textSend;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Terminal(Activity context) {
         this.context = context;
-
 
 
         /**скрываем клавитауру при октрыктиии этого дилаогового окна*/
@@ -58,9 +58,9 @@ public class Terminal {
         final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
         LayoutInflater inflater = context.getLayoutInflater();
         final View linearlayout = inflater.inflate(R.layout.terminal, null);
-        ImageButton sent=linearlayout.findViewById(R.id.send);
-        terminal=linearlayout.findViewById(R.id.terminal);
-        textSend =linearlayout.findViewById(R.id.textSend);
+        ImageButton sent = linearlayout.findViewById(R.id.send);
+        terminal = linearlayout.findViewById(R.id.terminal);
+        textSend = linearlayout.findViewById(R.id.textSend);
         terminal.setVerticalScrollBarEnabled(true);
         terminal.setMovementMethod(new ScrollingMovementMethod());
         terminal.setFocusable(false);/**Отключаем ввод текста*/
@@ -96,7 +96,7 @@ public class Terminal {
                     Color.parseColor("#b4794c")
             );
 
-            final ColorScheme[] schemes = {error, errorName, Name, kovichki, World,numbers};
+            final ColorScheme[] schemes = {error, errorName, Name, kovichki, World, numbers};
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -145,47 +145,44 @@ public class Terminal {
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#151d27")));
         alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-       // DialogKeyListener key = new DialogKeyListener();
-     //   alertDialog.setOnKeyListener(key);
+        // DialogKeyListener key = new DialogKeyListener();
+        //   alertDialog.setOnKeyListener(key);
         ratingdialog.create();
         sent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // str=str+"seteeeeeeeeee steeeeeeeeeeeeee\n";
-              //  terminal.setText(str);
-               // Start();
                 loading.setMessage(textSend.getText().toString());
                 textSend.getText().clear();
             }
         });
 
 
-
     }
-    public void setSetting(String message){
+
+    public void setSetting(String message) {
         Incoming_Data = message.split(":");
         Start();
 
     }
 
 
-/*
-    private class DialogKeyListener implements DialogInterface.OnKeyListener {
-        @Override
-        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                //   mainInterface.Finishing();
-                return false;
+    /*
+        private class DialogKeyListener implements DialogInterface.OnKeyListener {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    //   mainInterface.Finishing();
+                    return false;
+                }
+                return true;
             }
-            return true;
+
+
         }
 
-
-    }
-
-*/
-    public void setTerminal(String message){
-          terminal.setText(message);
+    */
+    public void setTerminal(String message) {
+        terminal.setText(message);
         /** Метод  с помошью которого можно скорлить пермешать коретку вниз автоматически
          * при заполении данных в окно*/
         final int scrollAmount = terminal.getLayout().getLineTop(terminal.getLineCount()) - terminal.getHeight();
@@ -208,7 +205,7 @@ public class Terminal {
          * Connection_Data[4]=usls=exemple=(home/kali/python or home/kali/documents/python
          * Connection_Data[5]=command Python (python3 if pthon>3.0 or if python<3 python
          * */
-        loading = new Loading((Activity) context,Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
+        loading = new Loading((Activity) context, Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
         loading.executeOnExecutor(Executors.newScheduledThreadPool(1));
         String[] ProgramName = Incoming_Data[0].replace(Environment.getExternalStorageDirectory().toString() + "/python/", "").split("/");
         String ProgramDirectory = Directory + ProgramName[0];

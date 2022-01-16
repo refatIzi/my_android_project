@@ -474,7 +474,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
     Terminal terminal;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -533,16 +535,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void download(String comand) {
-       // Intent intent = new Intent(this, download.class);
-      //  intent.putExtra("downaload", comand);
-      //  startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
-        terminal=   new Terminal(MainActivity.this);
+        // Intent intent = new Intent(this, download.class);
+        //  intent.putExtra("downaload", comand);
+        //  startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+        terminal = new Terminal(MainActivity.this);
         terminal.setSetting(comand);
     }
 
-    public void setTerminal(String message){
+    public void setTerminal(String message) {
         terminal.setTerminal(message);
     }
+
     public void setNumberCode(int progress) {
         numberCode.setTextSize(progress);
     }
@@ -601,13 +604,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
     /**
      * метод который принимает данные со второго активити
      * // форум в котоом можно прочитать про использваония этого метода
      * https://javarush.ru/groups/posts/regulyarnye-vyrazheniya-v-java регулятор віражения
      */
-    public void setReseult(String message)
-    {
+    public void setReseult(String message) {
         if (message.equals("Excellent")) {
 
         } else {
