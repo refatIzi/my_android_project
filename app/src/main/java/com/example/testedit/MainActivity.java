@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -27,7 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +41,6 @@ import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.dialogwindows.Setting;
 import com.example.testedit.dialogwindows.Terminal;
-import com.example.testedit.search.ListAdapter;
 import com.example.testedit.search.Search;
 
 import java.io.File;
@@ -63,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     orientation orientation;
     private String Directory;
     private List<Search> mLista = new ArrayList<>();
-    private ListAdapter mAdapter;
-    private ListView mListView;
     String project_Name = "no project";
 
 
@@ -300,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 NumberOfConstruction(0);
+
             }
 
             private boolean isReached = false;
@@ -338,6 +336,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
+        String[] text={"if","else","for","while","iff","forewer"};
+        /**следим за вводом текста*/
+        InputFilter filter = new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+              // Accept only letter & digits ; otherwise just return
+                if(source.length()>0) {
+                   // for (int i = 0; i < text.length; i++) {
+                //        if (text[i].contains(source))
+                         //   Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
+                 //   }
+                    Pattern p = java.util.regex.Pattern.compile(source.toString());
+                    Matcher m = p.matcher("");
+                    for(String s : text)
+                    {
+                        m.reset(s);
+                        if(m.find()) System.out.println(" "+s);
+                    }
+                }
+                    //    if(source.toString().equals("if"))
+                    //    Toast.makeText(MainActivity.this,""+source.toString().length(),Toast.LENGTH_SHORT).show();
+
+                return null;
+            }
+
+        };
+
+        editText.setFilters(new InputFilter[] { filter });
     }
 
 
@@ -573,7 +598,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * метод который принимает данные со второго активити
      * // форум в котоом можно прочитать про использваония этого метода
      * https://javarush.ru/groups/posts/regulyarnye-vyrazheniya-v-java регулятор віражения
-     */
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -604,7 +629,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
+     */
     /**
      * метод который принимает данные со второго активити
      * // форум в котоом можно прочитать про использваония этого метода
