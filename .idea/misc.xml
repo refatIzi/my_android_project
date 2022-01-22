@@ -55,9 +55,18 @@
         <entry key="app/src/main/res/drawable/ic_setting_connect.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/layout/activity_download.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_download__file.xml" value="0.22335526315789472" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22467105263157894" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.46827586206896554" />
+        <entry key="app/src/main/res/layout/activity_storege.xml" value="0.22335526315789472" />
+        <entry key="app/src/main/res/layout/button_fraagment.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/dialog_open.xml" value="0.22335526315789472" />
+        <entry key="app/src/main/res/layout/dialog_save.xml" value="0.22335526315789472" />
+        <entry key="app/src/main/res/layout/dialog_save_file.xml" value="0.22335526315789472" />
+        <entry key="app/src/main/res/layout/dialog_setting.xml" value="0.22335526315789472" />
+        <entry key="app/src/main/res/layout/fragment_button.xml" value="0.22335526315789472" />
+        <entry key="app/src/main/res/layout/fragment_help.xml" value="0.2138157894736842" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/iteam_row.xml" value="0.22467105263157894" />
+        <entry key="app/src/main/res/layout/search_fragment.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/terminal.xml" value="0.25" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/menu/menu_download.xml" value="0.22335526315789472" />

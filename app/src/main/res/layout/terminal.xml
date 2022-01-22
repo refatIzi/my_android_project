@@ -104,9 +104,9 @@
             android:backgroundTint="@android:color/transparent"
             android:layout_gravity="center"
             android:hint="Enter Message"
-            android:maxHeight="105dp"
             android:textColor="#ebecd3"
             android:textSize="15dip"
+            android:inputType="text"
             android:typeface="monospace"
 
             />

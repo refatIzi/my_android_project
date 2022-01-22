@@ -1,66 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/curved_style" >
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:background="@drawable/curved_style"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
-    <EditText
-        android:id="@+id/IPaddress"
-        android:layout_width="155dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:ems="10"
-        android:hint="IP Address"
-        android:inputType="textPersonName"
-        android:typeface="monospace"
-        android:textColor="#ffc851"
-        android:textColorHint="#ffc851" />
+        <EditText
+            android:id="@+id/IPaddress"
+            android:layout_width="155dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:backgroundTint="@android:color/transparent"
+            android:ems="10"
 
-    <EditText
-        android:id="@+id/port"
-        android:layout_width="114dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:textColor="#00cc5c"
-        android:textColorHint="#00cc5c"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        android:typeface="monospace"
-        android:hint="port" />
+            android:hint="IP Address"
+            android:inputType="textPersonName"
+            android:textColor="#ffc851"
+            android:textColorHint="#ffc851"
+            android:typeface="monospace" />
 
-</FrameLayout>
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:ems="10"
-        android:hint="username"
-        android:inputType="textPersonName"
-        android:typeface="monospace"
-        android:textColor="#4795d1"
-        android:textColorHint="#4795d1" />
+        <EditText
+            android:id="@+id/port"
+            android:layout_width="114dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:backgroundTint="@android:color/transparent"
+            android:ems="10"
+            android:hint="port"
+            android:inputType="textPostalAddress"
+            android:textColor="#00cc5c"
+            android:textColorHint="#00cc5c"
+            android:typeface="monospace" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="162dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:ems="10"
-        android:hint="password"
-        android:inputType="textPassword"
-        android:textColor="#f4134d"
-        android:textColorHint="#f4134d" />
-</FrameLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:backgroundTint="@android:color/transparent"
+
+            android:ems="10"
+            android:hint="username"
+            android:inputType="textPersonName"
+            android:textColor="#4795d1"
+            android:textColorHint="#4795d1"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="162dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:backgroundTint="@android:color/transparent"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword"
+            android:textColor="#f4134d"
+            android:textColorHint="#f4134d" />
+    </FrameLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -70,15 +80,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:backgroundTint="@android:color/transparent"
             android:ems="10"
             android:hint="url"
+
             android:inputType="textPersonName"
-            android:typeface="monospace"
             android:textColor="#c2f413"
-            android:textColorHint="#c2f413" />
+            android:textColorHint="#c2f413"
+            android:typeface="monospace" />
 
 
     </FrameLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,28 +102,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:backgroundTint="@android:color/transparent"
             android:ems="10"
             android:hint="puthon version (python or python3)"
             android:inputType="textPersonName"
-            android:typeface="monospace"
+
             android:textColor="#13d2f4"
-            android:textColorHint="#13d2f4" />
+            android:textColorHint="#13d2f4"
+            android:typeface="monospace" />
 
 
     </FrameLayout>
-    <TextView android:id="@+id/textSize"
+
+    <TextView
+        android:id="@+id/textSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#1372f4"
         android:textSize="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:typeface="monospace"
-        android:textColor="#1372f4"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <SeekBar
         android:id="@+id/TextSizeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -118,22 +136,22 @@
 
         <ImageButton
             android:id="@+id/Setting_save"
-            android:layout_gravity="right"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="right"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/ic_add" />
 
         <TextView
             android:id="@+id/Information"
-            android:layout_marginLeft="5dp"
-            android:textColor="#1372f4"
-            android:layout_gravity="left"
             android:layout_width="347dp"
             android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
             android:text="No information"
-            android:typeface="monospace"/>
+            android:textColor="#1372f4"
+            android:typeface="monospace" />
     </FrameLayout>
 
 

@@ -5,6 +5,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.os.Build.VERSION.SDK_INT;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -25,7 +26,6 @@ import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -50,7 +50,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, MainInterface {
+public class MainActivity extends AppCompatActivity implements MainInterface {
 
 
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -142,29 +142,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText = findViewById(R.id.txtCode);
 
 
-        tab = findViewById(R.id.Table);
-        sc_1 = findViewById(R.id.sc_1);
-        sc_2 = findViewById(R.id.sc_2);
-        divide = findViewById(R.id.divide);
-        procent = findViewById(R.id.procent);
-        hashtag = findViewById(R.id.hashtag);
-        plas = findViewById(R.id.plas);
-        minus = findViewById(R.id.minus);
-        equals = findViewById(R.id.equals);
-        down_left = findViewById(R.id.down_left);
-        down_right = findViewById(R.id.down_right);
+     //   tab = findViewById(R.id.Table);
+     //   sc_1 = findViewById(R.id.sc_1);
+      //  sc_2 = findViewById(R.id.sc_2);
+      //  divide = findViewById(R.id.divide);
+     //   procent = findViewById(R.id.procent);
+     //   hashtag = findViewById(R.id.hashtag);
+     //   plas = findViewById(R.id.plas);
+     //   minus = findViewById(R.id.minus);
+     //   equals = findViewById(R.id.equals);
+     //   down_left = findViewById(R.id.down_left);
+      //  down_right = findViewById(R.id.down_right);
 
-        tab.setOnClickListener(this);
-        sc_1.setOnClickListener(this);
-        sc_2.setOnClickListener(this);
-        divide.setOnClickListener(this);
-        procent.setOnClickListener(this);
-        hashtag.setOnClickListener(this);
-        plas.setOnClickListener(this);
-        equals.setOnClickListener(this);
-        down_left.setOnClickListener(this);
-        down_right.setOnClickListener(this);
+     //   tab.setOnClickListener(this);
+     //   sc_1.setOnClickListener(this);
+     //   sc_2.setOnClickListener(this);
+     //   divide.setOnClickListener(this);
+     //   procent.setOnClickListener(this);
+     //   hashtag.setOnClickListener(this);
+     //   plas.setOnClickListener(this);
+      //  equals.setOnClickListener(this);
+       // down_left.setOnClickListener(this);
+      //  down_right.setOnClickListener(this);
 
+        FragmentTransaction fTrans= getFragmentManager().beginTransaction();
+        button buttonfr=new button();
+        fTrans.replace(R.id.liner, buttonfr);
+        fTrans.commit();
         Directory = Environment.getExternalStorageDirectory() + "/python/";
 
         File dir = new File(Directory);
@@ -338,20 +342,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         String[] text={"if","else","for","while","iff","forewer"};
         /**следим за вводом текста*/
+
         InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
               // Accept only letter & digits ; otherwise just return
                 if(source.length()>0) {
-                   // for (int i = 0; i < text.length; i++) {
-                //        if (text[i].contains(source))
-                         //   Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
-                 //   }
-                    Pattern p = java.util.regex.Pattern.compile(source.toString());
-                    Matcher m = p.matcher("");
-                    for(String s : text)
-                    {
-                        m.reset(s);
-                        if(m.find()) System.out.println(" "+s);
+                    for (int i = 0; i < text.length; i++) {
+                        if (text[i].startsWith(source.toString()))
+                            Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
                     //    if(source.toString().equals("if"))
@@ -369,66 +367,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Кнопки нижней вкладки с помошью которого мы можем добовлять знаки
      */
-    @Override
+   /* @Override
     public void onClick(View v) {
         switch (v.getId()) {
             //tab,sc_1,sc_2,divide,procent,hashtag,plas,minus,equals,down_left,down_right;
             case R.id.Table:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "    ");
+              //  editText.getText().insert(editText.getSelectionStart(), "    ");
                 //  Toast.makeText(getApplicationContext(), sesion+" ", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.sc_1:
+           //     break;
+           // case R.id.sc_1:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "<");
-                break;
-            case R.id.sc_2:
+           //     editText.getText().insert(editText.getSelectionStart(), "<");
+          //      break;
+          //  case R.id.sc_2:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), ">");
-                break;
-            case R.id.divide:
+           //     editText.getText().insert(editText.getSelectionStart(), ">");
+            //    break;
+           // case R.id.divide:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "/");
-                break;
-            case R.id.procent:
+           //     editText.getText().insert(editText.getSelectionStart(), "/");
+            //    break;
+           // case R.id.procent:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "%");
-                break;
-            case R.id.hashtag:
+            //    editText.getText().insert(editText.getSelectionStart(), "%");
+          //      break;
+          //  case R.id.hashtag:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "#");
-                break;
-            case R.id.plas:
+         //       editText.getText().insert(editText.getSelectionStart(), "#");
+         //       break;
+         //   case R.id.plas:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "+");
-                break;
-            case R.id.minus:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "-");
-                break;
-            case R.id.equals:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                editText.getText().insert(editText.getSelectionStart(), "=");
-                break;
-            case R.id.down_left:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-
-                if (editText.getSelectionStart() > 0) {
-                    editText.setSelection(editText.getSelectionEnd() - 1);
-                } else {
+          //      editText.getText().insert(editText.getSelectionStart(), "+");
+         //       break;
+          //  case R.id.minus:
+          //      /**метод смомошью которого можно добавлять втекушую позицию текст*/
+         //       editText.getText().insert(editText.getSelectionStart(), "-");
+         //       break;
+         //   case R.id.equals:
+         //       /**метод смомошью которого можно добавлять втекушую позицию текст*/
+         //       editText.getText().insert(editText.getSelectionStart(), "=");
+        //        break;
+       //     case R.id.down_left:
+        //        /**метод смомошью которого можно добавлять втекушую позицию текст*/
+//
+        //        if (editText.getSelectionStart() > 0) {
+             //       editText.setSelection(editText.getSelectionEnd() - 1);
+          //      } else {
                     //start of string, cannot move cursor backward
-                }
-                break;
-            case R.id.down_right:
+         ////       }
+          //      break;
+          //  case R.id.down_right:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                if (editText.getSelectionEnd() < editText.getText().toString().length()) {
-                    editText.setSelection(editText.getSelectionEnd() + 1);
-                } else {
-                    //end of string, cannot move cursor forward
-                }
-                break;
-        }
-    }
+         //       if (editText.getSelectionEnd() < editText.getText().toString().length()) {
+           //         editText.setSelection(editText.getSelectionEnd() + 1);
+          //      } else {
+          //          //end of string, cannot move cursor forward
+          //      }
+         //       break;
+       // }
+   // }
 
     /**
      * создаем AsyncTask для вывода нумерации строки при измен

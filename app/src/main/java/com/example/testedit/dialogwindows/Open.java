@@ -19,11 +19,11 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 
 import com.example.testedit.BuildConfig;
-import com.example.testedit.search.ListAdapter;
 import com.example.testedit.MainInterface;
-import com.example.testedit.search.Search;
 import com.example.testedit.R;
 import com.example.testedit.Work_with_File;
+import com.example.testedit.search.ListAdapter;
+import com.example.testedit.search.Search;
 
 import java.io.File;
 import java.util.ArrayList;
