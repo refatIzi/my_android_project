@@ -1,63 +1,118 @@
 package com.example.testedit;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.app.Fragment;
+import android.widget.ImageButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link button#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class button extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+@SuppressLint("ValidFragment")
+public class button extends Fragment implements View.OnClickListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    MainInterface mainInterface;
 
-    public button() {
-        // Required empty public constructor
+    public button(MainActivity mainActivity) {
+        mainInterface = (MainInterface) mainActivity;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment button.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static button newInstance(String param1, String param2) {
-        button fragment = new button();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+    ImageButton tab, sc_1, sc_2, divide, procent, hashtag, plas, minus, equals, down_left, down_right;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_button, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_button, container, false);
+        tab = v.findViewById(R.id.Table);
+        sc_1 = v.findViewById(R.id.sc_1);
+        sc_2 = v.findViewById(R.id.sc_2);
+        divide = v.findViewById(R.id.divide);
+        procent = v.findViewById(R.id.procent);
+        hashtag = v.findViewById(R.id.hashtag);
+        plas = v.findViewById(R.id.plas);
+        minus = v.findViewById(R.id.minus);
+        equals = v.findViewById(R.id.equals);
+        down_left = v.findViewById(R.id.down_left);
+        down_right = v.findViewById(R.id.down_right);
+
+        tab.setOnClickListener(this);
+        sc_1.setOnClickListener(this);
+        sc_2.setOnClickListener(this);
+        divide.setOnClickListener(this);
+        procent.setOnClickListener(this);
+        hashtag.setOnClickListener(this);
+        plas.setOnClickListener(this);
+        equals.setOnClickListener(this);
+        down_left.setOnClickListener(this);
+        down_right.setOnClickListener(this);
+        return v;
+    }
+
+    /**
+     * Кнопки нижней вкладки с помошью которого мы можем добовлять знаки
+     */
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //tab,sc_1,sc_2,divide,procent,hashtag,plas,minus,equals,down_left,down_right;
+            case R.id.Table:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                //  editText.getText().insert(editText.getSelectionStart(), "    ");
+                mainInterface.setEdit("    ");
+
+                break;
+            case R.id.sc_1:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.setEdit("<");
+                break;
+            case R.id.sc_2:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.setEdit(">");
+                break;
+            case R.id.divide:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.setEdit("/");
+                break;
+            case R.id.procent:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.setEdit("%");
+                break;
+            case R.id.hashtag:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.setEdit("#");
+                break;
+            case R.id.plas:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.setEdit("+");
+                break;
+            case R.id.minus:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.setEdit("-");
+                break;
+            case R.id.equals:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.setEdit("=");
+                break;
+            case R.id.down_left:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+
+                mainInterface.Back();
+                break;
+            case R.id.down_right:
+                /**метод смомошью которого можно добавлять втекушую позицию текст*/
+                mainInterface.Forward();
+                break;
+        }
     }
 }

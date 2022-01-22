@@ -142,33 +142,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         editText = findViewById(R.id.txtCode);
 
 
-     //   tab = findViewById(R.id.Table);
-     //   sc_1 = findViewById(R.id.sc_1);
-      //  sc_2 = findViewById(R.id.sc_2);
-      //  divide = findViewById(R.id.divide);
-     //   procent = findViewById(R.id.procent);
-     //   hashtag = findViewById(R.id.hashtag);
-     //   plas = findViewById(R.id.plas);
-     //   minus = findViewById(R.id.minus);
-     //   equals = findViewById(R.id.equals);
-     //   down_left = findViewById(R.id.down_left);
-      //  down_right = findViewById(R.id.down_right);
-
-     //   tab.setOnClickListener(this);
-     //   sc_1.setOnClickListener(this);
-     //   sc_2.setOnClickListener(this);
-     //   divide.setOnClickListener(this);
-     //   procent.setOnClickListener(this);
-     //   hashtag.setOnClickListener(this);
-     //   plas.setOnClickListener(this);
-      //  equals.setOnClickListener(this);
-       // down_left.setOnClickListener(this);
-      //  down_right.setOnClickListener(this);
-
-        FragmentTransaction fTrans= getFragmentManager().beginTransaction();
-        button buttonfr=new button();
+        FragmentTransaction fTrans = getFragmentManager().beginTransaction();
+        button buttonfr = new button(MainActivity.this);
         fTrans.replace(R.id.liner, buttonfr);
         fTrans.commit();
+
+
         Directory = Environment.getExternalStorageDirectory() + "/python/";
 
         File dir = new File(Directory);
@@ -340,93 +319,29 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             }
 
         });
-        String[] text={"if","else","for","while","iff","forewer"};
+        String[] text = {"if", "else", "for", "while", "iff", "forewer"};
         /**следим за вводом текста*/
 
         InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-              // Accept only letter & digits ; otherwise just return
-                if(source.length()>0) {
+                // Accept only letter & digits ; otherwise just return
+                if (source.length() > 0) {
                     for (int i = 0; i < text.length; i++) {
                         if (text[i].startsWith(source.toString()))
                             Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
-                    //    if(source.toString().equals("if"))
-                    //    Toast.makeText(MainActivity.this,""+source.toString().length(),Toast.LENGTH_SHORT).show();
+                //    if(source.toString().equals("if"))
+                //    Toast.makeText(MainActivity.this,""+source.toString().length(),Toast.LENGTH_SHORT).show();
 
                 return null;
             }
 
         };
 
-        editText.setFilters(new InputFilter[] { filter });
+        editText.setFilters(new InputFilter[]{filter});
     }
 
-
-    /**
-     * Кнопки нижней вкладки с помошью которого мы можем добовлять знаки
-     */
-   /* @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            //tab,sc_1,sc_2,divide,procent,hashtag,plas,minus,equals,down_left,down_right;
-            case R.id.Table:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-              //  editText.getText().insert(editText.getSelectionStart(), "    ");
-                //  Toast.makeText(getApplicationContext(), sesion+" ", Toast.LENGTH_LONG).show();
-           //     break;
-           // case R.id.sc_1:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-           //     editText.getText().insert(editText.getSelectionStart(), "<");
-          //      break;
-          //  case R.id.sc_2:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-           //     editText.getText().insert(editText.getSelectionStart(), ">");
-            //    break;
-           // case R.id.divide:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-           //     editText.getText().insert(editText.getSelectionStart(), "/");
-            //    break;
-           // case R.id.procent:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-            //    editText.getText().insert(editText.getSelectionStart(), "%");
-          //      break;
-          //  case R.id.hashtag:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-         //       editText.getText().insert(editText.getSelectionStart(), "#");
-         //       break;
-         //   case R.id.plas:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-          //      editText.getText().insert(editText.getSelectionStart(), "+");
-         //       break;
-          //  case R.id.minus:
-          //      /**метод смомошью которого можно добавлять втекушую позицию текст*/
-         //       editText.getText().insert(editText.getSelectionStart(), "-");
-         //       break;
-         //   case R.id.equals:
-         //       /**метод смомошью которого можно добавлять втекушую позицию текст*/
-         //       editText.getText().insert(editText.getSelectionStart(), "=");
-        //        break;
-       //     case R.id.down_left:
-        //        /**метод смомошью которого можно добавлять втекушую позицию текст*/
-//
-        //        if (editText.getSelectionStart() > 0) {
-             //       editText.setSelection(editText.getSelectionEnd() - 1);
-          //      } else {
-                    //start of string, cannot move cursor backward
-         ////       }
-          //      break;
-          //  case R.id.down_right:
-                /**метод смомошью которого можно добавлять втекушую позицию текст*/
-         //       if (editText.getSelectionEnd() < editText.getText().toString().length()) {
-           //         editText.setSelection(editText.getSelectionEnd() + 1);
-          //      } else {
-          //          //end of string, cannot move cursor forward
-          //      }
-         //       break;
-       // }
-   // }
 
     /**
      * создаем AsyncTask для вывода нумерации строки при измен
@@ -565,6 +480,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         terminal.setSetting(comand);
     }
 
+    public void setEdit(String text) {
+        editText.getText().insert(editText.getSelectionStart(), text);
+    }
+
     public void setTerminal(String message) {
         terminal.setTerminal(message);
     }
@@ -591,42 +510,55 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         editText.append("\n");
     }
 
+    public void Back() {
+        if (editText.getSelectionStart() > 0) {
+            editText.setSelection(editText.getSelectionEnd() - 1);
+        } else {
+        }
+    }
+
+    public void Forward() {
+        if (editText.getSelectionEnd() < editText.getText().toString().length()) {
+            editText.setSelection(editText.getSelectionEnd() + 1);
+        } else {
+        }
+    }
+
 
     /**
      * метод который принимает данные со второго активити
      * // форум в котоом можно прочитать про использваония этого метода
      * https://javarush.ru/groups/posts/regulyarnye-vyrazheniya-v-java регулятор віражения
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                String message = data.getStringExtra(Intent.EXTRA_TEXT);
-                if (message.equals("Excellent")) {
+     @RequiresApi(api = Build.VERSION_CODES.O)
+     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+     super.onActivityResult(requestCode, resultCode, data);
+     if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
+     if (resultCode == RESULT_OK) {
+     String message = data.getStringExtra(Intent.EXTRA_TEXT);
+     if (message.equals("Excellent")) {
 
-                } else {
-                    Pattern pattern = Pattern.compile("line(([^\\n+',']+))");
-                    Matcher matcher = pattern.matcher(message);
-                    while (matcher.find()) {
-                        String[] line = message.substring(matcher.start(), matcher.end()).split(" ");
-                        try {
-                            int l = Integer.parseInt(String.valueOf(new Scanner(line[1]).useDelimiter("[^\\d]+").nextInt()));
-                            if (l > 0) {
-                                NumberOfConstruction(l);
+     } else {
+     Pattern pattern = Pattern.compile("line(([^\\n+',']+))");
+     Matcher matcher = pattern.matcher(message);
+     while (matcher.find()) {
+     String[] line = message.substring(matcher.start(), matcher.end()).split(" ");
+     try {
+     int l = Integer.parseInt(String.valueOf(new Scanner(line[1]).useDelimiter("[^\\d]+").nextInt()));
+     if (l > 0) {
+     NumberOfConstruction(l);
 
-                            } else {
-                                NumberOfConstruction(0);
-                            }
-                        } catch (NumberFormatException e) {
-                        }
+     } else {
+     NumberOfConstruction(0);
+     }
+     } catch (NumberFormatException e) {
+     }
 
-                    }
-                }
-            }
-        }
-    }
+     }
+     }
+     }
+     }
+     }
      */
     /**
      * метод который принимает данные со второго активити
