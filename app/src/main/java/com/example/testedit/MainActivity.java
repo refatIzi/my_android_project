@@ -120,7 +120,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-
+    help help;
+    FragmentTransaction fTrans;
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -142,11 +143,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         editText = findViewById(R.id.txtCode);
 
 
-        FragmentTransaction fTrans = getFragmentManager().beginTransaction();
-        button buttonfr = new button(MainActivity.this);
-        fTrans.replace(R.id.liner, buttonfr);
-        fTrans.commit();
+       fTrans = getFragmentManager().beginTransaction();
+       // button buttonfr = new button(MainActivity.this);
+       // fTrans.replace(R.id.liner, buttonfr);
+      //  fTrans.commit();
 
+       Help();
 
         Directory = Environment.getExternalStorageDirectory() + "/python/";
 
@@ -319,18 +321,30 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             }
 
         });
-        String[] text = {"if", "else", "for", "while", "iff", "forewer"};
+        String[] text = {"if", "else", "for", "while", "iff", "forewer","forest","elevator","front","in","element"};
         /**следим за вводом текста*/
 
         InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+
                 // Accept only letter & digits ; otherwise just return
-                if (source.length() > 0) {
-                    for (int i = 0; i < text.length; i++) {
-                        if (text[i].startsWith(source.toString()))
-                            Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
+                try {
+                    if (source.length() > 0) {
+                        help.clear();
+                        for (int i = 0; i < text.length; i++) {
+                            if (text[i].startsWith(source.toString()))
+                                help.helpAdd(text[i] );
+                            //   Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        help.clear();
+
                     }
                 }
+                catch (Exception e){}
+
                 //    if(source.toString().equals("if"))
                 //    Toast.makeText(MainActivity.this,""+source.toString().length(),Toast.LENGTH_SHORT).show();
 
@@ -340,9 +354,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         };
 
         editText.setFilters(new InputFilter[]{filter});
+
     }
-
-
+    private void Help(){
+        help = new help(MainActivity.this);
+        fTrans.replace(R.id.liner, help);
+        fTrans.commit();
+    }
+    private void Butt(){
+         button buttonfr = new button(MainActivity.this);
+         fTrans.replace(R.id.liner, buttonfr);
+         fTrans.commit();
+    }
     /**
      * создаем AsyncTask для вывода нумерации строки при измен
      */

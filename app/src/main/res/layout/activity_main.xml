@@ -20,7 +20,7 @@
        android:id="@+id/scroll"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_marginBottom="50dp"
+       android:layout_marginBottom="60dp"
        >
 
 
@@ -92,10 +92,10 @@
    <FrameLayout
        android:id="@+id/liner"
        android:layout_width="match_parent"
-       android:layout_height="50dp"
-       android:gravity="center"
+       android:layout_height="60dp"
        android:layout_alignParentBottom="true"
        android:background="#191919"
+       android:gravity="center"
        android:orientation="horizontal">
 
 

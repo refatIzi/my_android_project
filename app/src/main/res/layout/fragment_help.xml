@@ -2,13 +2,123 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="60dp"
     android:background="#191919"
     android:orientation="vertical">
     <ListView
         android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         >
     </ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#191919"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/Table"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_tab" />
+            <ImageButton
+                android:id="@+id/sc_1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_caret_left" />
+            <ImageButton
+                android:id="@+id/sc_2"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_caret_right" />
+
+            <ImageButton
+                android:id="@+id/divide"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_divide" />
+
+            <ImageButton
+                android:id="@+id/procent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_percent" />
+
+
+            <ImageButton
+                android:id="@+id/hashtag"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_hashtag" />
+            <ImageButton
+                android:id="@+id/plas"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_plus" />
+
+            <ImageButton
+                android:id="@+id/minus"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_minus" />
+            <ImageButton
+                android:id="@+id/equals"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_equals" />
+            <ImageButton
+                android:id="@+id/down_left"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_down_left" />
+            <ImageButton
+                android:id="@+id/down_right"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_down_right" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#781919"
+            android:orientation="horizontal"></LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

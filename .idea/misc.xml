@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../Sdk/platforms/android-30/data/res/layout/simple_list_item_1.xml" value="0.2236842105263158" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/button_burved.xml" value="0.24407894736842106" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/button_styl.xml" value="0.24407894736842106" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/drawable/button_white_line_pressed.xml" value="0.24407894736842106" />
@@ -66,7 +67,9 @@
         <entry key="app/src/main/res/layout/fragment_help.xml" value="0.2138157894736842" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/iteam_row.xml" value="0.22467105263157894" />
+        <entry key="app/src/main/res/layout/list_help.xml" value="0.2236842105263158" />
         <entry key="app/src/main/res/layout/search_fragment.xml" value="0.22335526315789472" />
+        <entry key="app/src/main/res/layout/simple_txt.xml" value="0.2236842105263158" />
         <entry key="app/src/main/res/layout/terminal.xml" value="0.25" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/menu/menu_download.xml" value="0.22335526315789472" />
