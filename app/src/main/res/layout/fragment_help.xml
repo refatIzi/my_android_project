@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="#191919"
+    android:background="@drawable/shape_image"
     android:orientation="vertical">
     <ListView
         android:id="@+id/search"
+        android:background="#263046"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -16,6 +17,20 @@
         android:layout_height="60dp"
         android:background="#191919"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#781919"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Here will be infirmation abaut news"
+                android:textSize="17dp"
+                android:textColor="#dfd6cf"
+                android:gravity="center"
+                android:typeface="monospace" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -114,11 +129,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/ic_down_right" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="#781919"
-            android:orientation="horizontal"></LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

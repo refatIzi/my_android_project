@@ -43,6 +43,11 @@
         <entry key="..\:/Android/FEBOnion/app/src/main/res/menu/main_menu.xml" value="0.2338815789473684" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/menu/menu_download.xml" value="0.2338815789473684" />
         <entry key="..\:/Android/FEBOnion/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.24407894736842106" />
+        <entry key="app/src/main/res/drawable/button_burved.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/button_styl.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/button_white_color.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/button_white_line_pressed.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/buttonstil.xml" value="0.343" />
         <entry key="app/src/main/res/drawable/ic_code.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/drawable/ic_cub.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/drawable/ic_jetbrainstoolbox.xml" value="0.23355263157894737" />
@@ -54,9 +59,15 @@
         <entry key="app/src/main/res/drawable/ic_python_project.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/drawable/ic_sendmessage_.xml" value="0.23355263157894737" />
         <entry key="app/src/main/res/drawable/ic_setting_connect.xml" value="0.23355263157894737" />
+        <entry key="app/src/main/res/drawable/ic_terminal.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/ic_textxfile.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/ic_writing.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/ic_xml_file.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/shape_image.xml" value="0.343" />
+        <entry key="app/src/main/res/drawable/white_color.xml" value="0.343" />
         <entry key="app/src/main/res/layout/activity_download.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_download__file.xml" value="0.22335526315789472" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.46827586206896554" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.15466748017083587" />
         <entry key="app/src/main/res/layout/activity_storege.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/button_fraagment.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/dialog_open.xml" value="0.22335526315789472" />
@@ -64,7 +75,7 @@
         <entry key="app/src/main/res/layout/dialog_save_file.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/dialog_setting.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/fragment_button.xml" value="0.22335526315789472" />
-        <entry key="app/src/main/res/layout/fragment_help.xml" value="0.2138157894736842" />
+        <entry key="app/src/main/res/layout/fragment_help.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/layout/iteam_row.xml" value="0.22467105263157894" />
         <entry key="app/src/main/res/layout/list_help.xml" value="0.2236842105263158" />

@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private String Directory;
     private List<Search> mLista = new ArrayList<>();
     String project_Name = "no project";
+    String[] functions1={"self","def","as","assert","break","continue","del","elif","else","except","finally","for","from","global","if","import","in","pass","raise","return","try","while","with","yield"};
+    String[] functions2={"min()","setattr()","abs()","all()","dir()","hex()","next()","any()","divmod()","id()","sorted()","ascii()","enumerate()","input()","oct()","max()","round()" ,
+            "bin()","eval()","exec()","isinstance()","ord()","sum()","filter()","issubclass()","pow()","iter()","print()","callable()","format()","delattr()",
+            "len()","chr()","range()","vars()","getattr()","locals()","repr()","zip()","compile()","globals()","map()","reversed()","__import__()","hasattr()","hash()","memoryview()"};
 
 
     public final String[] EXTERNAL_PERMS = {WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE};
@@ -321,7 +325,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             }
 
         });
-        String[] text = {"if", "else", "for", "while", "iff", "forewer","forest","elevator","front","in","element"};
+        String[] text = functions1;
+
         /**следим за вводом текста*/
 
         InputFilter filter = new InputFilter() {
