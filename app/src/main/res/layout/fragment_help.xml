@@ -18,18 +18,24 @@
         android:background="#191919"
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/linerMessage"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="#781919"
+            android:gravity="center"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:text="Here will be infirmation abaut news"
-                android:textSize="17dp"
+                android:text="Here will be infirmation abaut news or message"
+                android:textSize="14dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
                 android:textColor="#dfd6cf"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:typeface="monospace" />
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

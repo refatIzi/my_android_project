@@ -7,8 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -29,7 +29,7 @@ public class Setting {
         final AlertDialog ab = ratingdialog.show();
         /**установка прозрачного фона вашего диалога*/
         ab.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ImageButton SeveButton = linearlayout.findViewById(R.id.Setting_save);
+        Button SeveButton = linearlayout.findViewById(R.id.Setting_save);
         final EditText IpAddress = linearlayout.findViewById(R.id.IPaddress);
         final EditText Port = linearlayout.findViewById(R.id.port);
         final EditText Username = linearlayout.findViewById(R.id.username);

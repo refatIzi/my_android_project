@@ -77,7 +77,7 @@
                    android:hyphenationFrequency="none"
                    android:inputType="textMultiLine"
                    android:scrollbars="vertical"
-
+                   android:textStyle="bold"
                    android:scrollHorizontally="true"
                    android:singleLine="false"
                    android:textColor="#dfd6cf"

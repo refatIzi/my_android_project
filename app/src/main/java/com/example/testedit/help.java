@@ -7,21 +7,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.testedit.dialogwindows.helpinfo.HelpAdapter;
+import com.example.testedit.dialogwindows.helpinfo.HelpInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @SuppressLint("ValidFragment")
 public class help extends Fragment implements View.OnClickListener {
 
     ImageButton tab, sc_1, sc_2, divide, procent, hashtag, plas, minus, equals, down_left, down_right;
-
+    LinearLayout linearMessage;
     ListView listView;
-    final ArrayList<String> catNames = new ArrayList<>();
-    ArrayAdapter adapter;
+    private List<HelpInfo> helper = new ArrayList<>();
+    HelpAdapter adapter;
     MainInterface mainInterface;
    Context context;
     @SuppressLint("ValidFragment")
@@ -31,8 +36,8 @@ public class help extends Fragment implements View.OnClickListener {
 
     }
     public void helpAdd(String help){
-        catNames.add(0, help);
-        adapter.notifyDataSetChanged();
+        helper.add(new HelpInfo(help,"no info"));
+
         //  Toast.makeText(context,""+help,Toast.LENGTH_SHORT).show();
 
     }
@@ -54,8 +59,10 @@ public class help extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_help, container, false);
         listView =v.findViewById(R.id.search);
-        adapter = new ArrayAdapter<>(context,      R.layout.list_help, catNames);
+       // adapter = new ArrayAdapter<>(context,      R.layout.list_help, helper);
         // Привяжем массив через адаптер к ListView
+    //    listView.setAdapter(adapter);
+        adapter = new HelpAdapter(context, R.layout.iteam_help, helper);
         listView.setAdapter(adapter);
         tab = v.findViewById(R.id.Table);
         sc_1 = v.findViewById(R.id.sc_1);
@@ -68,6 +75,7 @@ public class help extends Fragment implements View.OnClickListener {
         equals = v.findViewById(R.id.equals);
         down_left = v.findViewById(R.id.down_left);
         down_right = v.findViewById(R.id.down_right);
+        linearMessage=v.findViewById(R.id.linerMessage);
 
         tab.setOnClickListener(this);
         sc_1.setOnClickListener(this);
@@ -79,9 +87,11 @@ public class help extends Fragment implements View.OnClickListener {
         equals.setOnClickListener(this);
         down_left.setOnClickListener(this);
         down_right.setOnClickListener(this);
+        linearMessage.setOnClickListener(this);
         // Inflate the layout for this fragment
         return v;
     }
+
     public void onClick(View v) {
         switch (v.getId()) {
             //tab,sc_1,sc_2,divide,procent,hashtag,plas,minus,equals,down_left,down_right;
@@ -131,6 +141,9 @@ public class help extends Fragment implements View.OnClickListener {
             case R.id.down_right:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
                 mainInterface.Forward();
+                break;
+            case R.id.linerMessage:
+                Toast.makeText(context,"Liner Button",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

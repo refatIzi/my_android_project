@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private List<Search> mLista = new ArrayList<>();
     String project_Name = "no project";
     String[] functions1={"self","def","as","assert","break","continue","del","elif","else","except","finally","for","from","global","if","import","in","pass","raise","return","try","while","with","yield"};
-    String[] functions2={"min()","setattr()","abs()","all()","dir()","hex()","next()","any()","divmod()","id()","sorted()","ascii()","enumerate()","input()","oct()","max()","round()" ,
+    String[] functions2={"min()","setattr()","abs()","all()","dir()","hex()","next()","any()","divmod()","id()","sorted()","ascii()","enumerate()","input()","oct()","max()","round()",
             "bin()","eval()","exec()","isinstance()","ord()","sum()","filter()","issubclass()","pow()","iter()","print()","callable()","format()","delattr()",
             "len()","chr()","range()","vars()","getattr()","locals()","repr()","zip()","compile()","globals()","map()","reversed()","__import__()","hasattr()","hash()","memoryview()"};
 
@@ -327,7 +327,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         });
         String[] text = functions1;
 
-        /**следим за вводом текста*/
+        /**следим за вводом текста
+         * Метод для подсказки */
 
         InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {

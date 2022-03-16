@@ -23,7 +23,9 @@
             android:inputType="textPersonName"
             android:textColor="#ffc851"
             android:textColorHint="#ffc851"
-            android:typeface="monospace" />
+            android:typeface="monospace"
+            android:textStyle="bold"
+            />
 
         <EditText
             android:id="@+id/port"
@@ -36,7 +38,9 @@
             android:inputType="textPostalAddress"
             android:textColor="#00cc5c"
             android:textColorHint="#00cc5c"
-            android:typeface="monospace" />
+            android:typeface="monospace"
+            android:textStyle="bold"
+            />
 
     </FrameLayout>
 
@@ -50,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:backgroundTint="@android:color/transparent"
+            android:textStyle="bold"
 
             android:ems="10"
             android:hint="username"
@@ -65,6 +70,8 @@
             android:layout_gravity="right"
             android:backgroundTint="@android:color/transparent"
             android:ems="10"
+            android:textStyle="bold"
+
             android:hint="password"
             android:inputType="textPassword"
             android:textColor="#f4134d"
@@ -83,6 +90,7 @@
             android:backgroundTint="@android:color/transparent"
             android:ems="10"
             android:hint="url"
+            android:textStyle="bold"
 
             android:inputType="textPersonName"
             android:textColor="#c2f413"
@@ -106,6 +114,7 @@
             android:ems="10"
             android:hint="puthon version (python or python3)"
             android:inputType="textPersonName"
+            android:textStyle="bold"
 
             android:textColor="#13d2f4"
             android:textColorHint="#13d2f4"
@@ -130,18 +139,36 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp" />
 
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="54dp">
-
-        <ImageButton
-            android:id="@+id/Setting_save"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <Button
+            android:id="@+id/Dontsave"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="right"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="120dp"
+            android:textStyle="bold"
+            android:textColor="#dfd6cf"
+            android:textSize="13dp"
+            android:text="Don`t Save"
+            android:background="@drawable/button_burved" />
+        <Button
+            android:id="@+id/Setting_save"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/ic_add" />
+            android:textStyle="bold"
+            android:textColor="#dfd6cf"
+            android:textSize="13dp"
+            android:text="Get Save"
+            android:background="@drawable/button_styl" />
 
         <TextView
             android:id="@+id/Information"
