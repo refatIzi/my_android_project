@@ -41,6 +41,7 @@ import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.dialogwindows.Setting;
 import com.example.testedit.dialogwindows.Terminal;
+import com.example.testedit.dialogwindows.helpinfo.Help;
 import com.example.testedit.search.Search;
 
 import java.io.File;
@@ -63,10 +64,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private String Directory;
     private List<Search> mLista = new ArrayList<>();
     String project_Name = "no project";
-    String[] functions1={"self","def","as","assert","break","continue","del","elif","else","except","finally","for","from","global","if","import","in","pass","raise","return","try","while","with","yield"};
-    String[] functions2={"min()","setattr()","abs()","all()","dir()","hex()","next()","any()","divmod()","id()","sorted()","ascii()","enumerate()","input()","oct()","max()","round()",
-            "bin()","eval()","exec()","isinstance()","ord()","sum()","filter()","issubclass()","pow()","iter()","print()","callable()","format()","delattr()",
-            "len()","chr()","range()","vars()","getattr()","locals()","repr()","zip()","compile()","globals()","map()","reversed()","__import__()","hasattr()","hash()","memoryview()"};
 
 
     public final String[] EXTERNAL_PERMS = {WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE};
@@ -124,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-    help help;
+    Help help;
     FragmentTransaction fTrans;
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -325,7 +322,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             }
 
         });
-        String[] text = functions1;
 
         /**следим за вводом текста
          * Метод для подсказки */
@@ -338,11 +334,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 help.clear();
                     if (source.length() > 0) {
 
-                        for (int i = 0; i < text.length; i++) {
-                            if (text[i].startsWith(source.toString()))
-                                help.helpAdd(text[i] );
+                    //    for (int i = 0; i < text.length; i++) {
+                   //         if (text[i].startsWith(source.toString()))
+                             //   help.helpAdd(text[i] );
+                        help.helpAdd(source.toString() );
                             //   Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
-                        }
+                    //    }
                     }
 
 
@@ -359,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     }
     private void Help(){
-        help = new help(MainActivity.this);
+        help = new Help(MainActivity.this);
         fTrans.replace(R.id.liner, help);
         fTrans.commit();
     }
@@ -503,6 +500,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     public void setEdit(String text) {
         editText.getText().insert(editText.getSelectionStart(), text);
+    }
+    public void Show(String text)
+    {
+        Toast.makeText(MainActivity.this,""+text,Toast.LENGTH_SHORT).show();
     }
 
     public void setTerminal(String message) {

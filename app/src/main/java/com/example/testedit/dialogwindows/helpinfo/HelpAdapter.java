@@ -40,4 +40,6 @@ public class HelpAdapter extends ArrayAdapter<HelpInfo> {
 
         return view;
     }
+
+
 }

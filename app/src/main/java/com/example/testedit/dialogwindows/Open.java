@@ -37,7 +37,10 @@ public class Open implements AdapterView.OnItemClickListener {
     private ListAdapter mAdapter;
     private ListView mListView;
     String Directory;
-
+    ImageButton SendFile;
+    ImageButton delete;
+    ImageButton Back ;
+    ImageButton cancel;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Open(Activity context,String Directory)
@@ -54,10 +57,10 @@ public class Open implements AdapterView.OnItemClickListener {
         ratingdialog.create();
         mListView = linearlayout.findViewById(R.id.OpenListView);
         mListView.setOnItemClickListener(this);
-        ImageButton SendFile = linearlayout.findViewById(R.id.SendFile);
-        ImageButton delete = linearlayout.findViewById(R.id.deleteFile);
-        ImageButton Back = linearlayout.findViewById(R.id.back);
-        ImageButton cancel = linearlayout.findViewById(R.id.cancel);
+        SendFile = linearlayout.findViewById(R.id.SendFile);
+        delete = linearlayout.findViewById(R.id.deleteFile);
+        Back = linearlayout.findViewById(R.id.back);
+        cancel = linearlayout.findViewById(R.id.cancel);
         SendFile.setVisibility(View.GONE);
         delete.setVisibility(View.GONE);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +160,8 @@ public class Open implements AdapterView.OnItemClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void Back() {
+        SendFile.setVisibility(View.GONE);
+        delete.setVisibility(View.GONE);
         String new_Directory = "";
         String[] parts = Directory.split("/");
         for (int i = 0; i != parts.length - 1; i++) {
