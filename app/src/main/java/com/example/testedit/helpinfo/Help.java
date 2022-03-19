@@ -1,4 +1,4 @@
-package com.example.testedit.dialogwindows.helpinfo;
+package com.example.testedit.helpinfo;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,6 +39,7 @@ public class Help extends Fragment implements View.OnClickListener, AdapterView.
     MainInterface mainInterface;
     Context context;
     String help;
+    EditText configuration;
 
     @SuppressLint("ValidFragment")
     public Help(MainActivity mainActivity) {
@@ -64,6 +66,14 @@ public class Help extends Fragment implements View.OnClickListener, AdapterView.
         super.onCreate(savedInstanceState);
 
     }
+    public String getConfiguration()
+    {
+        String Conf="";
+        if(!configuration.getText().toString().isEmpty())
+            Conf=configuration.getText().toString();
+                    else Conf=" ";
+        return Conf;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,6 +99,7 @@ public class Help extends Fragment implements View.OnClickListener, AdapterView.
         down_left = v.findViewById(R.id.down_left);
         down_right = v.findViewById(R.id.down_right);
         linearMessage = v.findViewById(R.id.linerMessage);
+        configuration=v.findViewById(R.id.configuration);
 
         tab.setOnClickListener(this);
         sc_1.setOnClickListener(this);
@@ -106,7 +117,8 @@ public class Help extends Fragment implements View.OnClickListener, AdapterView.
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mainInterface.Show(adapter.getItem(position).getInfirmation());
+              //  mainInterface.Show(adapter.getItem(position).getInfirmation());
+                mainInterface.Information(adapter.getItem(position).getHelp());
                 return true;
             }
         });

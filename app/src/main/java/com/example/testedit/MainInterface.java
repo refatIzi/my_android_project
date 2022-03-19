@@ -18,6 +18,7 @@ public interface MainInterface {
     void setReseult(String message);
     void Back();
     void Forward();
-    public void Show(String text);
+    void Show(String text);
+    void Information(String txt);
 
 }

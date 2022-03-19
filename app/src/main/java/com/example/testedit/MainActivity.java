@@ -36,12 +36,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.testedit.dialogwindows.Information;
 import com.example.testedit.dialogwindows.NewFile;
 import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.dialogwindows.Setting;
 import com.example.testedit.dialogwindows.Terminal;
-import com.example.testedit.dialogwindows.helpinfo.Help;
+import com.example.testedit.helpinfo.Help;
 import com.example.testedit.search.Search;
 
 import java.io.File;
@@ -454,9 +455,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     // File Path = new File(Directory);
                     Work_with_File.saveFile(FileName, editText.getText().toString(), Directory);
                     //  Path = new File(Path.getAbsolutePath());
-                    download(Directory + ":" + FileName + ":" + project_Name);
 
-                    Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
+                    download(Directory + ":" + FileName + ":" + project_Name+ ":" + help.getConfiguration());
+
+                    Toast.makeText(MainActivity.this, "" +  help.getConfiguration(), Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.new_file:
@@ -530,6 +532,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         editText.getText().clear();
         editText.append(text);
         editText.append("\n");
+    }
+    public void Information(String txt){
+        new Information(MainActivity.this,txt);
     }
 
     public void Back() {

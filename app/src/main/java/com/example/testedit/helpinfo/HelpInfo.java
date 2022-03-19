@@ -1,4 +1,4 @@
-package com.example.testedit.dialogwindows.helpinfo;
+package com.example.testedit.helpinfo;
 
 public class HelpInfo {
     String help;

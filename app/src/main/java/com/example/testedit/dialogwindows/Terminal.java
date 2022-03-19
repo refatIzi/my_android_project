@@ -211,7 +211,13 @@ public class Terminal {
         String ProgramDirectory = Directory + ProgramName[0];
         String isRun_Directory = Incoming_Data[0].replace(Environment.getExternalStorageDirectory().toString() + "/python/", "") + Incoming_Data[1];
         loading.setCopySend(ProgramDirectory, Connection_Data[4]);
-        loading.StartComand(Connection_Data[5] + " " + Connection_Data[4] + isRun_Directory);
+       // terminal.setText(Connection_Data[5] + " " + Connection_Data[4] + isRun_Directory+" "+Incoming_Data[3]);
+
+        try {
+            loading.StartComand(Connection_Data[5] + " " + Connection_Data[4] + isRun_Directory+" "+Incoming_Data[3]);
+
+        }catch (Exception e){}
+
 
     }
 
