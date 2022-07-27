@@ -176,14 +176,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
         editText.addTextChangedListener(new TextWatcher() {
 
-            ColorScheme keywords1 = new ColorScheme(
+            TetxtColor keywords1 = new TetxtColor(
                     Pattern.compile(
                             "\\b(self|def|as|assert|break|continue|del|elif|else|except|finally|for|from|global|if|import|in|pass|raise|return|try|while|with|yield)\\b"),
                     Color.parseColor("#c56a77")
 
 
             );
-            ColorScheme keywords2 = new ColorScheme(
+            TetxtColor keywords2 = new TetxtColor(
                     Pattern.compile(
                             "\\b(False|None|True|and|nonlocal|not|or|class|def|is|lambda)\\b"),
                     Color.parseColor("#3e9cca")
@@ -191,24 +191,24 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             );
 
-            ColorScheme numbers = new ColorScheme(
+            TetxtColor numbers = new TetxtColor(
                     Pattern.compile("(\\b(\\d*[.]?\\d+)\\b)"),
                     Color.parseColor("#2f5f93")
             );
             //Built-in functions1 Встроенные функции 1
-            ColorScheme Built_in_functions1 = new ColorScheme(
+            TetxtColor Built_in_functions1 = new TetxtColor(
                     Pattern.compile("(\\b(passive|Options|dict()|slice()|object()|staticmethod()|str()|int()|bool()|super()|tuple()|bytearray()|float()|bytes()|type()|property()|list()|frozenset()|classmethod()|complex()|set())\\b)"),
                     Color.parseColor("#2aa9b0")
             );
             //Built-in functions2 Встроенные функции 2
-            ColorScheme Built_in_functions2 = new ColorScheme(
+            TetxtColor Built_in_functions2 = new TetxtColor(
                     Pattern.compile("(\\b(min()|setattr()|abs()|all()|dir()|hex()|next()|any()|divmod()|id()|sorted()|ascii()|enumerate()|input()|oct()|max()|round()|\n" +
                             "bin()|eval()|exec()|isinstance()|ord()|sum()|filter()|issubclass()|pow()|iter()|print()|callable()|format()|delattr()|\n" +
                             "len()|chr()|range()|vars()|getattr()|locals()|repr()|zip()compile()|globals()|map()|reversed()|__import__()|hasattr()|hash()|memoryview())\\b)"),
                     Color.parseColor("#cc7832")
             );
 
-            ColorScheme String_methods = new ColorScheme(
+            TetxtColor String_methods = new TetxtColor(
                     Pattern.compile("(\\b(capitalize()|casefold()|center()|count()|encode()|endswith()|expandtabs()|find()|index()|isalnum()\n" +
                             "isalpha()|isascii()|isdigit()|isidentifier()|islower()|isnumeric()|isprintable()|isspace()\n" +
                             "istitle()|isupper()|join()|ljust()|lower()|lstrip()|rstrip()|maketrans()|partition()|replace()\n" +
@@ -217,59 +217,59 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     Color.parseColor("#b3b102")
             );
 
-            ColorScheme List_methods = new ColorScheme(
+            TetxtColor List_methods = new TetxtColor(
                     Pattern.compile("(\\b(append()|extend()|insert()|remove()|pop()|clear()|sort()|reverse()|copy())\\b)"),
                     Color.parseColor("#b3b102")
             );
 
-            ColorScheme Dictionary_methods = new ColorScheme(
+            TetxtColor Dictionary_methods = new TetxtColor(
                     Pattern.compile("(\\b(fromkeys()|get()|items()|keys()|popitem()|setdefault()|update()|values())\\b)"),
                     Color.parseColor("#b3b102")
 
             );
 
-            ColorScheme Working_with_files = new ColorScheme(
+            TetxtColor Working_with_files = new TetxtColor(
                     Pattern.compile("(\\b(read()|write()|tell()|seek()|close()|open()|closed|mode|name|softspace)\\b)"),
                     Color.parseColor("#b3b102")
             );
 
-            ColorScheme argument = new ColorScheme(
+            TetxtColor argument = new TetxtColor(
                     Pattern.compile("(\\b(file_name|access_mode|Buffering)\\b)"),
                     Color.parseColor("#784fae")
             );
 
-            ColorScheme sign = new ColorScheme(
+            TetxtColor sign = new TetxtColor(
                     Pattern.compile("\\#(.*[\\n]+|$)"),
                     Color.parseColor("#627b57")
             );
             /**Регулятор с 2 # для выделения света текс и вывода инфомрауии о коде в проводнике*/
-            ColorScheme information = new ColorScheme(
+            TetxtColor information = new TetxtColor(
                     Pattern.compile("\\##(.*[\\n]+|$)"),
                     Color.parseColor("#ab7e00")
             );
-            ColorScheme brackets = new ColorScheme(
+            TetxtColor brackets = new TetxtColor(
                     Pattern.compile("[\\(\\)]"),
                     Color.parseColor("#3e9cca")
             );
-            ColorScheme squarebrackets = new ColorScheme(
+            TetxtColor squarebrackets = new TetxtColor(
                     Pattern.compile("[\\[\\]]"),
                     Color.parseColor("#3e9cca")
             );
-            ColorScheme braces = new ColorScheme(
+            TetxtColor braces = new TetxtColor(
                     Pattern.compile("[\\{\\}]"),
                     Color.parseColor("#3e9cca")
             );
             /**Регулятор для трех и менее ковычек*/
-            ColorScheme kovichki = new ColorScheme(
+            TetxtColor kovichki = new TetxtColor(
                     Pattern.compile("\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\""),
                     Color.parseColor("#b4794c")
             );
             /**регулятор для подсвтеки одиночных букв*/
-            ColorScheme letters = new ColorScheme(
+            TetxtColor letters = new TetxtColor(
                     Pattern.compile("(\\b(q|w|e|r|t|y|u|i|o|p|a|s|d|f|g|h|j|k|l|z|x|c|v|b|n|m|Q|W|E|R|T|Y|U|I|O|P|A|S|D|F|G|H|J|K|L|Z|X|C|V|B|N|M)\\b)"),
                     Color.parseColor("#648cb8")
             );
-            final ColorScheme[] schemes = {keywords1, keywords2, numbers, Built_in_functions1, Built_in_functions2,
+            final TetxtColor[] colors = {keywords1, keywords2, numbers, Built_in_functions1, Built_in_functions2,
                     String_methods, List_methods, Dictionary_methods, letters, Working_with_files, argument, sign,
                     kovichki, information, brackets, squarebrackets, braces};
 
@@ -293,9 +293,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             @Override
             public void afterTextChanged(Editable s) {
                 removeSpans(s, ForegroundColorSpan.class);
-                for (ColorScheme scheme : schemes) {
-                    for (Matcher m = scheme.pattern.matcher(s); m.find(); ) {
-                        s.setSpan(new ForegroundColorSpan(scheme.color),
+                for (TetxtColor tetxtColor : colors) {
+                    for (Matcher m = tetxtColor.pattern.matcher(s); m.find(); ) {
+                        s.setSpan(new ForegroundColorSpan(tetxtColor.color),
                                 m.start(),
                                 m.end(),
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -312,11 +312,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 }
             }
 
-            class ColorScheme {
+            class TetxtColor {
                 final Pattern pattern;
                 final int color;
 
-                ColorScheme(Pattern pattern, int color) {
+                TetxtColor(Pattern pattern, int color) {
                     this.pattern = pattern;
                     this.color = color;
                 }
@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
 
                 // Accept only letter & digits ; otherwise just return
-                help.clear();
+                    help.clear();
                     if (source.length() > 0) {
 
                     //    for (int i = 0; i < text.length; i++) {
