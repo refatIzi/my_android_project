@@ -33,7 +33,7 @@
                 android:background="#781919"
                 android:fastScrollEnabled="true"
                 android:fillViewport="true"
-
+                android:hint="write configuration"
                 android:hyphenationFrequency="none"
                 android:inputType="textMultiLine"
                 android:scrollbars="vertical"
