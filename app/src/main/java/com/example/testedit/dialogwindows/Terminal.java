@@ -25,7 +25,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.testedit.Loading;
 import com.example.testedit.R;
-import com.example.testedit.Work_with_File;
+import com.example.testedit.WR_File;
 
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -196,7 +196,7 @@ public class Terminal {
 
     private void Start() {
         String[] Connection_Data;
-        String info = Work_with_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
+        String info = WR_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
         Connection_Data = info.split(":");
         /** Connection_Data[0]=ipadress
          * Connection_Data[1]=port

@@ -167,7 +167,7 @@ public class download extends AppCompatActivity implements View.OnClickListener 
     private void Start() {
     //    NewDir = Incoming_Data[0].split("python");
         String[] Connection_Data;
-        String info = Work_with_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
+        String info = WR_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
         Connection_Data = info.split(":");
         /** Connection_Data[0]=ipadress
          * Connection_Data[1]=port
@@ -249,7 +249,7 @@ public class download extends AppCompatActivity implements View.OnClickListener 
                  * КОпируем команду в буфер и открываем SSH клиент и вставляем команду из буфера чтобы самим не писать
                  */
                 String[] sepread;
-                String info = Work_with_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
+                String info = WR_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
                 sepread = info.split(":");
                 Uri location = null;
                 try {

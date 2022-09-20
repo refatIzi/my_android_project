@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.Work_with_File;
+import com.example.testedit.WR_File;
 
 public class Setting {
     MainInterface mainInterface;
@@ -60,7 +60,7 @@ public class Setting {
         });
 
         String[] separated;
-        String info = Work_with_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
+        String info = WR_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
         separated = info.split(":");
         if (separated.length > 0) {
             IpAddress.setText(separated[0]);
@@ -91,7 +91,7 @@ public class Setting {
         SeveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Work_with_File.saveFile("connect.txt", IpAddress.getText().toString() + ":" + Port.getText().toString()
+                WR_File.saveFile("connect.txt", IpAddress.getText().toString() + ":" + Port.getText().toString()
                         + ":" + Username.getText().toString() + ":" + Password.getText().toString()
                         + ":" + Urls.getText().toString() + ":" + Python.getText().toString() + ":" + TextSizeBar.getProgress(), Environment.getExternalStorageDirectory().toString() + "/python/");
                 ab.cancel();

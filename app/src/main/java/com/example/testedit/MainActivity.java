@@ -158,14 +158,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (!dir.exists()) {
             //   Toast.makeText(MainActivity.this, "create folder", Toast.LENGTH_LONG).show();
             dir.mkdir();
-            Work_with_File.saveFile("connect.txt", "192.168.3.1:22:root:password:home/Document/python:puthon3:15",
+            WR_File.saveFile("connect.txt", "192.168.3.1:22:root:password:home/Document/python:puthon3:15",
                     Environment.getExternalStorageDirectory().toString() + "/python/");
-            Work_with_File.saveFile("HelloWorld.py", "print('Hello World')", Environment.getExternalStorageDirectory().toString() + "/python/");
+            WR_File.saveFile("HelloWorld.py", "print('Hello World')", Environment.getExternalStorageDirectory().toString() + "/python/");
         } else {
             /**Считываем дданные о размере фаила и применяем их для нумерации строки в numberCode
              * и в editText*/
             String[] separated;
-            String info = Work_with_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
+            String info = WR_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
             separated = info.split(":");
             if (separated.length > 6) {
                 editText.setTextSize(Integer.parseInt(separated[6]));
@@ -454,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 } else {
                     //   Toast.makeText(MainActivity.this,FileName,Toast.LENGTH_LONG).show();
                     // File Path = new File(Directory);
-                    Work_with_File.saveFile(FileName, editText.getText().toString(), Directory);
+                    WR_File.saveFile(FileName, editText.getText().toString(), Directory);
                     //  Path = new File(Path.getAbsolutePath());
 
                     download(Directory + ":" + FileName + ":" + project_Name+ ":" + help.getConfiguration());

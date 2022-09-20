@@ -21,7 +21,7 @@ import androidx.core.content.FileProvider;
 import com.example.testedit.BuildConfig;
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.Work_with_File;
+import com.example.testedit.WR_File;
 import com.example.testedit.search.ListAdapter;
 import com.example.testedit.search.Search;
 
@@ -195,14 +195,14 @@ public class Open implements AdapterView.OnItemClickListener {
             File f1 = new File(aDirectory + File.separator + sDirList[i]);
             if (f1.isFile()) {
                 if (sDirList[i].endsWith(".py")) {
-                    mLista.add(new Search(sDirList[i], Work_with_File.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", Work_with_File.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_filepython, false));
+                    mLista.add(new Search(sDirList[i], WR_File.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", WR_File.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_filepython, false));
                 } else {
                 }
             } else {
                 if (sDirList[i].endsWith("project"))
-                    mLista.add(new Search(sDirList[i], Work_with_File.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", Work_with_File.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_python_prog, false));
+                    mLista.add(new Search(sDirList[i], WR_File.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", WR_File.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_python_prog, false));
                 else
-                    mLista.add(new Search(sDirList[i], Work_with_File.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", Work_with_File.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_folder_python_3, false));
+                    mLista.add(new Search(sDirList[i], WR_File.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", WR_File.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_folder_python_3, false));
             }
 
 
@@ -250,7 +250,7 @@ public class Open implements AdapterView.OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final File aDirectory = new File(Directory + mAdapter.getItem(position).getNomber());
         if (aDirectory.isFile()) {
-            mainInterface.setEditText(Work_with_File.readInformation(mAdapter.getItem(position).getNomber(), "readCode", Directory));
+            mainInterface.setEditText(WR_File.readInformation(mAdapter.getItem(position).getNomber(), "readCode", Directory));
             mainInterface.setFileName(mAdapter.getItem(position).getNomber());
             mainInterface.setDirectory(Directory);
             alertDialog.cancel();

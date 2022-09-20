@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.Work_with_File;
+import com.example.testedit.WR_File;
 
 public class NewFile {
     String Directory;
@@ -35,7 +35,7 @@ public class NewFile {
             public void onClick(View v) {
 
                 mainInterface.setEditText("print(\"Hello FEBO\")");
-                Work_with_File.saveFile(FileName_.getText().toString() + ".py", "print(\"Hello FEBO\")", Directory);
+                WR_File.saveFile(FileName_.getText().toString() + ".py", "print(\"Hello FEBO\")", Directory);
                 mainInterface.setFileName(FileName_.getText().toString() + ".py");
                 mainInterface.setDirectory(Directory);
                 ab.cancel();
