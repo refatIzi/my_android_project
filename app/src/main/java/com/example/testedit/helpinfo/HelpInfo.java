@@ -2,11 +2,11 @@ package com.example.testedit.helpinfo;
 
 public class HelpInfo {
     String help;
-    String infirmation;
-    public HelpInfo(String help, String infirmation)
+    String information;
+    public HelpInfo(String help, String information)
     {
         this.help=help;
-        this.infirmation=infirmation;
+        this.information =information;
     }
     public String getHelp()
     {
@@ -16,12 +16,12 @@ public class HelpInfo {
     {
         this.help=help;
     }
-    public String getInfirmation()
+    public String getInformation()
     {
-        return infirmation;
+        return information;
     }
-    public void setInfirmation(String infirmation)
+    public void setInformation(String information)
     {
-        this.infirmation=infirmation;
+        this.information =information;
     }
 }

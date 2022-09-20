@@ -357,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     }
     private void Help(){
+        //MainActivity activity =new MainActivity();
         help = new Help(MainActivity.this);
         fTrans.replace(R.id.liner, help);
         fTrans.commit();

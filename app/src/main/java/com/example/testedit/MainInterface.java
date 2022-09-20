@@ -16,9 +16,13 @@ public interface MainInterface {
     void setTerminal(String message);
 
     void setReseult(String message);
+
     void Back();
+
     void Forward();
+
     void Show(String text);
+
     void Information(String txt);
 
 }

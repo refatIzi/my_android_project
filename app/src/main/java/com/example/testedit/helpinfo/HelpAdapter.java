@@ -36,7 +36,7 @@ public class HelpAdapter extends ArrayAdapter<HelpInfo> {
         TextView help = view.findViewById(R.id.help);
         help.setText(helpInfo.getHelp());
         TextView infirmation = view.findViewById(R.id.info);
-        infirmation.setText(helpInfo.getInfirmation());
+        infirmation.setText(helpInfo.getInformation());
 
         return view;
     }
