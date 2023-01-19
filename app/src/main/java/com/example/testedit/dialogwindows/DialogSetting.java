@@ -15,9 +15,10 @@ import android.widget.Toast;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.WR_File;
+import com.example.testedit.setting.DataSaving;
 import com.example.testedit.connect.Connect;
 import com.example.testedit.connect.Protocol;
+import com.example.testedit.setting.Setting;
 
 public class DialogSetting {
     MainInterface mainInterface;
@@ -63,7 +64,7 @@ public class DialogSetting {
         });
 
         String[] separated;
-        String info = WR_File.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
+        String info = DataSaving.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
         separated = info.split(":");
         if (separated.length > 0) {
             ipAddress.setText(separated[0]);
@@ -103,9 +104,12 @@ public class DialogSetting {
                         .setProjectDirHost(projectDirHost.getText().toString())
                         .setPython(Connect.Python.python3)
                         .accept();
-
+                Setting setting=Setting
+                        .newSet()
+                        .setTextSize(""+TextSizeBar.getProgress())
+                        .accept();
                 Toast.makeText(context,"Host "+connect,Toast.LENGTH_LONG).show();
-                WR_File.saveFile("connect.txt", ipAddress.getText().toString() + ":" + port.getText().toString()
+                DataSaving.saveFile("connect.txt", ipAddress.getText().toString() + ":" + port.getText().toString()
                         + ":" + username.getText().toString() + ":" + password.getText().toString()
                         + ":" + projectDirHost.getText().toString() + ":" + Python.getText().toString() + ":" + TextSizeBar.getProgress(), Environment.getExternalStorageDirectory().toString() + "/python/");
                 ab.cancel();

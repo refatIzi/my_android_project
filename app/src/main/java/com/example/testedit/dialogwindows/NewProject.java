@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.WR_File;
+import com.example.testedit.setting.DataSaving;
 
 import java.io.File;
 
@@ -60,7 +60,7 @@ public class NewProject {
                  */
               //  editText.clearFocus();
                 mainInterface.setEditText("print(\"Hello FEBO\")");
-                WR_File.saveFile(SaveEdit.getText().toString() + ".py", "print(\"Hello FEBO\")", Directory);
+                DataSaving.saveFile(SaveEdit.getText().toString() + ".py", "print(\"Hello FEBO\")", Directory);
                 mainInterface.setFileName(SaveEdit.getText().toString() + ".py");
                 mainInterface.setDirectory(Directory);
                 ab.cancel();
