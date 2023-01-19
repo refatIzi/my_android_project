@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class download extends AppCompatActivity implements View.OnClickListener {
+public class Download extends AppCompatActivity implements View.OnClickListener {
 //https://icon-icons.com/ru/pack/Papirus-Apps/1381
 
 
@@ -178,7 +178,7 @@ public class download extends AppCompatActivity implements View.OnClickListener 
          * */
         urls = Connection_Data[4];
 
-        loading = new Loading(download.this,Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
+        loading = new Loading(Download.this,Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
         loading.executeOnExecutor(Executors.newScheduledThreadPool(1));
         String[] ProgramName = Incoming_Data[0].replace(Environment.getExternalStorageDirectory().toString() + "/python/", "").split("/");
         String ProgramDirectory = Directory + ProgramName[0];
@@ -305,7 +305,7 @@ public class download extends AppCompatActivity implements View.OnClickListener 
         /**
          * отправка обратна данных
          */
-        Intent intent = new Intent(download.this,MainActivity.class);
+        Intent intent = new Intent(Download.this,MainActivity.class);
         intent.putExtra(Intent.EXTRA_TEXT, loading.getResult());
         setResult(RESULT_OK, intent);
 

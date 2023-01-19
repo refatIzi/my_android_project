@@ -132,17 +132,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             @Override
             public void afterTextChanged(Editable s) {
                 removeSpans(s, ForegroundColorSpan.class);
-                Visualization visualization=new Visualization();
-                for (Visualization.TextColor tetxtColor : visualization.getColors()) {
+                for (Visualization.TextColor tetxtColor : Visualization.getColors()) {
                     for (Matcher m = tetxtColor.pattern.matcher(s); m.find(); ) {
                         s.setSpan(new ForegroundColorSpan(tetxtColor.color),
                                 m.start(),
                                 m.end(),
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
                     }
                 }
-
             }
 
             void removeSpans(Editable e, Class<? extends CharacterStyle> type) {

@@ -105,12 +105,28 @@ public class Visualization {
             Pattern.compile("(\\b(q|w|e|r|t|y|u|i|o|p|a|s|d|f|g|h|j|k|l|z|x|c|v|b|n|m|Q|W|E|R|T|Y|U|I|O|P|A|S|D|F|G|H|J|K|L|Z|X|C|V|B|N|M)\\b)"),
             Color.parseColor("#648cb8")
     );
+    static Visualization visualization = new Visualization();
+    static final TextColor[] colors = {
+            visualization.keywords1,
+            visualization.keywords2,
+            visualization.numbers,
+            visualization.Built_in_functions1,
+            visualization.Built_in_functions2,
+            visualization.String_methods,
+            visualization.List_methods,
+            visualization.Dictionary_methods,
+            visualization.letters,
+            visualization.Working_with_files,
+            visualization.argument,
+            visualization.sign,
+            visualization.kovichki,
+            visualization.information,
+            visualization.brackets,
+            visualization.squarebrackets,
+            visualization.braces
+    };
 
-     final TextColor[] colors = {keywords1, keywords2, numbers, Built_in_functions1, Built_in_functions2,
-            String_methods, List_methods, Dictionary_methods, letters, Working_with_files, argument, sign,
-            kovichki, information, brackets, squarebrackets, braces};
-
-    public TextColor[] getColors(){
+    public static TextColor[] getColors() {
         return colors;
     }
 
