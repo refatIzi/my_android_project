@@ -19,6 +19,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WR_File {
+
+
+
+
     /**
      * Информация о последнем изменении фаила
      */
@@ -27,9 +31,9 @@ public class WR_File {
         BasicFileAttributes attr = null;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Path fl = file.toPath();
+            Path path = file.toPath();
             try {
-                attr = Files.readAttributes(fl, BasicFileAttributes.class);
+                attr = Files.readAttributes(path, BasicFileAttributes.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }

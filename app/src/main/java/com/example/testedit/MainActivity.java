@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     ImageButton tab, sc_1, sc_2, divide, procent, hashtag, plas, minus, equals, down_left, down_right;
     String input;
     String FileName = "";
-    orientation orientation;
+    Orientation orientation;
     private String Directory;
     private List<Search> mLista = new ArrayList<>();
     String project_Name = "no project";
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         /**разрешения  которые я тут исползовал*/
 
-        orientation = new orientation();
+        orientation = new Orientation();
         orientation.execute();
         numberCode = findViewById(R.id.numberCode);
         editText = findViewById(R.id.txtCode);
@@ -148,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             }
 
 
-
         });
 
         /**следим за вводом текста
@@ -193,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     /**
      * создаем AsyncTask для вывода нумерации строки при измен
      */
-    class orientation extends AsyncTask<Void, Void, Void> {
+    class Orientation extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -202,12 +201,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
 
         protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+            //super.onPostExecute(aVoid);
             try {
-
                 numberOfConstruction(0);
-
-
             } catch (Exception e) {
             }
             /**Проверяяем ориентацию экрана*/
