@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private String Directory;
     private List<Search> mLista = new ArrayList<>();
     String project_Name = "no project";
-
-
     Help help;
     FragmentTransaction fTrans;
 
