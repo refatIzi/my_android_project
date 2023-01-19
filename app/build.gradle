@@ -5,6 +5,7 @@ android {
     defaultConfig {
         applicationId "com.example.testedit"
         minSdkVersion 22
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

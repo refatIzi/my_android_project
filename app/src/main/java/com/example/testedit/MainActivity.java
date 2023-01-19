@@ -1,21 +1,13 @@
 package com.example.testedit;
 
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static android.os.Build.VERSION.SDK_INT;
-
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spannable;
@@ -33,8 +25,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.testedit.dialogwindows.Information;
 import com.example.testedit.dialogwindows.NewFile;
@@ -43,6 +33,7 @@ import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.dialogwindows.Setting;
 import com.example.testedit.dialogwindows.Terminal;
 import com.example.testedit.helpinfo.Help;
+import com.example.testedit.permission.Permission;
 import com.example.testedit.search.Search;
 
 import java.io.File;
@@ -54,8 +45,6 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
-
-    private static final int PERMISSION_REQUEST_CODE = 1;
     EditText editText;
     TextView numberCode;
     ImageButton tab, sc_1, sc_2, divide, procent, hashtag, plas, minus, equals, down_left, down_right;
@@ -67,63 +56,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     String project_Name = "no project";
 
 
-    public final String[] EXTERNAL_PERMS = {WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE};
-    public final int EXTERNAL_REQUEST = 42;
-
-    public boolean requestForPermission() {
-
-        boolean isPermissionOn = true;
-        final int version = SDK_INT;
-        if (version >= 23) {
-            if (!canAccessExternalSd()) {
-                isPermissionOn = false;
-                requestPermissions(EXTERNAL_PERMS, EXTERNAL_REQUEST);
-            }
-        }
-
-        return isPermissionOn;
-    }
-
-    public boolean canAccessExternalSd() {
-        return (hasPermission(WRITE_EXTERNAL_STORAGE));
-    }
-
-    private boolean hasPermission(String perm) {
-        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm));
-
-    }
-
-
-    private boolean checkPermission() {
-        if (SDK_INT >= Build.VERSION_CODES.R) {
-            return Environment.isExternalStorageManager();
-        } else {
-            int result = ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE);
-            int result1 = ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE);
-            return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
-
-    private void requestPermission() {
-        if (SDK_INT >= Build.VERSION_CODES.R) {
-            try {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                intent.addCategory("android.intent.category.DEFAULT");
-                intent.setData(Uri.parse(String.format("package:%s", getApplicationContext().getPackageName())));
-                startActivityForResult(intent, 2296);
-            } catch (Exception e) {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                startActivityForResult(intent, 2296);
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-        }
-    }
-
     Help help;
     FragmentTransaction fTrans;
+
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -131,9 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        if (!checkPermission()) {
-            requestPermission();
-        }
+        new Permission();
 
         /**Запрет на поворот экрана*/
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -145,12 +78,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         editText = findViewById(R.id.txtCode);
 
 
-       fTrans = getFragmentManager().beginTransaction();
-       // button buttonfr = new button(MainActivity.this);
-       // fTrans.replace(R.id.liner, buttonfr);
-      //  fTrans.commit();
+        fTrans = getFragmentManager().beginTransaction();
+        // button buttonfr = new button(MainActivity.this);
+        // fTrans.replace(R.id.liner, buttonfr);
+        //  fTrans.commit();
 
-       Help();
+        // Help();
+        help = new Help(MainActivity.this);
+        fTrans.replace(R.id.liner, help);
+        fTrans.commit();
 
         Directory = Environment.getExternalStorageDirectory() + "/python/";
 
@@ -176,14 +112,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
         editText.addTextChangedListener(new TextWatcher() {
 
-            TetxtColor keywords1 = new TetxtColor(
+            TextColor keywords1 = new TextColor(
                     Pattern.compile(
                             "\\b(self|def|as|assert|break|continue|del|elif|else|except|finally|for|from|global|if|import|in|pass|raise|return|try|while|with|yield)\\b"),
                     Color.parseColor("#c56a77")
 
 
             );
-            TetxtColor keywords2 = new TetxtColor(
+            TextColor keywords2 = new TextColor(
                     Pattern.compile(
                             "\\b(False|None|True|and|nonlocal|not|or|class|def|is|lambda)\\b"),
                     Color.parseColor("#3e9cca")
@@ -191,24 +127,24 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             );
 
-            TetxtColor numbers = new TetxtColor(
+            TextColor numbers = new TextColor(
                     Pattern.compile("(\\b(\\d*[.]?\\d+)\\b)"),
                     Color.parseColor("#2f5f93")
             );
             //Built-in functions1 Встроенные функции 1
-            TetxtColor Built_in_functions1 = new TetxtColor(
+            TextColor Built_in_functions1 = new TextColor(
                     Pattern.compile("(\\b(passive|Options|dict()|slice()|object()|staticmethod()|str()|int()|bool()|super()|tuple()|bytearray()|float()|bytes()|type()|property()|list()|frozenset()|classmethod()|complex()|set())\\b)"),
                     Color.parseColor("#2aa9b0")
             );
             //Built-in functions2 Встроенные функции 2
-            TetxtColor Built_in_functions2 = new TetxtColor(
+            TextColor Built_in_functions2 = new TextColor(
                     Pattern.compile("(\\b(min()|setattr()|abs()|all()|dir()|hex()|next()|any()|divmod()|id()|sorted()|ascii()|enumerate()|input()|oct()|max()|round()|\n" +
                             "bin()|eval()|exec()|isinstance()|ord()|sum()|filter()|issubclass()|pow()|iter()|print()|callable()|format()|delattr()|\n" +
                             "len()|chr()|range()|vars()|getattr()|locals()|repr()|zip()compile()|globals()|map()|reversed()|__import__()|hasattr()|hash()|memoryview())\\b)"),
                     Color.parseColor("#cc7832")
             );
 
-            TetxtColor String_methods = new TetxtColor(
+            TextColor String_methods = new TextColor(
                     Pattern.compile("(\\b(capitalize()|casefold()|center()|count()|encode()|endswith()|expandtabs()|find()|index()|isalnum()\n" +
                             "isalpha()|isascii()|isdigit()|isidentifier()|islower()|isnumeric()|isprintable()|isspace()\n" +
                             "istitle()|isupper()|join()|ljust()|lower()|lstrip()|rstrip()|maketrans()|partition()|replace()\n" +
@@ -217,59 +153,59 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     Color.parseColor("#b3b102")
             );
 
-            TetxtColor List_methods = new TetxtColor(
+            TextColor List_methods = new TextColor(
                     Pattern.compile("(\\b(append()|extend()|insert()|remove()|pop()|clear()|sort()|reverse()|copy())\\b)"),
                     Color.parseColor("#b3b102")
             );
 
-            TetxtColor Dictionary_methods = new TetxtColor(
+            TextColor Dictionary_methods = new TextColor(
                     Pattern.compile("(\\b(fromkeys()|get()|items()|keys()|popitem()|setdefault()|update()|values())\\b)"),
                     Color.parseColor("#b3b102")
 
             );
 
-            TetxtColor Working_with_files = new TetxtColor(
+            TextColor Working_with_files = new TextColor(
                     Pattern.compile("(\\b(read()|write()|tell()|seek()|close()|open()|closed|mode|name|softspace)\\b)"),
                     Color.parseColor("#b3b102")
             );
 
-            TetxtColor argument = new TetxtColor(
+            TextColor argument = new TextColor(
                     Pattern.compile("(\\b(file_name|access_mode|Buffering)\\b)"),
                     Color.parseColor("#784fae")
             );
 
-            TetxtColor sign = new TetxtColor(
+            TextColor sign = new TextColor(
                     Pattern.compile("\\#(.*[\\n]+|$)"),
                     Color.parseColor("#627b57")
             );
             /**Регулятор с 2 # для выделения света текс и вывода инфомрауии о коде в проводнике*/
-            TetxtColor information = new TetxtColor(
+            TextColor information = new TextColor(
                     Pattern.compile("\\##(.*[\\n]+|$)"),
                     Color.parseColor("#ab7e00")
             );
-            TetxtColor brackets = new TetxtColor(
+            TextColor brackets = new TextColor(
                     Pattern.compile("[\\(\\)]"),
                     Color.parseColor("#3e9cca")
             );
-            TetxtColor squarebrackets = new TetxtColor(
+            TextColor squarebrackets = new TextColor(
                     Pattern.compile("[\\[\\]]"),
                     Color.parseColor("#3e9cca")
             );
-            TetxtColor braces = new TetxtColor(
+            TextColor braces = new TextColor(
                     Pattern.compile("[\\{\\}]"),
                     Color.parseColor("#3e9cca")
             );
             /**Регулятор для трех и менее ковычек*/
-            TetxtColor kovichki = new TetxtColor(
+            TextColor kovichki = new TextColor(
                     Pattern.compile("\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\""),
                     Color.parseColor("#b4794c")
             );
             /**регулятор для подсвтеки одиночных букв*/
-            TetxtColor letters = new TetxtColor(
+            TextColor letters = new TextColor(
                     Pattern.compile("(\\b(q|w|e|r|t|y|u|i|o|p|a|s|d|f|g|h|j|k|l|z|x|c|v|b|n|m|Q|W|E|R|T|Y|U|I|O|P|A|S|D|F|G|H|J|K|L|Z|X|C|V|B|N|M)\\b)"),
                     Color.parseColor("#648cb8")
             );
-            final TetxtColor[] colors = {keywords1, keywords2, numbers, Built_in_functions1, Built_in_functions2,
+            final TextColor[] colors = {keywords1, keywords2, numbers, Built_in_functions1, Built_in_functions2,
                     String_methods, List_methods, Dictionary_methods, letters, Working_with_files, argument, sign,
                     kovichki, information, brackets, squarebrackets, braces};
 
@@ -283,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             /**при изменении текста и добавлениии текста и переходе на новую строку*/
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                NumberOfConstruction(0);
+                numberOfConstruction(0);
 
             }
 
@@ -293,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             @Override
             public void afterTextChanged(Editable s) {
                 removeSpans(s, ForegroundColorSpan.class);
-                for (TetxtColor tetxtColor : colors) {
+                for (TextColor tetxtColor : colors) {
                     for (Matcher m = tetxtColor.pattern.matcher(s); m.find(); ) {
                         s.setSpan(new ForegroundColorSpan(tetxtColor.color),
                                 m.start(),
@@ -312,11 +248,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 }
             }
 
-            class TetxtColor {
+            class TextColor {
                 final Pattern pattern;
                 final int color;
 
-                TetxtColor(Pattern pattern, int color) {
+                TextColor(Pattern pattern, int color) {
                     this.pattern = pattern;
                     this.color = color;
                 }
@@ -332,17 +268,16 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
 
                 // Accept only letter & digits ; otherwise just return
-                    help.clear();
-                    if (source.length() > 0) {
+                help.clear();
+                if (source.length() > 0) {
 
                     //    for (int i = 0; i < text.length; i++) {
-                   //         if (text[i].startsWith(source.toString()))
-                             //   help.helpAdd(text[i] );
-                        help.helpAdd(source.toString() );
-                            //   Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
+                    //         if (text[i].startsWith(source.toString()))
+                    //   help.helpAdd(text[i] );
+                    help.helpAdd(source.toString());
+                    //   Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
                     //    }
-                    }
-
+                }
 
 
                 //    if(source.toString().equals("if"))
@@ -356,7 +291,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         editText.setFilters(new InputFilter[]{filter});
 
     }
-    private void Help(){
+
+    private void Help() {
         //MainActivity activity =new MainActivity();
         help = new Help(MainActivity.this);
         fTrans.replace(R.id.liner, help);
@@ -378,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             super.onPostExecute(aVoid);
             try {
 
-                NumberOfConstruction(0);
+                numberOfConstruction(0);
 
 
             } catch (Exception e) {
@@ -390,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     /**
      * Метод котрый выводит номурецию строки
      */
-    private void NumberOfConstruction(int errLine) {
+    private void numberOfConstruction(int errLine) {
         int line = editText.getLineCount();
         String number = "";
         try {
@@ -428,7 +364,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
@@ -457,9 +392,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     WR_File.saveFile(FileName, editText.getText().toString(), Directory);
                     //  Path = new File(Path.getAbsolutePath());
 
-                    download(Directory + ":" + FileName + ":" + project_Name+ ":" + help.getConfiguration());
+                    download(Directory + ":" + FileName + ":" + project_Name + ":" + help.getConfiguration());
 
-                    Toast.makeText(MainActivity.this, "" +  help.getConfiguration(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "" + help.getConfiguration(), Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.new_file:
@@ -504,9 +439,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     public void setEdit(String text) {
         editText.getText().insert(editText.getSelectionStart(), text);
     }
-    public void Show(String text)
-    {
-        Toast.makeText(MainActivity.this,""+text,Toast.LENGTH_SHORT).show();
+
+    public void Show(String text) {
+        Toast.makeText(MainActivity.this, "" + text, Toast.LENGTH_SHORT).show();
     }
 
     public void setTerminal(String message) {
@@ -534,8 +469,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         editText.append(text);
         editText.append("\n");
     }
-    public void Information(String txt){
-        new Information(MainActivity.this,txt);
+
+    public void Information(String txt) {
+        new Information(MainActivity.this, txt);
     }
 
     public void Back() {
@@ -604,10 +540,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 try {
                     int l = Integer.parseInt(String.valueOf(new Scanner(line[1]).useDelimiter("[^\\d]+").nextInt()));
                     if (l > 0) {
-                        NumberOfConstruction(l);
+                        numberOfConstruction(l);
 
                     } else {
-                        NumberOfConstruction(0);
+                        numberOfConstruction(0);
                     }
                 } catch (NumberFormatException e) {
                 }
