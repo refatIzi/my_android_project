@@ -10,15 +10,11 @@ public class Visualization {
             Pattern.compile(
                     "\\b(self|def|as|assert|break|continue|del|elif|else|except|finally|for|from|global|if|import|in|pass|raise|return|try|while|with|yield)\\b"),
             Color.parseColor("#c56a77")
-
-
     );
     final TextColor KEYWORDS_SECOND = new TextColor(
             Pattern.compile(
                     "\\b(False|None|True|and|nonlocal|not|or|class|def|is|lambda)\\b"),
             Color.parseColor("#3e9cca")
-
-
     );
 
     final TextColor NUMBERS = new TextColor(
@@ -57,9 +53,9 @@ public class Visualization {
             Color.parseColor("#b3b102")
 
     );
-
+    String work="(\\b(read()|write()|tell()|seek()|close()|open()|closed|mode|name|softspace)\\b)";
     final TextColor WORKING_METHODS_FIRST = new TextColor(
-            Pattern.compile("(\\b(read()|write()|tell()|seek()|close()|open()|closed|mode|name|softspace)\\b)"),
+            Pattern.compile(work),
             Color.parseColor("#b3b102")
     );
 
