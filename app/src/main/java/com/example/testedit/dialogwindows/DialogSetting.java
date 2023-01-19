@@ -19,11 +19,11 @@ import com.example.testedit.WR_File;
 import com.example.testedit.connect.Connect;
 import com.example.testedit.connect.Protocol;
 
-public class Setting {
+public class DialogSetting {
     MainInterface mainInterface;
     Context context;
 
-    public Setting(Activity context) {
+    public DialogSetting(Activity context) {
         this.context = context;
         mainInterface = (MainInterface) context;
         final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
@@ -101,6 +101,7 @@ public class Setting {
                         .setPort(port.getText().toString())
                         .setProtocol(Protocol.SSH)
                         .setProjectDirHost(projectDirHost.getText().toString())
+                        .setPython(Connect.Python.python3)
                         .accept();
 
                 Toast.makeText(context,"Host "+connect,Toast.LENGTH_LONG).show();

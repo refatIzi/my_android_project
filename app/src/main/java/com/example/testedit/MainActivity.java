@@ -30,7 +30,7 @@ import com.example.testedit.dialogwindows.Information;
 import com.example.testedit.dialogwindows.NewFile;
 import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
-import com.example.testedit.dialogwindows.Setting;
+import com.example.testedit.dialogwindows.DialogSetting;
 import com.example.testedit.dialogwindows.Terminal;
 import com.example.testedit.helpinfo.Help;
 import com.example.testedit.permission.Permission;
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 FileName = null;
                 return true;
             case R.id.action_settings:
-                new Setting(MainActivity.this);
+                new DialogSetting(MainActivity.this);
                 return true;
             case R.id.open:
                 try {

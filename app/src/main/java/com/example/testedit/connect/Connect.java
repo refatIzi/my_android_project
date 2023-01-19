@@ -7,6 +7,10 @@ public class Connect {
     private String port;
     private Protocol protocol;
     private String projectDirHost;
+    public enum Python{
+        python,python3
+    }
+    private Python python;
 
     public Connect() {
         this.ipAddress = "";
@@ -18,13 +22,14 @@ public class Connect {
         this.projectDirHost = "/";
     }
 
-    public Connect(String ipAddress, String userName, String password, String port, Protocol protocol, String projectDirHost) {
+    public Connect(String ipAddress, String userName, String password, String port, Protocol protocol, String projectDirHost,Python python) {
         this.ipAddress = ipAddress;
         this.userName = userName;
         this.password = password;
         this.port = port;
         this.protocol = protocol;
         this.projectDirHost = projectDirHost;
+        this.python=python;
     }
 
     public void setIPAddress(String ipAddress) {
@@ -51,6 +56,9 @@ public class Connect {
         this.projectDirHost = projectDirHost;
     }
 
+    public void setPython(Python python){
+        this.python=python;
+    }
     public String getIpAddress() {
         return ipAddress;
     }
@@ -73,6 +81,10 @@ public class Connect {
 
     public String getProjectDirHost() {
         return projectDirHost;
+    }
+
+    public Python getPython() {
+        return python;
     }
 
     public static Host newHost() {
@@ -112,6 +124,10 @@ public class Connect {
             Connect.this.projectDirHost = projectDirHost;
             return this;
         }
+        public Host setPython(Python python){
+            Connect.this.python=python;
+            return this;
+        }
 
         public Connect accept() {
             return Connect.this;
@@ -120,7 +136,7 @@ public class Connect {
 
     @Override
     public String toString() {
-        return ipAddress + ":" + userName + ":" + password + ":" + port + ":" + protocol;
+        return ipAddress + ":" + userName + ":" + password + ":" + port + ":" + protocol+":"+python;
     }
 
 }
