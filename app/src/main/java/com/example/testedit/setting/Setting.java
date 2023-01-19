@@ -1,13 +1,13 @@
 package com.example.testedit.setting;
 
 public class Setting {
-    private String textSize;
+    private int textSize;
 
-    public void setTextSize(String textSize) {
+    public void setTextSize(int textSize) {
         this.textSize = textSize;
     }
 
-    public String getTextSize() {
+    public int getTextSize() {
         return textSize;
     }
 
@@ -18,7 +18,7 @@ public class Setting {
         Set(){
 
         }
-        public Set setTextSize(String textSize) {
+        public Set setTextSize(int textSize) {
             Setting.this.textSize = textSize;
             return this;
         }

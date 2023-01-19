@@ -1,6 +1,7 @@
 package com.example.testedit.setting;
 
 import android.os.Build;
+import android.os.Environment;
 import android.widget.Adapter;
 
 import androidx.annotation.RequiresApi;
@@ -9,10 +10,13 @@ import com.example.testedit.connect.Connect;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -24,6 +28,8 @@ public class DataSaving {
 
     private Connect connect;
     private Setting setting;
+    private DataSaving dataSaving;
+    private final String PROJECT_DIR = Environment.getExternalStorageDirectory().toString() + "/python/";
 
     public void setConnect(Connect connect) {
         this.connect = connect;
@@ -39,6 +45,59 @@ public class DataSaving {
 
     public Setting getSetting() {
         return setting;
+    }
+
+    public static Saving newSaving() {
+        return new DataSaving().new Saving();
+    }
+
+    public class Saving {
+        Saving() {
+        }
+
+        public Saving setConnect(Connect connect) {
+            DataSaving.this.connect = connect;
+            return this;
+        }
+
+        public Saving setSetting(Setting setting) {
+            DataSaving.this.setting = setting;
+            return this;
+        }
+
+        public DataSaving accept() {
+            writeData(DataSaving.this);
+            return DataSaving.this;
+        }
+    }
+
+    public void writeData(DataSaving dataSaving) {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("feb_onion");
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
+            outputStream.writeObject(dataSaving);
+            outputStream.close();
+            fileOutputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public DataSaving readData() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("feb_onion");
+            ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
+            dataSaving = (DataSaving) inputStream.readObject();
+            inputStream.close();
+            fileInputStream.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return dataSaving;
     }
 
     /**
@@ -105,16 +164,13 @@ public class DataSaving {
      * Метод записи фаила
      */
     public static void saveFile(String fileName, String text, String dir) {
-        FileOutputStream fos = null;
         File directory = new File(dir);
         File filename = new File(directory, fileName);
         try {
-
-            fos = new FileOutputStream(filename);
             if (text.length() > 0) {
-                fos.write(text.getBytes());
+                new FileOutputStream(filename)
+                        .write(text.getBytes());
             } else {
-
             }
             //  Toast.makeText(this, "Файл сохранен", Toast.LENGTH_SHORT).show();
         } catch (IOException ex) {
@@ -122,9 +178,9 @@ public class DataSaving {
             //  Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-public static void send(Adapter adapter,String dir)
-{
 
-}
+    public static void send(Adapter adapter, String dir) {
+
+    }
 
 }

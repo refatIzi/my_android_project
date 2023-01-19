@@ -95,7 +95,8 @@ public class DialogSetting {
         SeveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Connect connect = Connect.newHost()
+                Connect connect = Connect
+                        .newHost()
                         .ipAddress(ipAddress.getText().toString())
                         .setUserName(username.getText().toString())
                         .setPassword(password.getText().toString())
@@ -106,7 +107,7 @@ public class DialogSetting {
                         .accept();
                 Setting setting=Setting
                         .newSet()
-                        .setTextSize(""+TextSizeBar.getProgress())
+                        .setTextSize(TextSizeBar.getProgress())
                         .accept();
                 Toast.makeText(context,"Host "+connect,Toast.LENGTH_LONG).show();
                 DataSaving.saveFile("connect.txt", ipAddress.getText().toString() + ":" + port.getText().toString()
