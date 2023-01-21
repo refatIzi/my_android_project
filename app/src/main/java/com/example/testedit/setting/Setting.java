@@ -26,4 +26,8 @@ public class Setting {
             return Setting.this;
         }
     }
+    @Override
+    public String toString() {
+        return "Text Suze "+textSize;
+    }
 }

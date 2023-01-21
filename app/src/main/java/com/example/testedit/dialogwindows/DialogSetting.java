@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,36 +14,43 @@ import android.widget.Toast;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.setting.DataSaving;
 import com.example.testedit.connect.Connect;
 import com.example.testedit.connect.Protocol;
+import com.example.testedit.setting.Data;
+import com.example.testedit.setting.DataSetting;
 import com.example.testedit.setting.Setting;
 
 public class DialogSetting {
     MainInterface mainInterface;
     Context context;
+    DataSetting dataSaving;
 
     public DialogSetting(Activity context) {
         this.context = context;
         mainInterface = (MainInterface) context;
+        //dataSaving = new DataSaving().readData();
         final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
         final View linearlayout = context.getLayoutInflater().inflate(R.layout.dialog_setting, null);
         ratingdialog.setView(linearlayout);
         final AlertDialog ab = ratingdialog.show();
         /**установка прозрачного фона вашего диалога*/
         ab.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        Button SeveButton = linearlayout.findViewById(R.id.Setting_save);
+        Button seveButton = linearlayout.findViewById(R.id.Setting_save);
         final EditText ipAddress = linearlayout.findViewById(R.id.IPaddress);
         final EditText port = linearlayout.findViewById(R.id.port);
         final EditText username = linearlayout.findViewById(R.id.username);
         final EditText password = linearlayout.findViewById(R.id.password);
         final EditText projectDirHost = linearlayout.findViewById(R.id.urls);
-        final EditText Python = linearlayout.findViewById(R.id.pythver);
-        final SeekBar TextSizeBar = linearlayout.findViewById(R.id.TextSizeBar);
+        final EditText python = linearlayout.findViewById(R.id.pythver);
+        final SeekBar textSizeBar = linearlayout.findViewById(R.id.TextSizeBar);
         final TextView textSize = linearlayout.findViewById(R.id.textSize);
         final TextView Information = linearlayout.findViewById(R.id.Information);
+        dataSaving = new Data().readData();
+        //Toast.makeText(context, "Data " + new Data(), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Host " + new Data().readData().getConnect(), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Size " + new Data().readData().getSetting(), Toast.LENGTH_LONG).show();
 
-        TextSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        textSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textSize.setText("Text size = " + progress);
@@ -63,36 +69,24 @@ public class DialogSetting {
             }
         });
 
-        String[] separated;
-        String info = DataSaving.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
-        separated = info.split(":");
-        if (separated.length > 0) {
-            ipAddress.setText(separated[0]);
-        }
-        if (separated.length > 1) {
-            port.setText(separated[1]);
-        }
-        if (separated.length > 2) {
-            username.setText(separated[2]);
-        }
-        if (separated.length > 3) {
-            password.setText(separated[3]);
-        }
-        if (separated.length > 4) {
-            projectDirHost.setText(separated[4]);
-        }
-        if (separated.length > 5) {
-            Python.setText(separated[5]);
-        }
-        if (separated.length > 6) {
-            TextSizeBar.setProgress(Integer.parseInt(separated[6]));
+        try {
+                ipAddress.setText(dataSaving.getConnect().getIpAddress());
+                port.setText(dataSaving.getConnect().getPort());
+                username.setText(dataSaving.getConnect().getUserName());
+                password.setText(dataSaving.getConnect().getPassword());
+                projectDirHost.setText(dataSaving.getConnect().getProjectDirHost());
+                python.setText(dataSaving.getConnect().getPython().toString());
+                textSizeBar.setProgress(dataSaving.getSetting().getTextSize());
+            if (textSizeBar.getProgress() == 0) {
+                mainInterface.setNumberCode(16);
+                mainInterface.setTextSize(16);
+            }
+
+        } catch (Exception e) {
+
         }
 
-        if (TextSizeBar.getProgress() == 0) {
-            mainInterface.setNumberCode(20);
-            mainInterface.setTextSize(20);
-        }
-        SeveButton.setOnClickListener(new View.OnClickListener() {
+        seveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Connect connect = Connect
@@ -105,15 +99,19 @@ public class DialogSetting {
                         .setProjectDirHost(projectDirHost.getText().toString())
                         .setPython(Connect.Python.python3)
                         .accept();
-                Setting setting=Setting
+                Setting setting = Setting
                         .newSet()
-                        .setTextSize(TextSizeBar.getProgress())
+                        .setTextSize(textSizeBar.getProgress())
                         .accept();
-                Toast.makeText(context,"Host "+connect,Toast.LENGTH_LONG).show();
-                DataSaving.saveFile("connect.txt", ipAddress.getText().toString() + ":" + port.getText().toString()
-                        + ":" + username.getText().toString() + ":" + password.getText().toString()
-                        + ":" + projectDirHost.getText().toString() + ":" + Python.getText().toString() + ":" + TextSizeBar.getProgress(), Environment.getExternalStorageDirectory().toString() + "/python/");
-                ab.cancel();
+                dataSaving = DataSetting
+                        .newSaving()
+                        .setConnect(connect)
+                        .setSetting(setting)
+                        .accept();
+                new Data().writeData(dataSaving);
+                //Toast.makeText(context, "Host " + connect, Toast.LENGTH_LONG).show();
+
+                       ab.cancel();
             }
         });
         ratingdialog.create();
