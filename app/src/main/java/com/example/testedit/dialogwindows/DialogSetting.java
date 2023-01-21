@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
@@ -28,7 +27,6 @@ public class DialogSetting {
     public DialogSetting(Activity context) {
         this.context = context;
         mainInterface = (MainInterface) context;
-        //dataSaving = new DataSaving().readData();
         final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
         final View linearlayout = context.getLayoutInflater().inflate(R.layout.dialog_setting, null);
         ratingdialog.setView(linearlayout);
@@ -46,9 +44,6 @@ public class DialogSetting {
         final TextView textSize = linearlayout.findViewById(R.id.textSize);
         final TextView Information = linearlayout.findViewById(R.id.Information);
         dataSaving = new Data().readData();
-        //Toast.makeText(context, "Data " + new Data(), Toast.LENGTH_LONG).show();
-        Toast.makeText(context, "Host " + new Data().readData().getConnect(), Toast.LENGTH_LONG).show();
-        Toast.makeText(context, "Size " + new Data().readData().getSetting(), Toast.LENGTH_LONG).show();
 
         textSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -65,7 +60,6 @@ public class DialogSetting {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
@@ -104,13 +98,11 @@ public class DialogSetting {
                         .setTextSize(textSizeBar.getProgress())
                         .accept();
                 dataSaving = DataSetting
-                        .newSaving()
+                        .newSetting()
                         .setConnect(connect)
                         .setSetting(setting)
                         .accept();
                 new Data().writeData(dataSaving);
-                //Toast.makeText(context, "Host " + connect, Toast.LENGTH_LONG).show();
-
                        ab.cancel();
             }
         });

@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        String[] ProgramName = Directory.replace(Environment.getExternalStorageDirectory().toString() + "/python/", "").split("/");
+        String[] ProgramName = Directory.replace(new Data().FEB_ONION_DIR, "").split("/");
 
         switch (id) {
             case R.id.loading:

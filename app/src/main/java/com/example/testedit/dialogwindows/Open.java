@@ -21,8 +21,9 @@ import androidx.core.content.FileProvider;
 import com.example.testedit.BuildConfig;
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
+import com.example.testedit.setting.Data;
 import com.example.testedit.setting.DataSetting;
-import com.example.testedit.search.ListAdapter;
+import com.example.testedit.search.SearchAdapter;
 import com.example.testedit.search.Search;
 
 import java.io.File;
@@ -33,21 +34,20 @@ public class Open implements AdapterView.OnItemClickListener {
     AlertDialog alertDialog;
     Context context;
     MainInterface mainInterface;
-    private List<Search> mLista = new ArrayList<>();
-    private ListAdapter mAdapter;
-    private ListView mListView;
-    String Directory;
-    ImageButton SendFile;
+    private List<Search> arrayList = new ArrayList<>();
+    private SearchAdapter searchAdapter;
+    private ListView listView;
+    String directory;
+    ImageButton sendFile;
     ImageButton delete;
-    ImageButton Back ;
+    ImageButton back;
     ImageButton cancel;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Open(Activity context,String Directory)
-    {
-        this.Directory=Directory;
-        this.context=context;
-        mainInterface=(MainInterface) context;
+    public Open(Activity context, String directory) {
+        this.directory = directory;
+        this.context = context;
+        mainInterface = (MainInterface) context;
 
         final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
         final View linearlayout = context.getLayoutInflater().inflate(R.layout.dialog_open, null);
@@ -55,13 +55,13 @@ public class Open implements AdapterView.OnItemClickListener {
         alertDialog = ratingdialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ratingdialog.create();
-        mListView = linearlayout.findViewById(R.id.OpenListView);
-        mListView.setOnItemClickListener(this);
-        SendFile = linearlayout.findViewById(R.id.SendFile);
+        listView = linearlayout.findViewById(R.id.OpenListView);
+        listView.setOnItemClickListener(this);
+        sendFile = linearlayout.findViewById(R.id.SendFile);
         delete = linearlayout.findViewById(R.id.deleteFile);
-        Back = linearlayout.findViewById(R.id.back);
+        back = linearlayout.findViewById(R.id.back);
         cancel = linearlayout.findViewById(R.id.cancel);
-        SendFile.setVisibility(View.GONE);
+        sendFile.setVisibility(View.GONE);
         delete.setVisibility(View.GONE);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +70,12 @@ public class Open implements AdapterView.OnItemClickListener {
                 alertDialog.cancel();
             }
         });
-        SendFile.setOnClickListener(new View.OnClickListener() {
+        sendFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /**Отпровляем фаилы и скрываем кнопки*/
                 Send();
-                SendFile.setVisibility(View.GONE);
+                sendFile.setVisibility(View.GONE);
                 delete.setVisibility(View.GONE);
                 alertDialog.cancel();
             }
@@ -85,35 +85,36 @@ public class Open implements AdapterView.OnItemClickListener {
             @Override
             public void onClick(View v) {
                 Delete();
-                SendFile.setVisibility(View.GONE);
+                sendFile.setVisibility(View.GONE);
                 delete.setVisibility(View.GONE);
 
             }
         });
-        Back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Back();
             }
         });
-        ShowDirectory(Directory);
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        showDirectory(directory);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final CheckBox checkBox = view.findViewById(R.id.check);
-                checkBox.setVisibility(view.VISIBLE); //разблокировка checkBox
-                if (mAdapter.getItem(position).getChecket() == false) {
+                /**разблокировка checkBox*/
+                checkBox.setVisibility(view.VISIBLE);
+                if (searchAdapter.getItem(position).getChecket() == false) {
                     checkBox.setChecked(true);
-                    mAdapter.getItem(position).setChecket(true);
+                    searchAdapter.getItem(position).setChecket(true);
                     /**При выделении проверяем на состояния checkBox ListView
                      * если оно ложное меняем его состояние на истинное
                      * потом меняем состояние кнопок*/
-                    SendFile.setVisibility(View.VISIBLE);
+                    sendFile.setVisibility(View.VISIBLE);
                     delete.setVisibility(View.VISIBLE);
                 } else {
                     checkBox.setChecked(false);
-                    mAdapter.getItem(position).setChecket(false);
-                    SendFile.setVisibility(View.GONE);
+                    searchAdapter.getItem(position).setChecket(false);
+                    sendFile.setVisibility(View.GONE);
                     delete.setVisibility(View.GONE);
                 }
                 return true;
@@ -121,49 +122,31 @@ public class Open implements AdapterView.OnItemClickListener {
         });
         ratingdialog.create();
     }
+
     /**
      * метот в котором буду выпольнятьса основные операции удаление
      * метот удаления https://javadevblog.com/kak-udalit-fajl-ili-papku-v-java.html
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Delete() {
-        int k = mLista.size();
+        int k = arrayList.size();
         int s = 0;
-        File file;
         while (s != k) {
-
-            if (mLista.get(s).getChecket() == true) {
-
-                file = new File(Directory + mLista.get(s).getNomber());
-                if (file.isFile()) {
-                    file.delete();
-                } else {
-                    recursiveDelete(file);
-                }
+            if (arrayList.get(s).getChecket() == true) {
+                new Data().deleteDir(directory + arrayList.get(s).getNomber());
             }
             s++;
         }
-        ShowDirectory(Directory);
+        showDirectory(directory);
     }
 
-    public static void recursiveDelete(File file) {
-        if (!file.exists())
-            return;
-        if (file.isDirectory()) {
-            for (File f : file.listFiles()) {
-                recursiveDelete(f);
-            }
-        }
-        file.delete();
-
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void Back() {
-        SendFile.setVisibility(View.GONE);
+        sendFile.setVisibility(View.GONE);
         delete.setVisibility(View.GONE);
         String new_Directory = "";
-        String[] parts = Directory.split("/");
+        String[] parts = directory.split("/");
         for (int i = 0; i != parts.length - 1; i++) {
             if (i == 0) {
                 new_Directory = new_Directory + parts[i];
@@ -174,65 +157,61 @@ public class Open implements AdapterView.OnItemClickListener {
 
         if (new_Directory.equals(Environment.getExternalStorageDirectory().toString())) {
             new_Directory = Environment.getExternalStorageDirectory().toString() + "/python";
-            ShowDirectory(new_Directory + "/");
+            showDirectory(new_Directory + "/");
         } else {
-            ShowDirectory(new_Directory + "/");
+            showDirectory(new_Directory + "/");
         }
-        Directory = new_Directory + "/";
+        directory = new_Directory + "/";
     }
 
     /**
      * Проводник для погказа сохраненных файлов в папке
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void ShowDirectory(String aDirectory) {
-        mLista.clear();
-        File dir = new File(aDirectory);
-
-        final String[] sDirList = dir.list();
+    private void showDirectory(String aDirectory) {
+        arrayList.clear();
+        final String[] sDirList = new Data().arrayDir(aDirectory);
         for (int i = 0; i < sDirList.length; i++) {
-
-            File f1 = new File(aDirectory + File.separator + sDirList[i]);
-            if (f1.isFile()) {
+            String file = aDirectory + sDirList[i];
+            String time = new Data().getTime(file);
+            if (new Data().checkFile(file)) {
                 if (sDirList[i].endsWith(".py")) {
-                    mLista.add(new Search(sDirList[i], DataSetting.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", DataSetting.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_filepython, false));
+                    arrayList.add(new Search(sDirList[i], time,
+                            DataSetting.readInformation(sDirList[i],
+                                    "information", aDirectory), R.drawable.ic_filepython, false));
                 } else {
                 }
             } else {
                 if (sDirList[i].endsWith("project"))
-                    mLista.add(new Search(sDirList[i], DataSetting.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", DataSetting.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_python_prog, false));
+                    arrayList.add(new Search(sDirList[i], time,
+                            DataSetting.readInformation(sDirList[i],
+                                    "information", aDirectory), R.drawable.ic_python_prog, false));
                 else
-                    mLista.add(new Search(sDirList[i], DataSetting.getTime(f1).toString().replaceAll("T1|T2|Z", "\n") + "", DataSetting.readInformation(sDirList[i], "information", aDirectory), R.drawable.ic_folder_python_3, false));
+                    arrayList.add(new Search(sDirList[i], time,
+                            DataSetting.readInformation(sDirList[i],
+                                    "information", aDirectory), R.drawable.ic_folder_python_3, false));
             }
-
-
         }
-        mAdapter = new ListAdapter(context, R.layout.iteam_row, mLista);
-        mListView.setAdapter(mAdapter);
+        searchAdapter = new SearchAdapter(context, R.layout.iteam_row, arrayList);
+        listView.setAdapter(searchAdapter);
     }
+
     /**
      * Метод с помошью которого мы отпровляем фаилы на другое приложение
      */
 
     public void Send() {
-        File listFile = new File(Directory);
-        File exportFiles[] = listFile.listFiles();
-        /** с помошью єтих методов мы можем узнать сколько обьектов в папке
-         //----------------------------------------------------------------
-         узнать как подробнее об передачи фаилов на другое приложение прочитайте это
-         Сыылка https://qna.habr.com/q/405453
-         */
-        ArrayList<Uri> uris = new ArrayList<Uri>();
+
+        ArrayList<Uri> uris = new ArrayList();
         Intent intent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
         intent.setType("*/*");
-        for (int i = 0; i != exportFiles.length; i++) {
-            /** в цикле проверяем каждый обьект на Чекбок если он ТРУ то меняем на Фалсе
-             самый легкий способ как это узнать мы узнаем размер директори. и применив этот размер как количесто обьектов
-             в Листв Виев проверий каждый  чекбок на состояние не применяя ВИЕВ*/
-            if (i != exportFiles.length) {
+        int size = new Data().arrayFile(directory).length;
+
+        for (int i = 0; i != size; i++) {
+            if (i != size) {
                 try {
-                    if (mAdapter.getItem(i).getChecket() == true) {
-                        Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, new File(Directory + mLista.get(i).getNomber()));
+                    if (searchAdapter.getItem(i).getChecket() == true) {
+                        Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, new File(directory + arrayList.get(i).getNomber()));
                         uris.add(uri);
                     }
                 } catch (Exception e) {
@@ -248,16 +227,15 @@ public class Open implements AdapterView.OnItemClickListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final File aDirectory = new File(Directory + mAdapter.getItem(position).getNomber());
-        if (aDirectory.isFile()) {
-            mainInterface.setEditText(DataSetting.readInformation(mAdapter.getItem(position).getNomber(), "readCode", Directory));
-            mainInterface.setFileName(mAdapter.getItem(position).getNomber());
-            mainInterface.setDirectory(Directory);
+        if (new Data().checkFile(directory + searchAdapter.getItem(position).getNomber())) {
+            mainInterface.setEditText(new Data().readFile(directory + searchAdapter.getItem(position).getNomber()));
+            mainInterface.setFileName(searchAdapter.getItem(position).getNomber());
+            mainInterface.setDirectory(directory);
             alertDialog.cancel();
         } else {
-            Directory = Directory + mAdapter.getItem(position).getNomber() + "/";
+            directory = directory + searchAdapter.getItem(position).getNomber() + "/";
             // project_Name = mAdapter.getItem(position).getNomber();
-            ShowDirectory(Directory + "/");
+            showDirectory(directory + "/");
         }
     }
 }

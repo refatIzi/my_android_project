@@ -6,7 +6,6 @@ import android.widget.Adapter;
 import androidx.annotation.RequiresApi;
 
 import com.example.testedit.connect.Connect;
-import com.example.testedit.connect.Protocol;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,19 +23,13 @@ import java.util.regex.Pattern;
 public class DataSetting {
 
     private Connect connect;
-    private Setting setting;
-
-
-    public DataSetting() {
-        //this.connect = readData().getConnect();
-        //this.setting = readData().getSetting();
-    }
+    private com.example.testedit.setting.Setting setting;
 
     public void setConnect(Connect connect) {
         this.connect = connect;
     }
 
-    public void setSetting(Setting setting) {
+    public void setSetting(com.example.testedit.setting.Setting setting) {
         this.setting = setting;
     }
 
@@ -44,24 +37,24 @@ public class DataSetting {
         return connect;
     }
 
-    public Setting getSetting() {
+    public com.example.testedit.setting.Setting getSetting() {
         return setting;
     }
 
-    public static Saving newSaving() {
-        return new DataSetting().new Saving();
+    public static Setting newSetting() {
+        return new DataSetting().new Setting();
     }
 
-    public class Saving {
-        Saving() {
+    public class Setting {
+        Setting() {
         }
 
-        public Saving setConnect(Connect connect) {
+        public Setting setConnect(Connect connect) {
             DataSetting.this.connect = connect;
             return this;
         }
 
-        public Saving setSetting(Setting setting) {
+        public Setting setSetting(com.example.testedit.setting.Setting setting) {
             DataSetting.this.setting = setting;
             return this;
         }
@@ -70,47 +63,8 @@ public class DataSetting {
             return DataSetting.this;
         }
 
-        public DataSetting getData() {
-            return new DataSetting().read();
-        }
     }
 
-
-
-
-    public DataSetting write(DataSetting dataSaving) {
-
-        return dataSaving;
-    }
-
-
-
-    public DataSetting read() {
-        DataSetting dataSaving = null;
-
-        if (dataSaving == null) {
-            Connect connect = Connect
-                    .newHost()
-                    .ipAddress("192.168.1.1")
-                    .setUserName("user")
-                    .setPassword("password")
-                    .setPort("22")
-                    .setProtocol(Protocol.SSH)
-                    .setProjectDirHost("/")
-                    .setPython(Connect.Python.python3)
-                    .accept();
-            Setting setting = Setting
-                    .newSet()
-                    .setTextSize(16)
-                    .accept();
-            dataSaving = DataSetting
-                    .newSaving()
-                    .setConnect(connect)
-                    .setSetting(setting)
-                    .accept();
-        }
-        return dataSaving;
-    }
 
     /**
      * Информация о последнем изменении фаила
