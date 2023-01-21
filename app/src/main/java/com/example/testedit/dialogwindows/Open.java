@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -21,10 +20,9 @@ import androidx.core.content.FileProvider;
 import com.example.testedit.BuildConfig;
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.setting.Data;
-import com.example.testedit.setting.DataSetting;
-import com.example.testedit.search.SearchAdapter;
 import com.example.testedit.search.Search;
+import com.example.testedit.search.SearchAdapter;
+import com.example.testedit.setting.Data;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,6 +40,8 @@ public class Open implements AdapterView.OnItemClickListener {
     ImageButton delete;
     ImageButton back;
     ImageButton cancel;
+    String ONION_DIR = new Data().FEB_ONION_DIR;
+    String DIR = new Data().DIR;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Open(Activity context, String directory) {
@@ -49,12 +49,12 @@ public class Open implements AdapterView.OnItemClickListener {
         this.context = context;
         mainInterface = (MainInterface) context;
 
-        final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         final View linearlayout = context.getLayoutInflater().inflate(R.layout.dialog_open, null);
-        ratingdialog.setView(linearlayout);
-        alertDialog = ratingdialog.show();
+        dialog.setView(linearlayout);
+        alertDialog = dialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ratingdialog.create();
+        dialog.create();
         listView = linearlayout.findViewById(R.id.OpenListView);
         listView.setOnItemClickListener(this);
         sendFile = linearlayout.findViewById(R.id.SendFile);
@@ -63,64 +63,46 @@ public class Open implements AdapterView.OnItemClickListener {
         cancel = linearlayout.findViewById(R.id.cancel);
         sendFile.setVisibility(View.GONE);
         delete.setVisibility(View.GONE);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /**Закрываем Диалог*/
-                alertDialog.cancel();
-            }
+        cancel.setOnClickListener(v -> {
+            /**Закрываем Диалог*/
+            alertDialog.cancel();
         });
-        sendFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /**Отпровляем фаилы и скрываем кнопки*/
-                Send();
-                sendFile.setVisibility(View.GONE);
-                delete.setVisibility(View.GONE);
-                alertDialog.cancel();
-            }
+        sendFile.setOnClickListener(v -> {
+            /**Отпровляем фаилы и скрываем кнопки*/
+            Send();
+            sendFile.setVisibility(View.GONE);
+            delete.setVisibility(View.GONE);
+            alertDialog.cancel();
         });
-        delete.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View v) {
-                Delete();
-                sendFile.setVisibility(View.GONE);
-                delete.setVisibility(View.GONE);
+        delete.setOnClickListener(v -> {
+            delete();
+            sendFile.setVisibility(View.GONE);
+            delete.setVisibility(View.GONE);
 
-            }
         });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Back();
-            }
-        });
+        back.setOnClickListener(v -> back());
         showDirectory(directory);
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final CheckBox checkBox = view.findViewById(R.id.check);
-                /**разблокировка checkBox*/
-                checkBox.setVisibility(view.VISIBLE);
-                if (searchAdapter.getItem(position).getChecket() == false) {
-                    checkBox.setChecked(true);
-                    searchAdapter.getItem(position).setChecket(true);
-                    /**При выделении проверяем на состояния checkBox ListView
-                     * если оно ложное меняем его состояние на истинное
-                     * потом меняем состояние кнопок*/
-                    sendFile.setVisibility(View.VISIBLE);
-                    delete.setVisibility(View.VISIBLE);
-                } else {
-                    checkBox.setChecked(false);
-                    searchAdapter.getItem(position).setChecket(false);
-                    sendFile.setVisibility(View.GONE);
-                    delete.setVisibility(View.GONE);
-                }
-                return true;
+        listView.setOnItemLongClickListener((parent, view, position, id) -> {
+            final CheckBox checkBox = view.findViewById(R.id.check);
+            /**разблокировка checkBox*/
+            checkBox.setVisibility(view.VISIBLE);
+            if (searchAdapter.getItem(position).getChecket() == false) {
+                checkBox.setChecked(true);
+                searchAdapter.getItem(position).setChecket(true);
+                /**При выделении проверяем на состояния checkBox ListView
+                 * если оно ложное меняем его состояние на истинное
+                 * потом меняем состояние кнопок*/
+                sendFile.setVisibility(View.VISIBLE);
+                delete.setVisibility(View.VISIBLE);
+            } else {
+                checkBox.setChecked(false);
+                searchAdapter.getItem(position).setChecket(false);
+                sendFile.setVisibility(View.GONE);
+                delete.setVisibility(View.GONE);
             }
+            return true;
         });
-        ratingdialog.create();
+        dialog.create();
     }
 
     /**
@@ -128,7 +110,7 @@ public class Open implements AdapterView.OnItemClickListener {
      * метот удаления https://javadevblog.com/kak-udalit-fajl-ili-papku-v-java.html
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Delete() {
+    public void delete() {
         int k = arrayList.size();
         int s = 0;
         while (s != k) {
@@ -142,54 +124,48 @@ public class Open implements AdapterView.OnItemClickListener {
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void Back() {
+    private void back() {
         sendFile.setVisibility(View.GONE);
         delete.setVisibility(View.GONE);
-        String new_Directory = "";
+        String newDirectory = "";
         String[] parts = directory.split("/");
         for (int i = 0; i != parts.length - 1; i++) {
             if (i == 0) {
-                new_Directory = new_Directory + parts[i];
+                newDirectory = newDirectory + parts[i];
             } else {
-                new_Directory = new_Directory + "/" + parts[i];
+                newDirectory = newDirectory + "/" + parts[i];
             }
         }
 
-        if (new_Directory.equals(Environment.getExternalStorageDirectory().toString())) {
-            new_Directory = Environment.getExternalStorageDirectory().toString() + "/python";
-            showDirectory(new_Directory + "/");
+        if (newDirectory.equals(DIR)) {
+            showDirectory(DIR + "/python/");
         } else {
-            showDirectory(new_Directory + "/");
+            showDirectory(newDirectory + "/");
         }
-        directory = new_Directory + "/";
     }
 
     /**
-     * Проводник для погказа сохраненных файлов в папке
+     * Проводник
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void showDirectory(String aDirectory) {
+    private void showDirectory(String analogDir) {
+        directory = analogDir;
         arrayList.clear();
-        final String[] sDirList = new Data().arrayDir(aDirectory);
+        final String[] sDirList = new Data().arrayDir(analogDir);
         for (int i = 0; i < sDirList.length; i++) {
-            String file = aDirectory + sDirList[i];
+            String file = analogDir + sDirList[i];
             String time = new Data().getTime(file);
+            String about = new Data().about(file);
             if (new Data().checkFile(file)) {
                 if (sDirList[i].endsWith(".py")) {
-                    arrayList.add(new Search(sDirList[i], time,
-                            DataSetting.readInformation(sDirList[i],
-                                    "information", aDirectory), R.drawable.ic_filepython, false));
+                    arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_filepython, false));
                 } else {
                 }
             } else {
                 if (sDirList[i].endsWith("project"))
-                    arrayList.add(new Search(sDirList[i], time,
-                            DataSetting.readInformation(sDirList[i],
-                                    "information", aDirectory), R.drawable.ic_python_prog, false));
+                    arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_python_prog, false));
                 else
-                    arrayList.add(new Search(sDirList[i], time,
-                            DataSetting.readInformation(sDirList[i],
-                                    "information", aDirectory), R.drawable.ic_folder_python_3, false));
+                    arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_folder_python_3, false));
             }
         }
         searchAdapter = new SearchAdapter(context, R.layout.iteam_row, arrayList);
@@ -201,8 +177,7 @@ public class Open implements AdapterView.OnItemClickListener {
      */
 
     public void Send() {
-
-        ArrayList<Uri> uris = new ArrayList();
+        ArrayList<Uri> uriList = new ArrayList();
         Intent intent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
         intent.setType("*/*");
         int size = new Data().arrayFile(directory).length;
@@ -212,7 +187,7 @@ public class Open implements AdapterView.OnItemClickListener {
                 try {
                     if (searchAdapter.getItem(i).getChecket() == true) {
                         Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, new File(directory + arrayList.get(i).getNomber()));
-                        uris.add(uri);
+                        uriList.add(uri);
                     }
                 } catch (Exception e) {
 
@@ -220,7 +195,7 @@ public class Open implements AdapterView.OnItemClickListener {
             }
 
         }
-        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
         context.startActivity(Intent.createChooser(intent, "Share Image:"));
     }
 

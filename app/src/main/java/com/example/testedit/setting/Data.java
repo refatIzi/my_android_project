@@ -13,18 +13,19 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Data {
 
 
-    private final String DIR = Environment.getExternalStorageDirectory().toString() + "/";
+    public final String DIR = Environment.getExternalStorageDirectory().toString();
     public final String FEB_ONION_DIR = Environment.getExternalStorageDirectory().toString() + "/python/";
 
 
@@ -170,7 +171,6 @@ public class Data {
 
     public String readFile(String FileName) {
         String code = "";
-        /** формируем объект File, который содержит путь к файлу*/
         File sdFile = new File(FileName);
         try {
             BufferedReader br = new BufferedReader(new FileReader(sdFile));
@@ -179,12 +179,40 @@ public class Data {
                 code = code + string + "\n";
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return code;
+    }
+
+    public void createFile(String fileName, String text, String dir) {
+        File directory = new File(dir);
+        File file = new File(directory, fileName);
+        try {
+            if (text.length() > 0) {
+                new FileOutputStream(file)
+                        .write(text.getBytes());
+            } else {
+            }
+        } catch (IOException ex) {
+        }
+    }
+
+    public String about(String FileName) {
+        String about = "";
+        File sdFile = new File(FileName);
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(sdFile));
+            String string;
+            while ((string = br.readLine()) != null) {
+                about = about + string;
+            }
+            Matcher m = Pattern.compile("\\#(([^\\#]+))\\##").matcher(about);
+            if (m.find())
+                return m.group(1);
+        } catch (IOException e) {
+
+        }
+        return "There is no information in the code. Probably someone forgot to write it.";
     }
 
     public File[] arrayFile(String directory) {
@@ -196,11 +224,12 @@ public class Data {
         File dir = new File(directory);
         return dir.list();
     }
+
     /**
      * Информация о последнем изменении фаила
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public  String getTime(String directory) {
+    public String getTime(String directory) {
         BasicFileAttributes attr = null;
         File file = new File(directory);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -170,11 +170,11 @@ public class Help extends Fragment implements View.OnClickListener, AdapterView.
             case R.id.down_left:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
 
-                mainInterface.Back();
+                mainInterface.back();
                 break;
             case R.id.down_right:
                 /**метод смомошью которого можно добавлять втекушую позицию текст*/
-                mainInterface.Forward();
+                mainInterface.forward();
                 break;
             case R.id.linerMessage:
                 Toast.makeText(context, "Liner Button", Toast.LENGTH_SHORT).show();

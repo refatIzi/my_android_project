@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.testedit.setting.DataSetting;
+import com.example.testedit.setting.Data;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -169,7 +169,7 @@ public class Download extends AppCompatActivity implements View.OnClickListener 
     private void Start() {
     //    NewDir = Incoming_Data[0].split("python");
         String[] Connection_Data;
-        String info = DataSetting.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
+        String info = new Data().readFile( Environment.getExternalStorageDirectory().toString() + "/python/connect.txt");
         Connection_Data = info.split(":");
         /** Connection_Data[0]=ipadress
          * Connection_Data[1]=port
@@ -251,7 +251,7 @@ public class Download extends AppCompatActivity implements View.OnClickListener 
                  * КОпируем команду в буфер и открываем SSH клиент и вставляем команду из буфера чтобы самим не писать
                  */
                 String[] sepread;
-                String info = DataSetting.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
+                String info = new Data().readFile( Environment.getExternalStorageDirectory().toString() + "/python/connect.txt");
                 sepread = info.split(":");
                 Uri location = null;
                 try {

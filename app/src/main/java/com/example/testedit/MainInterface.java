@@ -17,12 +17,14 @@ public interface MainInterface {
 
     void setReseult(String message);
 
-    void Back();
+    void back();
 
-    void Forward();
+    void forward();
 
-    void Show(String text);
+    void show(String text);
 
     void Information(String txt);
+
+    void numberOfConstruction(int errLine);
 
 }

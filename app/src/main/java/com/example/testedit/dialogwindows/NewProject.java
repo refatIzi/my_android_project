@@ -13,54 +13,44 @@ import android.widget.Toast;
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
 import com.example.testedit.setting.Data;
-import com.example.testedit.setting.DataSetting;
 
 public class NewProject {
     String directory;
     MainInterface mainInterface;
     Context context;
+    String ONION_DIR = new Data().FEB_ONION_DIR;
+
 
     public NewProject(Activity context) {
-        this.context=context;
-        mainInterface=(MainInterface) context;
-        final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
+        this.context = context;
+        mainInterface = (MainInterface) context;
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         final View linearlayout = context.getLayoutInflater().inflate(R.layout.dialog_save, null);
-        ratingdialog.setView(linearlayout);
-        final AlertDialog ab = ratingdialog.show();
+        dialog.setView(linearlayout);
+        final AlertDialog alertDialog = dialog.show();
         /**установка прозрачного фона вашего диалога*/
-        ab.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        final EditText SaveEdit = linearlayout.findViewById(R.id.saveEdit);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final EditText saveEdit = linearlayout.findViewById(R.id.saveEdit);
         final EditText project = linearlayout.findViewById(R.id.Project);
         ImageButton buttonsend = linearlayout.findViewById(R.id.buttonsave);
-        buttonsend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (project.getText().length() > 0) {
-                    directory = new Data().FEB_ONION_DIR;
-                    directory = directory + project.getText() + "_project/";
-                    /**Create new Directory */
-                  new Data().checkDirectory(directory);
-                    //      Toast.makeText(MainActivity.this, "" + directory, Toast.LENGTH_LONG).show();
-                } else {
-                }
-
-                /*if (editText.getText().length() == 0) {
-                    editText.setText("print(\"Hello FEBO\")");
-                    Work_with_File.saveFile(SaveEdit.getText().toString() + ".py", editText.getText().toString(), Directory);
-                } else {
-                    Work_with_File.saveFile(SaveEdit.getText().toString() + ".py", editText.getText().toString(), Directory);
-                }
-                 */
-              //  editText.clearFocus();
-                mainInterface.setEditText("print(\"Hello FEBO\")");
-                DataSetting.saveFile(SaveEdit.getText().toString() + ".py", "print(\"Hello FEBO\")", directory);
-                mainInterface.setFileName(SaveEdit.getText().toString() + ".py");
-                mainInterface.setDirectory(directory);
-                ab.cancel();
-                Toast.makeText(context, "" + directory, Toast.LENGTH_SHORT).show();
+        buttonsend.setOnClickListener(v -> {
+            String fileName = saveEdit.getText().toString() + ".py";
+            String code = "print(\"Hello FEBO\")";
+            if (project.getText().length() > 0) {
+                directory = ONION_DIR;
+                directory = directory + project.getText() + "_project/";
+                new Data().checkDirectory(directory);
+            } else {
             }
+
+            mainInterface.setEditText(code);
+            new Data().createFile(fileName, code, directory);
+            mainInterface.setFileName(fileName);
+            mainInterface.setDirectory(directory);
+            alertDialog.cancel();
+            Toast.makeText(context, "" + directory, Toast.LENGTH_SHORT).show();
         });
-        ratingdialog.create();
+        dialog.create();
 
     }
 }

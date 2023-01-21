@@ -12,35 +12,33 @@ import android.widget.Toast;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.setting.DataSetting;
+import com.example.testedit.setting.Data;
 
 public class NewFile {
-    String Directory;
+    String directory;
     MainInterface mainInterface;
     Context context;
-    public NewFile(Activity context,String Directory) {
+    public NewFile(Activity context,String directory) {
         this.context=context;
         mainInterface=(MainInterface) context;
-        this.Directory=Directory;
-        final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
+        this.directory =directory;
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         final View linearlayout = context.getLayoutInflater().inflate(R.layout.dialog_save_file, null);
-        ratingdialog.setView(linearlayout);
-        final AlertDialog ab = ratingdialog.show();
+        dialog.setView(linearlayout);
+        final AlertDialog alertDialog = dialog.show();
         /**установка прозрачного фона вашего диалога*/
-        ab.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        final EditText FileName_ = linearlayout.findViewById(R.id.saveEdit_file);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final EditText name = linearlayout.findViewById(R.id.saveEdit_file);
         ImageButton buttonSend_file = linearlayout.findViewById(R.id.buttonsave_file);
-        buttonSend_file.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mainInterface.setEditText("print(\"Hello FEBO\")");
-                DataSetting.saveFile(FileName_.getText().toString() + ".py", "print(\"Hello FEBO\")", Directory);
-                mainInterface.setFileName(FileName_.getText().toString() + ".py");
-                mainInterface.setDirectory(Directory);
-                ab.cancel();
-                Toast.makeText(context, "" + Directory, Toast.LENGTH_SHORT).show();
-            }
+        buttonSend_file.setOnClickListener(v -> {
+            String fileName = name.getText().toString() + ".py";
+            String code = "print(\"Hello FEBO\")";
+            mainInterface.setEditText(code);
+            new Data().createFile(fileName, code, directory);
+            mainInterface.setFileName(fileName);
+            mainInterface.setDirectory(directory);
+            alertDialog.cancel();
+            Toast.makeText(context, "" + directory, Toast.LENGTH_SHORT).show();
         });
 
     }

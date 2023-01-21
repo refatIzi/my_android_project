@@ -27,12 +27,12 @@ public class DialogSetting {
     public DialogSetting(Activity context) {
         this.context = context;
         mainInterface = (MainInterface) context;
-        final AlertDialog.Builder ratingdialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         final View linearlayout = context.getLayoutInflater().inflate(R.layout.dialog_setting, null);
-        ratingdialog.setView(linearlayout);
-        final AlertDialog ab = ratingdialog.show();
+        dialog.setView(linearlayout);
+        final AlertDialog alertDialog = dialog.show();
         /**установка прозрачного фона вашего диалога*/
-        ab.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         Button seveButton = linearlayout.findViewById(R.id.Setting_save);
         final EditText ipAddress = linearlayout.findViewById(R.id.IPaddress);
         final EditText port = linearlayout.findViewById(R.id.port);
@@ -103,9 +103,9 @@ public class DialogSetting {
                         .setSetting(setting)
                         .accept();
                 new Data().writeData(dataSaving);
-                       ab.cancel();
+                       alertDialog.cancel();
             }
         });
-        ratingdialog.create();
+        dialog.create();
     }
 }

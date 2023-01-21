@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spannable;
@@ -19,29 +17,24 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.testedit.dialogwindows.DialogSetting;
 import com.example.testedit.dialogwindows.Information;
 import com.example.testedit.dialogwindows.NewFile;
 import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
-import com.example.testedit.dialogwindows.DialogSetting;
 import com.example.testedit.dialogwindows.Terminal;
 import com.example.testedit.helpinfo.Help;
 import com.example.testedit.permission.Permission;
-import com.example.testedit.search.Search;
 import com.example.testedit.setting.Data;
-import com.example.testedit.setting.DataSetting;
 import com.example.testedit.visualization.Visualization;
+import com.example.testedit.visualization.Watch;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,22 +43,20 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     EditText editText;
     TextView numberCode;
-    ImageButton tab, sc_1, sc_2, divide, procent, hashtag, plas, minus, equals, down_left, down_right;
     String input;
-    String FileName = "";
-    Orientation orientation;
-    private String Directory;
-    private List<Search> mLista = new ArrayList<>();
+    String fileName;
+    private String directory;
     String project_Name = "no project";
     Help help;
-    FragmentTransaction fTrans;
+    FragmentTransaction fragment;
+    String ONION_DIR = new Data().FEB_ONION_DIR;
+
 
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         new Permission();
 
@@ -73,62 +64,32 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         /**разрешения  которые я тут исползовал*/
 
-        orientation = new Orientation();
-        orientation.execute();
+        new Watch(this).execute();
         numberCode = findViewById(R.id.numberCode);
         editText = findViewById(R.id.txtCode);
-
-
-        fTrans = getFragmentManager().beginTransaction();
-        // button buttonfr = new button(MainActivity.this);
-        // fTrans.replace(R.id.liner, buttonfr);
-        //  fTrans.commit();
-
-        // Help();
+        fragment = getFragmentManager().beginTransaction();
         help = new Help(MainActivity.this);
-        fTrans.replace(R.id.liner, help);
-        fTrans.commit();
-
-        Directory = Environment.getExternalStorageDirectory() + "/python/";
+        fragment.replace(R.id.liner, help);
+        fragment.commit();
+        directory = ONION_DIR;
         editText.setTextSize(new Data().setting().getTextSize());
         numberCode.setTextSize(new Data().setting().getTextSize());
-        File dir = new File(Directory);
-        if (!dir.exists()) {
-            //   Toast.makeText(MainActivity.this, "create folder", Toast.LENGTH_LONG).show();
-            dir.mkdir();
-            DataSetting.saveFile("connect.txt", "192.168.3.1:22:root:password:home/Document/python:puthon3:15",
-                    Environment.getExternalStorageDirectory().toString() + "/python/");
-            DataSetting.saveFile("HelloWorld.py", "print('Hello World')", Environment.getExternalStorageDirectory().toString() + "/python/");
-        } else {
-            /**Считываем дданные о размере фаила и применяем их для нумерации строки в numberCode
-             * и в editText*/
-            String[] separated;
-            String info = DataSetting.readInformation("connect.txt", "", Environment.getExternalStorageDirectory().toString() + "/python/");
-            separated = info.split(":");
-            if (separated.length > 6) {
-               // editText.setTextSize(Integer.parseInt(separated[6]));
-               // numberCode.setTextSize(Integer.parseInt(separated[6]));
-            }
-            new Open(MainActivity.this, Directory);
+        new Data().checkDirectory(ONION_DIR);
+        new Open(MainActivity.this, directory);
 
-        }
         editText.addTextChangedListener(new TextWatcher() {
 
             //до изменении текста
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             /**при изменении текста и добавлениии текста и переходе на новую строку*/
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 numberOfConstruction(0);
-
             }
 
             private boolean isReached = false;
-
             // после изменении текста
             @Override
             public void afterTextChanged(Editable s) {
@@ -156,67 +117,28 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         /**следим за вводом текста
          * Метод для подсказки */
 
-        InputFilter filter = new InputFilter() {
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-
-                // Accept only letter & digits ; otherwise just return
-                help.clear();
-                if (source.length() > 0) {
-
-                    //    for (int i = 0; i < text.length; i++) {
-                    //         if (text[i].startsWith(source.toString()))
-                    //   help.helpAdd(text[i] );
-                    help.helpAdd(source.toString());
-                    //   Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
-                    //    }
-                }
-
-
-                //    if(source.toString().equals("if"))
-                //    Toast.makeText(MainActivity.this,""+source.toString().length(),Toast.LENGTH_SHORT).show();
-
-                return null;
+        InputFilter filter = (source, start, end, dest, dstart, dend) -> {
+            // Accept only letter & digits ; otherwise just return
+            help.clear();
+            if (source.length() > 0) {
+                //    for (int i = 0; i < text.length; i++) {
+                //         if (text[i].startsWith(source.toString()))
+                //   help.helpAdd(text[i] );
+                help.helpAdd(source.toString());
+                //   Toast.makeText(MainActivity.this, text[i] + " ~ " + source.toString(), Toast.LENGTH_SHORT).show();
+                //    }
             }
-
-        };
-
-        editText.setFilters(new InputFilter[]{filter});
-
-    }
-
-    private void Help() {
-        //MainActivity activity =new MainActivity();
-        help = new Help(MainActivity.this);
-        fTrans.replace(R.id.liner, help);
-        fTrans.commit();
-    }
-
-    /**
-     * создаем AsyncTask для вывода нумерации строки при измен
-     */
-    class Orientation extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
+            //    if(source.toString().equals("if"))
+            //    Toast.makeText(MainActivity.this,""+source.toString().length(),Toast.LENGTH_SHORT).show();
             return null;
-        }
-
-        protected void onPostExecute(Void aVoid) {
-            //super.onPostExecute(aVoid);
-            try {
-                numberOfConstruction(0);
-            } catch (Exception e) {
-            }
-            /**Проверяяем ориентацию экрана*/
-        }
+        };
+        editText.setFilters(new InputFilter[]{filter});
     }
 
     /**
      * Метод котрый выводит номурецию строки
      */
-    private void numberOfConstruction(int errLine) {
+    public void numberOfConstruction(int errLine) {
         int line = editText.getLineCount();
         String number = "";
         try {
@@ -241,8 +163,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 numberCode.setText(text);
             } else {
             }
-
-
         } catch (Exception e) {
 
         }
@@ -264,41 +184,35 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        String[] ProgramName = Directory.replace(new Data().FEB_ONION_DIR, "").split("/");
+        String[] ProgramName = directory.replace(new Data().FEB_ONION_DIR, "").split("/");
 
         switch (id) {
             case R.id.loading:
-                if (FileName == null || FileName.equals("")) {
+                if (fileName == null || fileName.equals("")) {
                     if (ProgramName[0].endsWith("_project")) {
-                        new NewFile(MainActivity.this, Directory);
+                        new NewFile(MainActivity.this, directory);
                     } else {
                         new NewProject(MainActivity.this);
                     }
-
                     Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
                 } else {
-                    //   Toast.makeText(MainActivity.this,FileName,Toast.LENGTH_LONG).show();
-                    // File Path = new File(Directory);
-                    DataSetting.saveFile(FileName, editText.getText().toString(), Directory);
-                    //  Path = new File(Path.getAbsolutePath());
-
-                    download(Directory + ":" + FileName + ":" + project_Name + ":" + help.getConfiguration());
-
+                    new Data().createFile(fileName, editText.getText().toString(), directory);
+                    download(directory + ":" + fileName + ":" + project_Name + ":" + help.getConfiguration());
                     Toast.makeText(MainActivity.this, "" + help.getConfiguration(), Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.new_file:
                 editText.getText().clear();
                 //  newSheet();
-                new NewFile(MainActivity.this, Directory);
-                FileName = null;
+                new NewFile(MainActivity.this, directory);
+                fileName = null;
                 return true;
             case R.id.action_settings:
                 new DialogSetting(MainActivity.this);
                 return true;
             case R.id.open:
                 try {
-                    new Open(MainActivity.this, Directory);
+                    new Open(MainActivity.this, directory);
                 } catch (Exception e) {
 
                 }
@@ -330,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         editText.getText().insert(editText.getSelectionStart(), text);
     }
 
-    public void Show(String text) {
+    public void show(String text) {
         Toast.makeText(MainActivity.this, "" + text, Toast.LENGTH_SHORT).show();
     }
 
@@ -347,11 +261,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     public void setFileName(String FileName) {
-        this.FileName = FileName;
+        this.fileName = FileName;
     }
 
     public void setDirectory(String Directory) {
-        this.Directory = Directory;
+        this.directory = Directory;
     }
 
     public void setEditText(String text) {
@@ -364,14 +278,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         new Information(MainActivity.this, txt);
     }
 
-    public void Back() {
+    public void back() {
         if (editText.getSelectionStart() > 0) {
             editText.setSelection(editText.getSelectionEnd() - 1);
         } else {
         }
     }
 
-    public void Forward() {
+    public void forward() {
         if (editText.getSelectionEnd() < editText.getText().toString().length()) {
             editText.setSelection(editText.getSelectionEnd() + 1);
         } else {
