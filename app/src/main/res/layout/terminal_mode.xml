@@ -4,15 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_image"
+    android:gravity="bottom"
     android:orientation="vertical">
 
-<TextView
-    android:id="@+id/show"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    />
-    <Button
-        android:id="@+id/butt"
+    <ListView
+        android:id="@+id/consoleList"
+        android:background="#263046"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        >
+    </ListView>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
 </LinearLayout>

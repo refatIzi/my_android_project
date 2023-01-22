@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="left"
+    >
+
+    <EditText
+        android:id="@+id/console"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_toStartOf="@+id/butt"
+        android:backgroundTint="@android:color/transparent"
+        android:fastScrollEnabled="true"
+        android:fillViewport="true"
+        android:hyphenationFrequency="none"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="true"
+        android:singleLine="false"
+        android:textColor="#dfd6cf"
+        android:textSize="13dp"
+        android:textStyle="bold"
+        android:typeface="monospace" />
+
+    <View
+        android:id="@+id/butt"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:background="#000" />
+
+</RelativeLayout>

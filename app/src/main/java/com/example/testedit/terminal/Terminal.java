@@ -1,32 +1,35 @@
 package com.example.testedit.terminal;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.app.Fragment;
 import android.widget.Button;
-import android.widget.TextView;
-
+import android.widget.ListView;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("ValidFragment")
 public class Terminal extends Fragment implements View.OnClickListener {
     MainInterface mainInterface;
     Context context;
-    int i=0;
+    private List<Console> consoleList = new ArrayList<>();
+    Console console;
+    TerminalAdapter adapter;
+    ListView listView;
 
     @SuppressLint("ValidFragment")
     public Terminal(Context context) {
         mainInterface = (MainInterface) context;
         this.context = context;
-
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,28 +37,45 @@ public class Terminal extends Fragment implements View.OnClickListener {
 
     }
 
-    TextView textView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.terminal_mode, container, false);
-        textView = v.findViewById(R.id.show);
-        Button button = v.findViewById(R.id.butt);
-        textView.append(""+i);
+        listView = v.findViewById(R.id.consoleList);
+        Button button=v.findViewById(R.id.button);
         button.setOnClickListener(this);
-        // Inflate the layout for this fragment
+
+        consoleList.add(new Console("Hello body"));
+        consoleList.add(new Console("Hello body"));
+        consoleList.add(new Console("Hello body"));
+        consoleList.add(new Console("Hello body"));
+        consoleList.add(new Console("Hello body"));
+
+        adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
+
+        listView.setAdapter(adapter);
         return v;
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.butt:
-                i++;
-                textView.append(""+i);
+    public void onSaveInstanceState(Bundle outState)
+    {
+        //тут пишете необходимые вещи в outState
+        if(outState == null)
+            outState = new Bundle();
+        super.onSaveInstanceState(outState);
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button:
+                consoleList.add(new Console("Hello body"));
+                adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
+
+                listView.setAdapter(adapter);
                 break;
+
         }
     }
 }
