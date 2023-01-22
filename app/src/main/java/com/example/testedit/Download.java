@@ -28,7 +28,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.testedit.setting.Data;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -180,13 +179,13 @@ public class Download extends AppCompatActivity implements View.OnClickListener 
          * */
         urls = Connection_Data[4];
 
-        loading = new Loading(Download.this,Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
-        loading.executeOnExecutor(Executors.newScheduledThreadPool(1));
+        //loading = new Loading(Download.this,Connection_Data[2], Connection_Data[3], Connection_Data[0], Integer.parseInt(Connection_Data[1]));
+        //loading.executeOnExecutor(Executors.newScheduledThreadPool(1));
         String[] ProgramName = Incoming_Data[0].replace(Environment.getExternalStorageDirectory().toString() + "/python/", "").split("/");
         String ProgramDirectory = Directory + ProgramName[0];
         String isRun_Directory = Incoming_Data[0].replace(Environment.getExternalStorageDirectory().toString() + "/python/", "") + Incoming_Data[1];
-        loading.setCopySend(ProgramDirectory, Connection_Data[4]);
-        loading.StartComand(Connection_Data[5] + " " + Connection_Data[4] + isRun_Directory);
+       // loading.setCopySend(ProgramDirectory, Connection_Data[4]);
+        //loading.StartComand(Connection_Data[5] + " " + Connection_Data[4] + isRun_Directory);
 
     }
 
@@ -196,7 +195,9 @@ public class Download extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send:
-                loading.setMessage(textsend.getText().toString());
+                //loading.setMessage(textsend.getText().toString());
+                txt.append(textsend.getText().toString());
+                txt.append("\n");
                 break;
 
         }
@@ -310,8 +311,6 @@ public class Download extends AppCompatActivity implements View.OnClickListener 
         Intent intent = new Intent(Download.this,MainActivity.class);
         intent.putExtra(Intent.EXTRA_TEXT, loading.getResult());
         setResult(RESULT_OK, intent);
-
-
 
     }
 

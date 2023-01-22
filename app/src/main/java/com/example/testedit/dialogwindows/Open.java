@@ -205,10 +205,10 @@ public class Open implements AdapterView.OnItemClickListener {
         if (new Data().checkFile(directory + searchAdapter.getItem(position).getNomber())) {
             mainInterface.setEditText(new Data().readFile(directory + searchAdapter.getItem(position).getNomber()));
             mainInterface.setFileName(searchAdapter.getItem(position).getNomber());
-            mainInterface.setDirectory(directory);
+            mainInterface.setDIRECTORY(directory);
             alertDialog.cancel();
         } else {
-            directory = directory + searchAdapter.getItem(position).getNomber() + "/";
+            directory = directory + searchAdapter.getItem(position).getNomber();
             // project_Name = mAdapter.getItem(position).getNomber();
             showDirectory(directory + "/");
         }

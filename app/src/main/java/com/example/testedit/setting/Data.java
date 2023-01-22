@@ -29,6 +29,7 @@ public class Data {
     public final String FEB_ONION_DIR = Environment.getExternalStorageDirectory().toString() + "/python/";
 
 
+
     public void writeData(DataSetting dataSetting) {
         try {
             File filename = new File(FEB_ONION_DIR, "onion.json");
@@ -244,5 +245,9 @@ public class Data {
             return attr.lastModifiedTime().toString().replaceAll("T|T1|T2|Z", "\n");
         }
         return "";
+    }
+    public boolean checkProject(String directory){
+        String[] ProgramName = directory.replace(FEB_ONION_DIR, "").split("/");
+        return ProgramName[0].endsWith("_project");
     }
 }

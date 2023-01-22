@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.testedit.MainActivity;
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
 
@@ -42,7 +41,7 @@ public class Help extends Fragment implements View.OnClickListener, AdapterView.
     EditText configuration;
 
     @SuppressLint("ValidFragment")
-    public Help(MainActivity mainActivity) {
+    public Help(Context mainActivity) {
         mainInterface = (MainInterface) mainActivity;
         context = mainActivity;
 

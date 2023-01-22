@@ -20,8 +20,9 @@
        android:id="@+id/scroll"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
+       android:layout_marginStart="0dp"
        android:layout_marginBottom="60dp"
-       >
+       android:layout_toEndOf="@+id/terminalMode">
 
 
       <LinearLayout
@@ -77,11 +78,11 @@
                    android:hyphenationFrequency="none"
                    android:inputType="textMultiLine"
                    android:scrollbars="vertical"
-                   android:textStyle="bold"
                    android:scrollHorizontally="true"
                    android:singleLine="false"
                    android:textColor="#dfd6cf"
                    android:textSize="13dp"
+                   android:textStyle="bold"
                    android:typeface="monospace" />
 
             </LinearLayout>
@@ -89,6 +90,18 @@
       </LinearLayout>
    </ScrollView>
 
+   <FrameLayout
+       android:id="@+id/terminalMode"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_above="@+id/liner"
+       android:layout_marginBottom="0dp"
+       android:background="#dfd6cf"
+       android:gravity="center"
+       android:orientation="horizontal">
+
+
+   </FrameLayout>
    <FrameLayout
        android:id="@+id/liner"
        android:layout_width="match_parent"

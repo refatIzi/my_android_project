@@ -15,13 +15,14 @@ import com.example.testedit.R;
 import com.example.testedit.setting.Data;
 
 public class NewFile {
-    String directory;
+    String DIRECTORY;
     MainInterface mainInterface;
     Context context;
-    public NewFile(Activity context,String directory) {
-        this.context=context;
-        mainInterface=(MainInterface) context;
-        this.directory =directory;
+
+    public NewFile(Activity context, String DIRECTORY) {
+        this.context = context;
+        mainInterface = (MainInterface) context;
+        this.DIRECTORY = DIRECTORY;
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         final View linearlayout = context.getLayoutInflater().inflate(R.layout.dialog_save_file, null);
         dialog.setView(linearlayout);
@@ -34,11 +35,11 @@ public class NewFile {
             String fileName = name.getText().toString() + ".py";
             String code = "print(\"Hello FEBO\")";
             mainInterface.setEditText(code);
-            new Data().createFile(fileName, code, directory);
+            new Data().createFile(fileName, code, this.DIRECTORY);
             mainInterface.setFileName(fileName);
-            mainInterface.setDirectory(directory);
+            mainInterface.setDIRECTORY(this.DIRECTORY);
             alertDialog.cancel();
-            Toast.makeText(context, "" + directory, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "" + this.DIRECTORY, Toast.LENGTH_SHORT).show();
         });
 
     }

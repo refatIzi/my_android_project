@@ -16,7 +16,9 @@ import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,10 +30,10 @@ import com.example.testedit.dialogwindows.Information;
 import com.example.testedit.dialogwindows.NewFile;
 import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
-import com.example.testedit.dialogwindows.Terminal;
 import com.example.testedit.helpinfo.Help;
 import com.example.testedit.permission.Permission;
 import com.example.testedit.setting.Data;
+import com.example.testedit.terminal.Terminal;
 import com.example.testedit.visualization.Visualization;
 import com.example.testedit.visualization.Watch;
 
@@ -45,10 +47,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     TextView numberCode;
     String input;
     String fileName;
-    private String directory;
+    private String DIRECTORY;
     String project_Name = "no project";
     Help help;
-    FragmentTransaction fragment;
+    Terminal terminal;
+    FragmentTransaction fragmentHelper;
+    FragmentTransaction fragmentTerminal;
+    FrameLayout terminalFrameLayout;
+
     String ONION_DIR = new Data().FEB_ONION_DIR;
 
 
@@ -59,29 +65,35 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         new Permission();
-
-        /**Запрет на поворот экрана*/
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        /**разрешения  которые я тут исползовал*/
-
         new Watch(this).execute();
         numberCode = findViewById(R.id.numberCode);
         editText = findViewById(R.id.txtCode);
-        fragment = getFragmentManager().beginTransaction();
+        terminalFrameLayout = findViewById(R.id.terminalMode);
+        terminalFrameLayout.setVisibility(View.GONE);
+
+        fragmentHelper = getFragmentManager().beginTransaction();
         help = new Help(MainActivity.this);
-        fragment.replace(R.id.liner, help);
-        fragment.commit();
-        directory = ONION_DIR;
+        fragmentHelper.replace(R.id.liner, help);
+        fragmentHelper.commit();
+
+        fragmentTerminal = getFragmentManager().beginTransaction();
+        terminal = new Terminal(MainActivity.this);
+        fragmentTerminal.replace(R.id.terminalMode, terminal);
+        fragmentTerminal.commit();
+
+        DIRECTORY = ONION_DIR;
         editText.setTextSize(new Data().setting().getTextSize());
         numberCode.setTextSize(new Data().setting().getTextSize());
         new Data().checkDirectory(ONION_DIR);
-        new Open(MainActivity.this, directory);
+        new Open(MainActivity.this, DIRECTORY);
 
         editText.addTextChangedListener(new TextWatcher() {
 
             //до изменении текста
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             /**при изменении текста и добавлениии текста и переходе на новую строку*/
             @Override
@@ -90,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             }
 
             private boolean isReached = false;
+
             // после изменении текста
             @Override
             public void afterTextChanged(Editable s) {
@@ -168,54 +181,31 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-    /**
-     * Меню
-     * https://android--examples.blogspot.com/2016/01/android-how-to-use-options-menu.html
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
-    Terminal terminal;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        String[] ProgramName = directory.replace(new Data().FEB_ONION_DIR, "").split("/");
-
         switch (id) {
             case R.id.loading:
-                if (fileName == null || fileName.equals("")) {
-                    if (ProgramName[0].endsWith("_project")) {
-                        new NewFile(MainActivity.this, directory);
-                    } else {
-                        new NewProject(MainActivity.this);
-                    }
-                    Toast.makeText(MainActivity.this, "" + project_Name, Toast.LENGTH_SHORT).show();
-                } else {
-                    new Data().createFile(fileName, editText.getText().toString(), directory);
-                    download(directory + ":" + fileName + ":" + project_Name + ":" + help.getConfiguration());
-                    Toast.makeText(MainActivity.this, "" + help.getConfiguration(), Toast.LENGTH_SHORT).show();
-                }
+                download();
                 return true;
             case R.id.new_file:
                 editText.getText().clear();
-                //  newSheet();
-                new NewFile(MainActivity.this, directory);
+                new NewFile(MainActivity.this, DIRECTORY);
                 fileName = null;
                 return true;
             case R.id.action_settings:
                 new DialogSetting(MainActivity.this);
                 return true;
             case R.id.open:
-                try {
-                    new Open(MainActivity.this, directory);
-                } catch (Exception e) {
-
-                }
+                new Open(MainActivity.this, DIRECTORY);
                 return true;
             case R.id.new_project:
                 input = editText.getText().toString();
@@ -225,19 +215,36 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         return super.onOptionsItemSelected(item);
     }
 
-
-    /**
-     * метот который перадает окну downaload путь к файлу и открывает окно downaload
-     */
-    private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
+    boolean stus = false;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void download(String comand) {
-        // Intent intent = new Intent(this, download.class);
-        //  intent.putExtra("downaload", comand);
-        //  startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
-        terminal = new Terminal(MainActivity.this);
-        terminal.setSetting(comand);
+    public void download() {
+        if (fileName == null || fileName.equals("")) {
+            if (new Data().checkProject(DIRECTORY)) {
+                new NewFile(MainActivity.this, DIRECTORY);
+            } else {
+                new NewProject(MainActivity.this);
+            }
+        } else {
+            new Data().createFile(fileName, editText.getText().toString(), DIRECTORY);
+            //terminal = new Terminal(MainActivity.this);
+            // terminal.setSetting(DIRECTORY + ":" + fileName + ":" + project_Name + ":" + help.getConfiguration());
+            //Intent intent = new Intent(this, Download.class);
+            //intent.putExtra("downaload", DIRECTORY + ":" + fileName + ":" + project_Name + ":" + help.getConfiguration());
+            // ((Activity) this).startActivityForResult(intent, 0);
+            //  final int SECOND_ACTIVITY_REQUEST_CODE = 0;
+            // Intent intent = new Intent(this, download.class);
+            //  intent.putExtra("downaload", comand);
+            //  startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+            if (stus == false) {
+                terminalFrameLayout.setVisibility(View.VISIBLE);
+                stus = true;
+            } else {
+                terminalFrameLayout.setVisibility(View.GONE);
+                stus = false;
+            }
+        }
+
     }
 
     public void setEdit(String text) {
@@ -249,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     public void setTerminal(String message) {
-        terminal.setTerminal(message);
+        //terminal.setTerminal(message);
     }
 
     public void setNumberCode(int progress) {
@@ -264,8 +271,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         this.fileName = FileName;
     }
 
-    public void setDirectory(String Directory) {
-        this.directory = Directory;
+    public void setDIRECTORY(String Directory) {
+        this.DIRECTORY = Directory;
     }
 
     public void setEditText(String text) {

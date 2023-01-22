@@ -46,7 +46,7 @@ public class NewProject {
             mainInterface.setEditText(code);
             new Data().createFile(fileName, code, directory);
             mainInterface.setFileName(fileName);
-            mainInterface.setDirectory(directory);
+            mainInterface.setDIRECTORY(directory);
             alertDialog.cancel();
             Toast.makeText(context, "" + directory, Toast.LENGTH_SHORT).show();
         });

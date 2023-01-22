@@ -11,7 +11,7 @@ public interface MainInterface {
 
     void setEditText(String text);
 
-    void setDirectory(String Directory);
+    void setDIRECTORY(String Directory);
 
     void setTerminal(String message);
 
