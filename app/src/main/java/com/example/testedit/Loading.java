@@ -78,7 +78,6 @@ public class Loading extends AsyncTask<Void, Void, String> {
 
     public void setMessage(String message) {
         this.message = message;
-
     }
 
     public String getResult() {
@@ -187,7 +186,7 @@ public class Loading extends AsyncTask<Void, Void, String> {
                         if (matcher.find()) {
                             Result = Result + s;
                             //download.SetResult(Return);
-                            mainInterface.setReseult(Result);
+                            mainInterface.setResult(Result);
                         } else {
                             Result = "Excellent";
                             matcher.reset();

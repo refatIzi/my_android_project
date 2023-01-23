@@ -46,10 +46,7 @@ public class Terminal extends Fragment implements View.OnClickListener {
         button.setOnClickListener(this);
 
         consoleList.add(new Console("Hello body"));
-        consoleList.add(new Console("Hello body"));
-        consoleList.add(new Console("Hello body"));
-        consoleList.add(new Console("Hello body"));
-        consoleList.add(new Console("Hello body"));
+
 
         adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
 

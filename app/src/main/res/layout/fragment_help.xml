@@ -28,8 +28,6 @@
                 android:id="@+id/configuration"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:background="#781919"
                 android:fastScrollEnabled="true"
                 android:fillViewport="true"

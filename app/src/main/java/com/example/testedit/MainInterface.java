@@ -15,7 +15,7 @@ public interface MainInterface {
 
     void setTerminal(String message);
 
-    void setReseult(String message);
+    void setResult(String message);
 
     void back();
 

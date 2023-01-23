@@ -89,19 +89,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         new Open(MainActivity.this, DIRECTORY);
 
         editText.addTextChangedListener(new TextWatcher() {
-
             //до изменении текста
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             /**при изменении текста и добавлениии текста и переходе на новую строку*/
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 numberOfConstruction(0);
             }
-
-            private boolean isReached = false;
 
             // после изменении текста
             @Override
@@ -340,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
      * // форум в котоом можно прочитать про использваония этого метода
      * https://javarush.ru/groups/posts/regulyarnye-vyrazheniya-v-java регулятор віражения
      */
-    public void setReseult(String message) {
+    public void setResult(String message) {
         if (message.equals("Excellent")) {
 
         } else {
