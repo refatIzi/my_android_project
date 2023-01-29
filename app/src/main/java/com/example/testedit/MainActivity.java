@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new Permission();
+        new Permission(this);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         new Watch(this).execute();
         numberCode = findViewById(R.id.numberCode);

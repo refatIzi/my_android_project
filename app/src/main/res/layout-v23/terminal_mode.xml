@@ -10,37 +10,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
-        android:background="#263046"/>
+        android:background="#263046"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="right|bottom"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/console"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="30dp"
             android:background="#dfd6cf"
-            android:fastScrollEnabled="true"
-            android:fillViewport="true"
+            android:backgroundTint="@android:color/transparent"
             android:hint="terminal"
-            android:hyphenationFrequency="none"
             android:inputType="textMultiLine"
-            android:scrollbars="vertical"
-            android:textStyle="bold"
-            android:scrollHorizontally="true"
             android:singleLine="false"
-            android:textColor="#000"
+            android:textColor="#263046"
             android:textSize="13dp"
-            android:typeface="monospace"  />
+            android:textStyle="bold"
+            android:typeface="monospace" />
 
         <Button
             android:id="@+id/button"
-            android:background="#000"
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:background="#000" />
     </LinearLayout>
 
 </LinearLayout>

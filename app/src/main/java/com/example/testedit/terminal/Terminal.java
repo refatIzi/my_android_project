@@ -3,12 +3,16 @@ package com.example.testedit.terminal;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
@@ -24,6 +28,8 @@ public class Terminal extends Fragment implements View.OnClickListener {
     Console console;
     TerminalAdapter adapter;
     ListView listView;
+    EditText consoleEdit;
+    InConsole inConsole;
 
     @SuppressLint("ValidFragment")
     public Terminal(Context context) {
@@ -34,6 +40,7 @@ public class Terminal extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        inConsole =new InConsole(this);
 
     }
 
@@ -42,10 +49,12 @@ public class Terminal extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.terminal_mode, container, false);
         listView = v.findViewById(R.id.consoleList);
-        Button button=v.findViewById(R.id.button);
+        consoleEdit = v.findViewById(R.id.console);
+        Button button = v.findViewById(R.id.button);
         button.setOnClickListener(this);
-
-        consoleList.add(new Console("Hello body"));
+        listView.setNestedScrollingEnabled(true);
+        //nviron().get("PATH")
+        consoleList.add(new Console(System.getProperties().toString()));
 
 
         adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
@@ -55,24 +64,39 @@ public class Terminal extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
+    public void onSaveInstanceState(Bundle outState) {
         //тут пишете необходимые вещи в outState
-        if(outState == null)
+        if (outState == null)
             outState = new Bundle();
         super.onSaveInstanceState(outState);
     }
 
+    int i = 0;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.button:
-                consoleList.add(new Console("Hello body"));
+                String command = consoleEdit.getText().toString();
+                consoleList.add(new Console(command));
                 adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
-
                 listView.setAdapter(adapter);
+
+               //inConsole.shellExec(command);
+
+                   inConsole.python();
+
+                i++;
                 break;
 
         }
     }
+
+    public void shell(String line){
+        consoleList.add(new Console(line));
+        adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
+        listView.setAdapter(adapter);
+    }
+
 }
