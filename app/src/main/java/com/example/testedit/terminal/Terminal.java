@@ -19,7 +19,6 @@ import com.example.testedit.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @SuppressLint("ValidFragment")
 public class Terminal extends Fragment implements View.OnClickListener {
     MainInterface mainInterface;
@@ -85,7 +84,7 @@ public class Terminal extends Fragment implements View.OnClickListener {
 
                //inConsole.shellExec(command);
 
-                   inConsole.python();
+                 //  inConsole.python();
 
                 i++;
                 break;

@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     String ONION_DIR = new Data().FEB_ONION_DIR;
 
-
+        /**
+         * file editor. bootloader. output.
+         * FEBO*/
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
