@@ -20,9 +20,56 @@ android {
     buildFeatures {
         viewBinding true
     }
+    sourceSets {
+        main {
+            // let gradle pack the shared library into apk
+            jniLibs.srcDirs = [
+                    file("src/main/jniLibs")
+            ]
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path 'src/main/jni/CMakeLists.txt'
+        }
+    }
+
+    packagingOptions {
+        pickFirst 'lib/arm64-v8a/libpython3.11.so'
+        pickFirst 'lib/armeabi-v7a/libpython3.11.so'
+        pickFirst 'lib/x86_64/libpython3.11.so'
+    }
+
+    // Only building ARM currently
+    // productFlavors allows us to specify exactly which ABIs we support
+    flavorDimensions "arm8", "arm", "x86_64"
+    productFlavors {
+        arm8 {
+            dimension "arm8"
+            ndk {
+                abiFilters 'arm64-v8a'
+            }
+        }
+        arm {
+            dimension "arm"
+            ndk {
+                abiFilter 'armeabi-v7a'
+            }
+        }
+        x86_64 {
+            dimension "x86_64"
+            ndk {
+                abiFilter 'x86_64'
+            }
+        }
+    }
 }
 
 dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
 
     implementation 'org.apache.commons:commons-lang3:3.5'
     implementation fileTree(dir: 'libs', include: ['*.jar'])

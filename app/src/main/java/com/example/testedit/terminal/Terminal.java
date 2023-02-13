@@ -15,6 +15,7 @@ import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 
 import com.example.testedit.MainInterface;
+import com.example.testedit.PythonThread;
 import com.example.testedit.R;
 
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class Terminal extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        System.loadLibrary("python3.11");
+        System.loadLibrary("pythonthread");
         View v = inflater.inflate(R.layout.terminal_mode, container, false);
         listView = v.findViewById(R.id.consoleList);
         consoleEdit = v.findViewById(R.id.console);
@@ -82,7 +85,9 @@ public class Terminal extends Fragment implements View.OnClickListener {
                 adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
                 listView.setAdapter(adapter);
 
-               //inConsole.shellExec(command);
+                    //inConsole.shellExec(command);
+                PythonThread lThread = new PythonThread(context);
+                lThread.start();
 
                  //  inConsole.python();
 
