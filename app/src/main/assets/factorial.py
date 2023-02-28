@@ -1,9 +1,11 @@
 #Python program to find the factorial of a number provided by the user.
+#import time
 print('FACTORIAL')
 def main():
+    import time
     # create parrot1 object
     # change the value for a different result
-    num = 14
+    num = 15
     # To take input from the user
     #num = int(input("Enter a number: "))
     factorial = 1
@@ -15,8 +17,17 @@ def main():
     else:
         for i in range(1,num + 1):
             factorial = factorial*i
+            time.sleep(0.3)
+                #time.sleep(6)
+            print(factorial)
+
         print("The factorial of",num,"is",factorial)
+
+
     parrons()
+
+if __name__ == '__main__':
+    main()
 
 def parrons():
     print('PATRON')

@@ -1,0 +1,8 @@
+//
+// Created by Sirius on 26.02.2023.
+//
+
+#ifndef TESTEDIT_PYTHONRESULT_H
+#define TESTEDIT_PYTHONRESULT_H
+
+#endif //TESTEDIT_PYTHONRESULT_H

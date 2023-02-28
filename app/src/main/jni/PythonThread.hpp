@@ -14,6 +14,8 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved);
  * Method:    initPython
  * Signature: ()I
  */
+JNIEXPORT void JNICALL Java_com_example_testedit_PythonThread_returnInfoPython
+        (JNIEnv *env, jobject obj);
 JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_initPython
         (JNIEnv *, jobject, jstring aPath);
 
@@ -30,12 +32,48 @@ JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_cleanupPython
  * Method:    runPython
  * Signature: ()I
  */
+
+class JNI_obj {
+
+
+public:
+    jobject obj;
+    JNIEnv *env;
+public:
+    JNI_obj() {
+
+    };
+public:
+    JNI_obj(JNIEnv *env, jobject obj) {
+        this->env = env;
+        this->obj = obj;
+    };
+
+};
+class PyLogs {
+public:
+    void LOG(string message);
+};
+
 JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_runPython
         (JNIEnv *, jobject, jstring filename);
 
-JNIEXPORT jstring JNICALL returnPython(JNIEnv* env, jobject obj,string message);
+JNIEXPORT void JNICALL returnPython(JNIEnv *env, jobject obj, string message);
+JNIEXPORT jboolean JNICALL
+Java_com_example_testedit_PythonThread_getStatusPy(JNIEnv *env, jobject thiz);
+JNIEXPORT jboolean JNICALL
+Java_com_example_testedit_PythonThread_getStatusResult(JNIEnv *env, jobject thiz);
+JNIEXPORT jboolean JNICALL
+Java_com_example_testedit_PythonThread_getStatusError(JNIEnv *env, jobject thiz);
+JNIEXPORT jboolean JNICALL
+Java_com_example_testedit_PythonThread_getStatusErrorResult(JNIEnv *env, jobject thiz);
+JNIEXPORT jstring JNICALL
+Java_com_example_testedit_PythonThread_getResult(JNIEnv *env, jobject thiz) ;
+JNIEXPORT jstring JNICALL
+Java_com_example_testedit_PythonThread_getError(JNIEnv *env, jobject thiz);
 #ifdef __cplusplus
 }
+
 #endif
 
 

@@ -27,7 +27,7 @@ static int mOutFile[2];
 static pthread_t mErrThread = -1;
 static pthread_t mOutThread = -1;
 
-void * out_thread_func(void *pVoid);
+void *out_thread_func(void *pVoid);
 
 static void *err_thread_func(void *);
 
@@ -35,25 +35,41 @@ using namespace std;
 JNIEnv *enV;
 jobject obJ;
 JavaVM *jvM;
-class MyWrapper
-{
-public: JNIEnv* env;
-public: jobject obj;
-public: MyWrapper( JNIEnv* env, jobject obj)
-    {
-        this->env = env;
-        this->obj = obj;
-    }
+bool statusResult = false;
+bool statusErrorResult = false;
+bool status = false;
+bool statusError = false;
+
+
+
+
+
+string errorMessage;
+string mymessage;
+JNI_obj jniObj;
+
+
+
+
+void PyLogs::LOG(string message) {
+    errorMessage = message;
+    __android_log_write(ANDROID_LOG_VERBOSE, __FUNCTION__, errorMessage.c_str());
+
+
 };
-extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
+
+extern "C" {
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
     __android_log_write(ANDROID_LOG_VERBOSE, __FUNCTION__, "JNI_OnLoad");
-    //jvM=jvm;
+
     return JNI_VERSION_1_6;
 }
 
-extern "C" JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_initPython
-        (JNIEnv *env, jobject obj, jstring aPath) {
 
+JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_initPython
+        (JNIEnv *env, jobject obj, jstring aPath) {
+    jniObj.env=env;
+    jniObj.obj=obj;
     wstring lPassedPath = Utilities::getWStringFromJava(env, aPath);
 
     string lDirectory;
@@ -90,9 +106,11 @@ extern "C" JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_initPyt
     return 0;
 }
 
-extern "C" JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_cleanupPython
-        (JNIEnv *env, jobject obj) {
 
+JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_cleanupPython
+        (JNIEnv *env, jobject obj) {
+    jniObj.env=env;
+    jniObj.obj=obj;
     __android_log_write(ANDROID_LOG_VERBOSE, __FUNCTION__, "We are in Cleanup Python");
 
     // TODO: -- In a perfect world we setup our logging threads better to be able to shut down. We would set a flag and
@@ -112,10 +130,22 @@ extern "C" JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_cleanup
     return 1;
 }
 
-extern "C" JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_runPython
+JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_runPython
         (JNIEnv *env, jobject obj, jstring filename) {
-       env->GetJavaVM(&jvM);
-       obJ = env->NewGlobalRef(obj);
+    //enV->GetJavaVM(&jvM);
+    enV = env;
+    obJ = env->NewGlobalRef(obj);
+    jniObj.env=env;
+    jniObj.obj=obj;
+
+    //env->SetLongField(obj, getPtrFieldId(env, obj), (jlong) new CppObject);
+
+
+
+    //enV = env;
+    //obJ = obj;
+
+
     __android_log_write(ANDROID_LOG_VERBOSE, __FUNCTION__, "We are in Run Python");
 
     // Initialize Python, we only want to do this once!
@@ -131,7 +161,8 @@ extern "C" JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_runPyth
                             "Python Engine has been initialized");
     }
 
-    string lPythonFile = Utilities::getStringFromJava(env, filename);//преоброзуем java строку на С++ строку
+    string lPythonFile = Utilities::getStringFromJava(env,
+                                                      filename);//преоброзуем java строку на С++ строку
 
     FILE *file;
 
@@ -151,33 +182,97 @@ extern "C" JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_runPyth
 
     // Startup the Error logging
     startStdErrLogging();
-    startStdOutLogging(env,obj);
+    startStdOutLogging(env, obj);
 
     __android_log_write(ANDROID_LOG_INFO, __FUNCTION__, "We are leaving run Python");
-    ///JNIEnv *envv;
-    //jvM->AttachCurrentThread(&envv, NULL);
-
-
-    //returnPython(env,obj,"sssssssTTTTTTTssssss");
-   // jvM->DetachCurrentThread();
-    //returnPython(enV,obJ,"sssssssTTTTTTTssssss");
     return lExecuteReturn;
 }
 
-
-extern "C" JNIEXPORT jstring JNICALL returnPython(JNIEnv* env, jobject obj, string message)
-{   jstring jstr = env->NewStringUTF(message.c_str());
+JNIEXPORT void JNICALL Java_com_example_testedit_PythonThread_returnInfoPython
+        (JNIEnv *env, jobject obj) {
+    jniObj.env=env;
+    jniObj.obj=obj;
+    returnPython(jniObj.env,jniObj.obj, errorMessage + " " + mymessage);
+    mymessage = "";
+    status = false;
+}
+JNIEXPORT void JNICALL returnPython(JNIEnv *env, jobject obj, string message) {
+    jstring jstr = env->NewStringUTF(message.c_str());
 
     jclass cls = env->FindClass("com/example/testedit/PythonThread");
 
     //jmethodID retryS = env->GetMethodID(cls, "retryStartVideo", "()V");
-   // env->CallVoidMethod(obJ, retryS);
+    // env->CallVoidMethod(obJ, retryS);
     env->ExceptionClear();
     jmethodID method = env->GetMethodID(cls, "messageMe", "(Ljava/lang/String;)V");
     env->CallVoidMethod(obj, method, jstr);
-    return env->NewStringUTF(
-            "SSSSSSSSSSSSSSSSSSSS");
+
 }
+
+
+/**
+ * We check @status, if @status = true we mast read @message
+ * */
+JNIEXPORT jboolean JNICALL
+Java_com_example_testedit_PythonThread_getStatusPy(JNIEnv *env, jobject thiz) {
+    jniObj.env=env;
+    jniObj.obj=thiz;
+    return status;
+}
+/**
+ * We check  @statusResult, if @statusResult = true we change on false
+ * and return true else return @statusResult.
+ * @statusResult needed for to see the end of the pthread cycle
+ * */
+
+JNIEXPORT jboolean JNICALL
+Java_com_example_testedit_PythonThread_getStatusResult(JNIEnv *env, jobject thiz) {
+    jniObj.env=env;
+    jniObj.obj=thiz;
+    if (statusResult) {
+        statusResult = false;
+        return true;
+    } else
+        return statusResult;
+}
+
+
+JNIEXPORT jboolean JNICALL
+Java_com_example_testedit_PythonThread_getStatusError(JNIEnv *env, jobject thiz) {
+    jniObj.env=env;
+    jniObj.obj=thiz;
+    return statusError;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_example_testedit_PythonThread_getStatusErrorResult(JNIEnv *env, jobject thiz) {
+    jniObj.env=env;
+    jniObj.obj=thiz;
+    if (statusErrorResult) {
+        statusErrorResult = false;
+        return true;
+    } else
+        return statusErrorResult;
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_example_testedit_PythonThread_getResult(JNIEnv *env, jobject thiz) {
+    jstring jstr = env->NewStringUTF(mymessage.c_str());
+    mymessage="";
+    status = false;
+    return jstr;
+}
+JNIEXPORT jstring JNICALL
+Java_com_example_testedit_PythonThread_getError(JNIEnv *env, jobject thiz) {
+    // TODO: implement getError()
+    jstring jstr = env->NewStringUTF(errorMessage.c_str());
+    errorMessage="";
+    status = false;
+    return jstr;
+    //errorMessage
+}
+}
+
 // Start up our Standard Error Thread
 void startStdErrLogging() {
     // This will make our stderr buffer wake on newline
@@ -195,9 +290,6 @@ void startStdErrLogging() {
     pthread_detach(mErrThread);
 }
 
-
-
-
 void startStdOutLogging(JNIEnv *pEnv, jobject pJobject) {
 
     // This will make our stderr buffer wake on newline _IOLBF instead of Nonbuffered _IONBF
@@ -208,9 +300,9 @@ void startStdOutLogging(JNIEnv *pEnv, jobject pJobject) {
     dup2(mOutFile[1], STDOUT_FILENO);
     __android_log_write(ANDROID_LOG_DEBUG, __FUNCTION__, "Start thread_func");
     /* spawn the logging thread */
-   // JNIEnv *envv;
-   // jvM->AttachCurrentThread(&envv, NULL);
-    if (pthread_create(&mOutThread, nullptr, out_thread_func, new MyWrapper(pEnv,pJobject)) != 0) {
+    // (pthread_create(&mOutThread, nullptr, out_thread_func, new MyWrapper(pEnv,pJobject)) != 0)
+
+    if (pthread_create(&mOutThread, nullptr, out_thread_func, nullptr) != 0) {
         return;
     }
 
@@ -218,23 +310,7 @@ void startStdOutLogging(JNIEnv *pEnv, jobject pJobject) {
 
 }
 
-
-
-void * out_thread_func(void *pVoid) {
-    MyWrapper* wrapper = (MyWrapper*)pVoid;
-
-
-    //jstring jstr = wrapper->env->NewStringUTF("sssssssTTTTTTTssssss");
-
-    //jclass cls = wrapper->env->FindClass("com/example/testedit/PythonThread");
-
-    //jmethodID retryS = env->GetMethodID(cls, "retryStartVideo", "()V");
-    // env->CallVoidMethod(obJ, retryS);
-   // wrapper->env->ExceptionClear();
-    //jmethodID method = wrapper->env->GetMethodID(cls, "messageMe", "(Ljava/lang/String;)V");
-   // wrapper->env->CallObjectMethod(wrapper->obj, method, jstr);
-     returnPython(wrapper->env,wrapper->obj,"sssssssTTTTTTTssssss");
-    //jvM->DetachCurrentThread();
+void *out_thread_func(void *pVoid) {
     ssize_t lReadSize;
     char lReadBuffer[2048];
 
@@ -255,13 +331,13 @@ void * out_thread_func(void *pVoid) {
 #pragma ide diagnostic ignored "EndlessLoop"
     while (true) {
         lReadSize = read(mOutFile[0], lReadBuffer, sizeof lReadBuffer - 1);
-
-
         if (lReadSize <= 0) {
+
             // We found nothing, wait to keep the CPU usage down
-            usleep(250000); // 250ms
+            usleep(25000); // 20ms
             continue;
         }
+
 
         // Find the position of the \n in our string
         lUnProcessedBuffer.append(lReadBuffer);
@@ -269,18 +345,20 @@ void * out_thread_func(void *pVoid) {
         // now we have a buffer, might be more then 1 line, keep writing until we have
         // written each line
         while ((lPos = lUnProcessedBuffer.find_first_of('\n')) != string::npos) {
+            status = false;
             // We know where it is.
             lWriteBuffer = lUnProcessedBuffer.substr(0, ++lPos);
             lUnProcessedBuffer = lUnProcessedBuffer.substr(lPos);
             string result = "OUTPUT " + lWriteBuffer;
+
             __android_log_write(ANDROID_LOG_DEBUG, __FUNCTION__, result.c_str());
-
-
+            mymessage = lWriteBuffer;
+            status = true;
+            usleep(2000); // 20ms
         }
+        statusResult = true;
 
-        //returnPython(enV,obJ,"sssssssTTTTTTTssssss");
     }
-
 
 #pragma clang diagnostic pop
 
@@ -290,11 +368,16 @@ void * out_thread_func(void *pVoid) {
 //   close(mOutFile[1]);
 //
 //   return nullptr;
+// Для цієї демонстрації ми не маємо умов зупинити журналювання, але якщо ви це зробили, поверніть це назад
+// // Закрийте файли, ми збираємось завершити роботу. Це великий, інакше ви зламаєте трубу
+// закрити (mOutFile[0]);
+// закрити(mOutFile[1]);
+//
+// повернути nullptr;
 }
 
 static PyObject *
-spam_system(PyObject *self, PyObject *args)
-{
+spam_system(PyObject * self, PyObject * args) {
     const char *command;
     int sts;
 
@@ -343,13 +426,17 @@ static void *err_thread_func(void *) {
         // written each line
         while ((lPos = lUnProcessedBuffer.find_first_of('\n')) != string::npos) {
             // We know where it is.
+            statusError = false;
             lWriteBuffer = lUnProcessedBuffer.substr(0, ++lPos);
             lUnProcessedBuffer = lUnProcessedBuffer.substr(lPos);
             string error = "OUTPUT ERROR " + lWriteBuffer;
 
             __android_log_write(ANDROID_LOG_ERROR, __FUNCTION__, error.c_str());
-
+            mymessage = lWriteBuffer;
+            statusError = true;
+            usleep(20000); // 20ms
         }
+        statusErrorResult = true;
     }
 #pragma clang diagnostic pop
 

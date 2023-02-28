@@ -28,12 +28,12 @@ public class InConsole {
 
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-       terminal.shell(line);
+      // terminal.shell(line);
                 // stringBuilder.append(line);
             }
 
         } catch (Exception e) {
-            terminal.shell(SHEL_EXECUTE_ERROR+" "+e);
+           // terminal.shell(SHEL_EXECUTE_ERROR+" "+e);
 
         }
 
@@ -57,7 +57,7 @@ public class InConsole {
                     String line; // this will be used to read the output line by line. Helpful in troubleshooting.
                     while ((line = reader.readLine()) != null) {
                         //System.out.println(line);
-                        terminal.shell(line);
+                       // terminal.shell(line);
                     }
                 } catch (IOException e) {
                     Log.e(TAG, "ZALUPA=" + e.toString());

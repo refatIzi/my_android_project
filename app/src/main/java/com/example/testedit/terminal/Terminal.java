@@ -20,6 +20,7 @@ import com.example.testedit.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @SuppressLint("ValidFragment")
 public class Terminal extends Fragment implements View.OnClickListener {
     MainInterface mainInterface;
@@ -40,7 +41,7 @@ public class Terminal extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inConsole =new InConsole(this);
+        inConsole = new InConsole(this);
 
     }
 
@@ -56,12 +57,12 @@ public class Terminal extends Fragment implements View.OnClickListener {
         button.setOnClickListener(this);
         listView.setNestedScrollingEnabled(true);
         //nviron().get("PATH")
-        consoleList.add(new Console(System.getProperties().toString()));
+        //consoleList.add(new Console(System.getProperties().toString()));
 
 
-        adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
+        //adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
 
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
         return v;
     }
 
@@ -81,26 +82,27 @@ public class Terminal extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.button:
                 String command = consoleEdit.getText().toString();
-                consoleList.add(new Console(command));
-                adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
-                listView.setAdapter(adapter);
+                shell("Start");
 
-                    //inConsole.shellExec(command);
-                PythonThread lThread = new PythonThread(context);
+                //inConsole.shellExec(command);
+                PythonThread lThread = new PythonThread(context, this);
                 lThread.start();
 
-                 //  inConsole.python();
 
-                i++;
-                break;
-
+                //  inConsole.python();
         }
     }
 
-    public void shell(String line){
+    public void shell(String line) {
+        listView.clearFocus();
         consoleList.add(new Console(line));
         adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        //.notifyDatasetChanged();
+        //listView.setSelection(listView.getAdapter().getCount() - 1);
+
     }
 
 }
