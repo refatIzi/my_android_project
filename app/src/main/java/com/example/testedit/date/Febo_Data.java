@@ -1,33 +1,49 @@
-package com.example.testedit.setting;
+package com.example.testedit.date;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 import com.example.testedit.connect.Connect;
 import com.example.testedit.connect.Protocol;
+import com.example.testedit.pythonInpreter.Common;
+import com.example.testedit.setting.Setting;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
-public class Data {
+public class Febo_Data {
+    private static final String TAG = "FEBO Work with Date";
 
-
+    private static final Logger  mLogger = Logger.getLogger(TAG);
     public final String DIR = Environment.getExternalStorageDirectory().toString();
     public final String FEB_ONION_DIR = Environment.getExternalStorageDirectory().toString() + "/python/";
 
+    public Febo_Data() {
+        //mLogger = null;
+    }
 
 
     public void writeData(DataSetting dataSetting) {
@@ -227,7 +243,7 @@ public class Data {
     }
 
     /**
-     * Информация о последнем изменении фаила
+     * Ebaute of and change file
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getTime(String directory) {
@@ -249,5 +265,107 @@ public class Data {
     public boolean checkProject(String directory){
         String[] ProgramName = directory.replace(FEB_ONION_DIR, "").split("/");
         return ProgramName[0].endsWith("_project");
+    }
+
+    public static void copyFilesFromAssets(Context context, String aFileName) {
+        AssetManager assetManager = context.getAssets();
+
+        InputStream lInputStream;
+        OutputStream lOutputStream;
+        try {
+            lInputStream = assetManager.open(aFileName, AssetManager.ACCESS_BUFFER);
+
+            String outDir = Common.getEngineRootDirectory(context);
+
+            File outFile = new File(outDir, aFileName);
+
+            lOutputStream = new FileOutputStream(outFile);
+            copyFile(lInputStream, lOutputStream);
+            lInputStream.close();
+            lOutputStream.flush();
+            lOutputStream.close();
+        } catch (IOException e) {
+            Log.e("tag", "Failed to copy asset file: " + aFileName, e);
+        }
+
+    }
+
+
+    public static void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+    }
+    public static void unzipFileFromAssets(Context mContext,String aSourceFile) {
+        AssetManager assetManager = mContext.getAssets();
+
+        InputStream lInputStream = null;
+        try {
+            lInputStream = assetManager.open(aSourceFile, AssetManager.ACCESS_BUFFER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+//        String lDestinationFile = mContext.getExternalFilesDir(null) + \"\\\\Python" + aSourceFile;
+        String lDestinationFile = Common.getEngineRootDirectory(mContext);
+
+        ZipInputStream zis;
+        try {
+            // ensure the destination directory exists
+            if (!new File(lDestinationFile).mkdirs()) {
+                mLogger.log(Level.INFO, "Unable to create directory '" + lDestinationFile + "'. It probably already exists");
+            }
+
+            // get the input stream of the zip file itself
+            assert lInputStream != null;
+            zis = new ZipInputStream(new BufferedInputStream(lInputStream));
+            ZipEntry ze;
+            byte[] buffer = new byte[8192];
+            int count;
+
+            // loop through all the zip entries in the zip
+            while ((ze = zis.getNextEntry()) != null) {
+                // if this entry is simply a directory, just create it and move on
+                if (ze.isDirectory()) {
+                    String dir = Common.ensureStringEndsWithForwardslash(lDestinationFile + File.separator + ze.getName());
+                    File fmd = new File(dir);
+                    if (!fmd.exists()) {
+                        // directory doesn't exist yet, try to create it
+                        if (!fmd.mkdirs()) {
+                            mLogger.log(Level.WARNING, "Unable to create directory on device from zip: " + dir + ", DirExistsAlready=" + fmd.exists());
+                        }
+                    }
+                    continue;
+                }
+
+                // if we get here, we're dealing with a straight file
+                File destFile = new File(lDestinationFile, ze.getName());
+                File destinationParent = destFile.getParentFile();
+
+                // create the parent directory structure if needed for the file
+                assert destinationParent != null;
+                if (!destinationParent.isDirectory() && !destinationParent.mkdirs()) {
+                    mLogger.log(Level.WARNING, "Unable to create directory " + destinationParent);
+                }
+
+                // write the file
+                FileOutputStream lFileStream = new FileOutputStream(lDestinationFile + File.separator + ze.getName());
+                while ((count = zis.read(buffer)) != -1) {
+                    lFileStream.write(buffer, 0, count);
+                }
+
+                lFileStream.close();
+                zis.closeEntry();
+            }
+
+            zis.close();
+
+            mLogger.log(Level.INFO, aSourceFile + " unzipped successfully");
+        } catch (Exception e) {
+            mLogger.log(Level.SEVERE, "Exception while unzipping file:" + e.getMessage());
+        }
     }
 }

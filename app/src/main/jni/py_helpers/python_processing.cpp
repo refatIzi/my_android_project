@@ -425,15 +425,16 @@ namespace py_helper {
 extern "C" {
 
 JNIEXPORT jstring JNICALL
-Java_com_example_testedit_terminal_PythonReturn_resultError(JNIEnv *env, jobject thiz) {
+Java_com_example_testedit_pythonInpreter_PythonReturn_resultError(JNIEnv *env, jobject thiz) {
     jstring jstr = env->NewStringUTF(error_string.c_str());
 
     return jstr;
 }
 
 JNIEXPORT void JNICALL
-Java_com_example_testedit_terminal_PythonReturn_clearError(JNIEnv *env, jobject thiz) {
+Java_com_example_testedit_pythonInpreter_PythonReturn_clearError(JNIEnv *env, jobject thiz) {
     error_string = "";
 }
 }
+
 

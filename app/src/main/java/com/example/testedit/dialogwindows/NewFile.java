@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.setting.Data;
+import com.example.testedit.date.Febo_Data;
 
 public class NewFile {
     String DIRECTORY;
@@ -35,7 +35,7 @@ public class NewFile {
             String fileName = name.getText().toString() + ".py";
             String code = "print(\"Hello FEBO\")";
             mainInterface.setEditText(code);
-            new Data().createFile(fileName, code, this.DIRECTORY);
+            new Febo_Data().createFile(fileName, code, this.DIRECTORY);
             mainInterface.setFileName(fileName);
             mainInterface.setDIRECTORY(this.DIRECTORY);
             alertDialog.cancel();

@@ -14,16 +14,19 @@
 #include <fcntl.h>
 #include <pthread.h>
 
+#define MSGSIZE 16
 
 // This is the object we use to call a specific method in a python file.
 static py_helper::PythonProcessing mPyProcess;
 
 void startStdErrLogging();
 
-void startStdOutLogging(JNIEnv *pEnv, jobject pJobject);
+void startStdOutLogging();
 
 static int mErrFile[2];
 static int mOutFile[2];
+char inbuf[MSGSIZE];
+int  pid, nbytes;
 static pthread_t mErrThread = -1;
 static pthread_t mOutThread = -1;
 
@@ -66,7 +69,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
 }
 
 
-JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_initPython
+JNIEXPORT jint JNICALL Java_com_example_testedit_pythonInpreter_PythonThread_initPython
         (JNIEnv *env, jobject obj, jstring aPath) {
     jniObj.env=env;
     jniObj.obj=obj;
@@ -107,7 +110,7 @@ JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_initPython
 }
 
 
-JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_cleanupPython
+JNIEXPORT jint JNICALL Java_com_example_testedit_pythonInpreter_PythonThread_cleanupPython
         (JNIEnv *env, jobject obj) {
     jniObj.env=env;
     jniObj.obj=obj;
@@ -130,7 +133,7 @@ JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_cleanupPython
     return 1;
 }
 
-JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_runPython
+JNIEXPORT jint JNICALL Java_com_example_testedit_pythonInpreter_PythonThread_runPython
         (JNIEnv *env, jobject obj, jstring filename) {
     //enV->GetJavaVM(&jvM);
     enV = env;
@@ -181,14 +184,15 @@ JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_runPython
     mPyProcess.unloadFile();
 
     // Startup the Error logging
+    startStdOutLogging();
     startStdErrLogging();
-    startStdOutLogging(env, obj);
+
 
     __android_log_write(ANDROID_LOG_INFO, __FUNCTION__, "We are leaving run Python");
     return lExecuteReturn;
 }
-
-JNIEXPORT void JNICALL Java_com_example_testedit_PythonThread_returnInfoPython
+//Java_com_example_testedit_pythonIn_preter_
+JNIEXPORT void JNICALL Java_com_example_testedit_pythonInpreter_PythonReturn_returnInfoPython
         (JNIEnv *env, jobject obj) {
     jniObj.env=env;
     jniObj.obj=obj;
@@ -199,7 +203,7 @@ JNIEXPORT void JNICALL Java_com_example_testedit_PythonThread_returnInfoPython
 JNIEXPORT void JNICALL returnPython(JNIEnv *env, jobject obj, string message) {
     jstring jstr = env->NewStringUTF(message.c_str());
 
-    jclass cls = env->FindClass("com/example/testedit/PythonThread");
+    jclass cls = env->FindClass("com/example/testedit/pythonInpreter/PythonReturn");
 
     //jmethodID retryS = env->GetMethodID(cls, "retryStartVideo", "()V");
     // env->CallVoidMethod(obJ, retryS);
@@ -209,12 +213,12 @@ JNIEXPORT void JNICALL returnPython(JNIEnv *env, jobject obj, string message) {
 
 }
 
-
+//Java_com_example_testedit_pythonInpreter_PythonReturn_
 /**
  * We check @status, if @status = true we mast read @message
  * */
 JNIEXPORT jboolean JNICALL
-Java_com_example_testedit_PythonThread_getStatusPy(JNIEnv *env, jobject thiz) {
+Java_com_example_testedit_pythonInpreter_PythonReturn_getStatusPy(JNIEnv *env, jobject thiz) {
     jniObj.env=env;
     jniObj.obj=thiz;
     return status;
@@ -226,7 +230,7 @@ Java_com_example_testedit_PythonThread_getStatusPy(JNIEnv *env, jobject thiz) {
  * */
 
 JNIEXPORT jboolean JNICALL
-Java_com_example_testedit_PythonThread_getStatusResult(JNIEnv *env, jobject thiz) {
+Java_com_example_testedit_pythonInpreter_PythonReturn_getStatusResult(JNIEnv *env, jobject thiz) {
     jniObj.env=env;
     jniObj.obj=thiz;
     if (statusResult) {
@@ -238,14 +242,14 @@ Java_com_example_testedit_PythonThread_getStatusResult(JNIEnv *env, jobject thiz
 
 
 JNIEXPORT jboolean JNICALL
-Java_com_example_testedit_PythonThread_getStatusError(JNIEnv *env, jobject thiz) {
+Java_com_example_testedit_pythonInpreter_PythonReturn_getStatusError(JNIEnv *env, jobject thiz) {
     jniObj.env=env;
     jniObj.obj=thiz;
     return statusError;
 }
-
+//Java_com_example_testedit_pythonInpreter_PythonReturn_
 JNIEXPORT jboolean JNICALL
-Java_com_example_testedit_PythonThread_getStatusErrorResult(JNIEnv *env, jobject thiz) {
+Java_com_example_testedit_pythonInpreter_PythonReturn_getStatusErrorResult(JNIEnv *env, jobject thiz) {
     jniObj.env=env;
     jniObj.obj=thiz;
     if (statusErrorResult) {
@@ -256,14 +260,14 @@ Java_com_example_testedit_PythonThread_getStatusErrorResult(JNIEnv *env, jobject
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_example_testedit_PythonThread_getResult(JNIEnv *env, jobject thiz) {
+Java_com_example_testedit_pythonInpreter_PythonReturn_getResult(JNIEnv *env, jobject thiz) {
     jstring jstr = env->NewStringUTF(mymessage.c_str());
     mymessage="";
     status = false;
     return jstr;
 }
 JNIEXPORT jstring JNICALL
-Java_com_example_testedit_PythonThread_getError(JNIEnv *env, jobject thiz) {
+Java_com_example_testedit_pythonInpreter_PythonReturn_getError(JNIEnv *env, jobject thiz) {
     // TODO: implement getError()
     jstring jstr = env->NewStringUTF(errorMessage.c_str());
     errorMessage="";
@@ -290,13 +294,14 @@ void startStdErrLogging() {
     pthread_detach(mErrThread);
 }
 
-void startStdOutLogging(JNIEnv *pEnv, jobject pJobject) {
+void startStdOutLogging() {
 
     // This will make our stderr buffer wake on newline _IOLBF instead of Nonbuffered _IONBF
     setvbuf(stdout, nullptr, _IOLBF, 0);
-
+    char lReadBuffer[2048];
     /* create the pipe and redirect stdout */
     pipe(mOutFile);
+
     dup2(mOutFile[1], STDOUT_FILENO);
     __android_log_write(ANDROID_LOG_DEBUG, __FUNCTION__, "Start thread_func");
     /* spawn the logging thread */
@@ -322,6 +327,7 @@ void *out_thread_func(void *pVoid) {
     size_t lPos;               // the position of our \n
     string lWriteBuffer;       // What we plan to store the stuff to write out in
 
+
     // Set this read non-blocking
     fcntl(mOutFile[0], F_SETFL,
           fcntl(mOutFile[0], F_GETFL) | O_NONBLOCK); // NOLINT(hicpp-signed-bitwise)
@@ -332,13 +338,10 @@ void *out_thread_func(void *pVoid) {
     while (true) {
         lReadSize = read(mOutFile[0], lReadBuffer, sizeof lReadBuffer - 1);
         if (lReadSize <= 0) {
-
             // We found nothing, wait to keep the CPU usage down
             usleep(25000); // 20ms
             continue;
         }
-
-
         // Find the position of the \n in our string
         lUnProcessedBuffer.append(lReadBuffer);
 

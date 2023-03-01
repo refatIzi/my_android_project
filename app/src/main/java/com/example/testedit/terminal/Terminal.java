@@ -15,8 +15,8 @@ import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 
 import com.example.testedit.MainInterface;
-import com.example.testedit.PythonThread;
 import com.example.testedit.R;
+import com.example.testedit.pythonInpreter.PythonThread;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,13 +83,12 @@ public class Terminal extends Fragment implements View.OnClickListener {
             case R.id.button:
                 String command = consoleEdit.getText().toString();
                 shell("Start");
+                //ProcessBuilder pb = new ProcessBuilder("python", "/path/to/your/python/file.py");
 
+               // pb.start();
                 //inConsole.shellExec(command);
                 PythonThread lThread = new PythonThread(context, this);
                 lThread.start();
-
-
-                //  inConsole.python();
         }
     }
 

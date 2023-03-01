@@ -17,7 +17,7 @@ def main():
     else:
         for i in range(1,num + 1):
             factorial = factorial*i
-            time.sleep(0.3)
+            #time.sleep(0.5)
                 #time.sleep(6)
             print(factorial)
 

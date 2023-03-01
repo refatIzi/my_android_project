@@ -22,7 +22,7 @@ import com.example.testedit.MainInterface;
 import com.example.testedit.R;
 import com.example.testedit.search.Search;
 import com.example.testedit.search.SearchAdapter;
-import com.example.testedit.setting.Data;
+import com.example.testedit.date.Febo_Data;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,8 +40,8 @@ public class Open implements AdapterView.OnItemClickListener {
     ImageButton delete;
     ImageButton back;
     ImageButton cancel;
-    String ONION_DIR = new Data().FEB_ONION_DIR;
-    String DIR = new Data().DIR;
+    String ONION_DIR = new Febo_Data().FEB_ONION_DIR;
+    String DIR = new Febo_Data().DIR;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Open(Activity context, String directory) {
@@ -115,7 +115,7 @@ public class Open implements AdapterView.OnItemClickListener {
         int s = 0;
         while (s != k) {
             if (arrayList.get(s).getChecket() == true) {
-                new Data().deleteDir(directory + arrayList.get(s).getNomber());
+                new Febo_Data().deleteDir(directory + arrayList.get(s).getNomber());
             }
             s++;
         }
@@ -151,12 +151,12 @@ public class Open implements AdapterView.OnItemClickListener {
     private void showDirectory(String analogDir) {
         directory = analogDir;
         arrayList.clear();
-        final String[] sDirList = new Data().arrayDir(analogDir);
+        final String[] sDirList = new Febo_Data().arrayDir(analogDir);
         for (int i = 0; i < sDirList.length; i++) {
             String file = analogDir + sDirList[i];
-            String time = new Data().getTime(file);
-            String about = new Data().about(file);
-            if (new Data().checkFile(file)) {
+            String time = new Febo_Data().getTime(file);
+            String about = new Febo_Data().about(file);
+            if (new Febo_Data().checkFile(file)) {
                 if (sDirList[i].endsWith(".py")) {
                     arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_filepython, false));
                 } else {
@@ -180,7 +180,7 @@ public class Open implements AdapterView.OnItemClickListener {
         ArrayList<Uri> uriList = new ArrayList();
         Intent intent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
         intent.setType("*/*");
-        int size = new Data().arrayFile(directory).length;
+        int size = new Febo_Data().arrayFile(directory).length;
 
         for (int i = 0; i != size; i++) {
             if (i != size) {
@@ -202,8 +202,8 @@ public class Open implements AdapterView.OnItemClickListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (new Data().checkFile(directory + searchAdapter.getItem(position).getNomber())) {
-            mainInterface.setEditText(new Data().readFile(directory + searchAdapter.getItem(position).getNomber()));
+        if (new Febo_Data().checkFile(directory + searchAdapter.getItem(position).getNomber())) {
+            mainInterface.setEditText(new Febo_Data().readFile(directory + searchAdapter.getItem(position).getNomber()));
             mainInterface.setFileName(searchAdapter.getItem(position).getNomber());
             mainInterface.setDIRECTORY(directory);
             alertDialog.cancel();

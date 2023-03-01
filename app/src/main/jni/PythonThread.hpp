@@ -6,32 +6,9 @@
 #pragma once
 using namespace std;
 #ifdef __cplusplus
+
 extern "C" {
 #endif
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved);
-/*
- * Class:     com_example_testedit_PythonThread
- * Method:    initPython
- * Signature: ()I
- */
-JNIEXPORT void JNICALL Java_com_example_testedit_PythonThread_returnInfoPython
-        (JNIEnv *env, jobject obj);
-JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_initPython
-        (JNIEnv *, jobject, jstring aPath);
-
-/*
- * Class:     com_example_testedit_PythonThread
- * Method:    cleanupPython
- * Signature: ()I
- */
-JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_cleanupPython
-        (JNIEnv *, jobject);
-
-/*
- * Class:     com_example_testedit_PythonThread
- * Method:    runPython
- * Signature: ()I
- */
 
 class JNI_obj {
 
@@ -55,22 +32,105 @@ public:
     void LOG(string message);
 };
 
-JNIEXPORT jint JNICALL Java_com_example_testedit_PythonThread_runPython
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved);
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    initPython
+ * Signature: ()I
+ */
+
+JNIEXPORT jint JNICALL Java_com_example_testedit_pythonInpreter_PythonThread_initPython
+        (JNIEnv *, jobject, jstring aPath);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    cleanupPython
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_example_testedit_pythonInpreter_PythonThread_cleanupPython
+        (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    runPython
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_example_testedit_pythonInpreter_PythonThread_runPython
         (JNIEnv *, jobject, jstring filename);
 
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    returnInfoPython
+ * Signature: ()I
+ */
+
+JNIEXPORT void JNICALL Java_com_example_testedit_pythonInpreter_PythonReturn_returnInfoPython
+        (JNIEnv *env, jobject obj);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    returnPython
+ * Signature: ()I
+ */
+
 JNIEXPORT void JNICALL returnPython(JNIEnv *env, jobject obj, string message);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    getStatusPy
+ * Signature: ()I
+ */
+
 JNIEXPORT jboolean JNICALL
-Java_com_example_testedit_PythonThread_getStatusPy(JNIEnv *env, jobject thiz);
+Java_com_example_testedit_pythonInpreter_PythonReturn_getStatusPy(JNIEnv *env, jobject thiz);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    getStatusResult
+ * Signature: ()I
+ */
+
 JNIEXPORT jboolean JNICALL
-Java_com_example_testedit_PythonThread_getStatusResult(JNIEnv *env, jobject thiz);
+Java_com_example_testedit_pythonInpreter_PythonReturn_getStatusResult(JNIEnv *env, jobject thiz);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    getStatusError
+ * Signature: ()I
+ */
+
 JNIEXPORT jboolean JNICALL
-Java_com_example_testedit_PythonThread_getStatusError(JNIEnv *env, jobject thiz);
+Java_com_example_testedit_pythonInpreter_PythonReturn_getStatusError(JNIEnv *env, jobject thiz);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    getStatusErrorResult
+ * Signature: ()I
+ */
+
 JNIEXPORT jboolean JNICALL
-Java_com_example_testedit_PythonThread_getStatusErrorResult(JNIEnv *env, jobject thiz);
+Java_com_example_testedit_pythonInpreter_PythonReturn_getStatusErrorResult(JNIEnv *env,
+                                                                           jobject thiz);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    getResult
+ * Signature: ()I
+ */
+
 JNIEXPORT jstring JNICALL
-Java_com_example_testedit_PythonThread_getResult(JNIEnv *env, jobject thiz) ;
+Java_com_example_testedit_pythonInpreter_PythonReturn_getResult(JNIEnv *env, jobject thiz);
+
+/*
+ * Class:     com_example_testedit_pythonInpreter_PythonThread_
+ * Method:    getError
+ * Signature: ()I
+ */
+
 JNIEXPORT jstring JNICALL
-Java_com_example_testedit_PythonThread_getError(JNIEnv *env, jobject thiz);
+Java_com_example_testedit_pythonInpreter_PythonReturn_getError(JNIEnv *env, jobject thiz);
+
+
 #ifdef __cplusplus
 }
 

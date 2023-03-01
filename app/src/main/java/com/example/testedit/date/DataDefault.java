@@ -1,7 +1,8 @@
-package com.example.testedit.setting;
+package com.example.testedit.date;
 
 import com.example.testedit.connect.Connect;
 import com.example.testedit.connect.Protocol;
+import com.example.testedit.setting.Setting;
 
 public enum DataDefault {
     DEFAULT{

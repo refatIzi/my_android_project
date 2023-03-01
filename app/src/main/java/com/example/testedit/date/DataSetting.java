@@ -1,4 +1,4 @@
-package com.example.testedit.setting;
+package com.example.testedit.date;
 
 import com.example.testedit.connect.Connect;
 

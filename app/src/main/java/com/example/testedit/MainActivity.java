@@ -32,7 +32,7 @@ import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.helpinfo.Help;
 import com.example.testedit.permission.Permission;
-import com.example.testedit.setting.Data;
+import com.example.testedit.date.Febo_Data;
 import com.example.testedit.terminal.Terminal;
 import com.example.testedit.visualization.Visualization;
 import com.example.testedit.visualization.Watch;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     FragmentTransaction fragmentTerminal;
     FrameLayout terminalFrameLayout;
 
-    String ONION_DIR = new Data().FEB_ONION_DIR;
+    String ONION_DIR = new Febo_Data().FEB_ONION_DIR;
 
         /**
          * file editor. bootloader. output.
@@ -85,9 +85,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         fragmentTerminal.commit();
 
         DIRECTORY = ONION_DIR;
-        editText.setTextSize(new Data().setting().getTextSize());
-        numberCode.setTextSize(new Data().setting().getTextSize());
-        new Data().checkDirectory(ONION_DIR);
+        editText.setTextSize(new Febo_Data().setting().getTextSize());
+        numberCode.setTextSize(new Febo_Data().setting().getTextSize());
+        new Febo_Data().checkDirectory(ONION_DIR);
         new Open(MainActivity.this, DIRECTORY);
 
         editText.addTextChangedListener(new TextWatcher() {
@@ -218,13 +218,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void download() {
         if (fileName == null || fileName.equals("")) {
-            if (new Data().checkProject(DIRECTORY)) {
+            if (new Febo_Data().checkProject(DIRECTORY)) {
                 new NewFile(MainActivity.this, DIRECTORY);
             } else {
                 new NewProject(MainActivity.this);
             }
         } else {
-            new Data().createFile(fileName, editText.getText().toString(), DIRECTORY);
+            new Febo_Data().createFile(fileName, editText.getText().toString(), DIRECTORY);
             //terminal = new Terminal(MainActivity.this);
             // terminal.setSetting(DIRECTORY + ":" + fileName + ":" + project_Name + ":" + help.getConfiguration());
             //Intent intent = new Intent(this, Download.class);

@@ -12,13 +12,13 @@ import android.widget.Toast;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.setting.Data;
+import com.example.testedit.date.Febo_Data;
 
 public class NewProject {
     String directory;
     MainInterface mainInterface;
     Context context;
-    String ONION_DIR = new Data().FEB_ONION_DIR;
+    String ONION_DIR = new Febo_Data().FEB_ONION_DIR;
 
 
     public NewProject(Activity context) {
@@ -39,12 +39,12 @@ public class NewProject {
             if (project.getText().length() > 0) {
                 directory = ONION_DIR;
                 directory = directory + project.getText() + "_project/";
-                new Data().checkDirectory(directory);
+                new Febo_Data().checkDirectory(directory);
             } else {
             }
 
             mainInterface.setEditText(code);
-            new Data().createFile(fileName, code, directory);
+            new Febo_Data().createFile(fileName, code, directory);
             mainInterface.setFileName(fileName);
             mainInterface.setDIRECTORY(directory);
             alertDialog.cancel();
