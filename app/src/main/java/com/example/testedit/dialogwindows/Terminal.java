@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.testedit.Loading;
+import com.example.testedit.terminal.Loading;
 import com.example.testedit.R;
 import com.example.testedit.date.Febo_Data;
 

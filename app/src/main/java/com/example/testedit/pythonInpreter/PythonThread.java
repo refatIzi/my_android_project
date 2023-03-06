@@ -28,15 +28,26 @@ public class PythonThread extends Thread {
     private final Context mContext;
     Activity activity;
     Terminal terminal;
+    private String directory;
+    private String pythonFile;
 
-    public PythonThread(Context aContext, Terminal terminal) {
+    public PythonThread(Context aContext, Terminal terminal,String directory, String pythonFile) {
         mLogger = Logger.getLogger(TAG);
         mContext = aContext;
         activity = (Activity) mContext;
         this.terminal = terminal;
-        initializePython();
-        new PythonReturn(aContext, terminal).start();
+        this.directory=directory;
+        this.pythonFile = pythonFile;
+        if (pythonFile.isEmpty()) {
 
+        } else {
+            initializePython();
+            new PythonReturn(aContext, terminal).start();
+        }
+    }
+
+    public void runFile(String pythonFile) {
+        this.pythonFile = pythonFile;
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -60,7 +71,7 @@ public class PythonThread extends Thread {
         }
 
         // Put the python files where we can execute them
-        Febo_Data.copyFilesFromAssets(mContext, "factorial.py");
+        //Febo_Data.copyFilesFromAssets(mContext, pythonFile);
 
         final String lPythonRootPath = lTempPath;
 
@@ -85,11 +96,15 @@ public class PythonThread extends Thread {
                     return;
                 }
 
-                File lPathToMain = new File(Common.getEngineRootDirectory(mContext) + "/factorial.py");
+                //File lPathToMain = new File(Common.getEngineRootDirectory(mContext) + "/factori.py");
+                mLogger.log(Level.SEVERE, "DIRECTORY FILE=" +directory+pythonFile);
+
+               // mLogger.log(Level.SEVERE, "DIRECTORY FILE=" + new Febo_Data().FEB_ONION_DIR + "prog_project/Start.py");
+                File lPathToMain = new File(directory+pythonFile);
 
                 // Make sure that the file exists0
                 if (!lPathToMain.exists()) {
-                    mLogger.log(Level.SEVERE, "Unable to run the Python Level 3.  The main.py does not exist in proper location.  File Location=" + lPathToMain.getAbsolutePath());
+                    mLogger.log(Level.SEVERE, "Unable to run the Python Level 3.  The "+lPathToMain+" does not exist in proper location.  File Location=" + lPathToMain.getAbsolutePath());
                     return;
                 }
 

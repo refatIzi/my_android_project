@@ -7,12 +7,13 @@ import com.example.testedit.terminal.Terminal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PythonReturn extends Thread{
+public class PythonReturn extends Thread {
     private static final String TAG = "PythonReturn";
     private final Logger mLogger;
 
     Context context;
     Terminal terminal;
+
     public native void returnInfoPython();
 
     public native boolean getStatusPy();
@@ -26,17 +27,20 @@ public class PythonReturn extends Thread{
     public native String getResult();
 
     public native String getError();
+
     public native String resultError();
+
     public native void clearError();
 
     public PythonReturn(Context context, Terminal terminal) {
         mLogger = Logger.getLogger(TAG);
-        this.context=context;
-        this.terminal=terminal;
+        this.context = context;
+        this.terminal = terminal;
         returnPythonThread();
-        returnProcessing();
+        //returnProcessing();
     }
-    private void returnPythonThread(){
+
+    private void returnPythonThread() {
         terminal.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -56,28 +60,33 @@ public class PythonReturn extends Thread{
                     } else if (getStatusErrorResult()) {
                         break;
                     }
+                    if (resultError().length() != 0) {
+                        terminal.shell(resultError());
+                        clearError();
+                      break;
+                    }
                 }
 
             }
         });
     }
 
-    private void returnProcessing(){
-        Thread result =new Thread(){
+    private void returnProcessing() {
+        terminal.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                while (true){
-                    if(resultError().length()!=0){
-                        //terminal.shell(resultError());
+                while (true) {
+                    if (resultError().length() != 0) {
+                        terminal.shell(resultError());
                         clearError();
                         break;
                     }
                 }
-
             }
-        };
-        result.start();
+        });
+
     }
+
     public void messageMe(String text) {
 
         terminal.getActivity().runOnUiThread(new Runnable() {

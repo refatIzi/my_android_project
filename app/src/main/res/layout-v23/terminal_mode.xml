@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
-        android:background="#263046"
+        android:background="#04324B"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
 
@@ -28,7 +28,6 @@
             android:layout_height="30dp"
             android:layout_marginLeft="30dp"
             android:background="#dfd6cf"
-            android:backgroundTint="@android:color/transparent"
             android:hint="terminal"
             android:inputType="textMultiLine"
             android:singleLine="false"

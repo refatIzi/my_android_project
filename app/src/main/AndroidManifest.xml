@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.testedit"
     >
-
+    <uses-permission android:name="com.termux.permission.TERMUX_SERVICE" />
+    <uses-permission android:name="com.termux.permission.RUN_COMMAND" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.PRIVATE_EXTERNAL_STORAGE" />
@@ -64,6 +65,13 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+        <receiver
+            android:name=".terminal.TermuxBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.ACTION_SEND_MESSAGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

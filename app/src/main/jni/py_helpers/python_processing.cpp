@@ -11,7 +11,10 @@ using namespace std;
 string error_string;
 
 void __android_log_toviev(string logs) {
-    error_string = logs;
+    bool found = logs.find("function main at ") != std::string::npos;
+    if (found) error_string = "";
+    else
+        error_string = logs;
 };
 namespace py_helper {
 

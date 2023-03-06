@@ -197,15 +197,19 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case R.id.new_file:
                 editText.getText().clear();
                 new NewFile(MainActivity.this, DIRECTORY);
+                terminalFrameLayout.setVisibility(View.GONE);
                 fileName = null;
                 return true;
             case R.id.action_settings:
+                terminalFrameLayout.setVisibility(View.GONE);
                 new DialogSetting(MainActivity.this);
                 return true;
             case R.id.open:
+                terminalFrameLayout.setVisibility(View.GONE);
                 new Open(MainActivity.this, DIRECTORY);
                 return true;
             case R.id.new_project:
+                terminalFrameLayout.setVisibility(View.GONE);
                 input = editText.getText().toString();
                 new NewProject(MainActivity.this);
                 return true;
@@ -225,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             }
         } else {
             new Febo_Data().createFile(fileName, editText.getText().toString(), DIRECTORY);
+            Toast.makeText(this, ""+DIRECTORY+fileName, Toast.LENGTH_SHORT).show();
             //terminal = new Terminal(MainActivity.this);
             // terminal.setSetting(DIRECTORY + ":" + fileName + ":" + project_Name + ":" + help.getConfiguration());
             //Intent intent = new Intent(this, Download.class);
@@ -234,17 +239,20 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             // Intent intent = new Intent(this, download.class);
             //  intent.putExtra("downaload", comand);
             //  startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
-            if (stus == false) {
-                terminalFrameLayout.setVisibility(View.VISIBLE);
-                stus = true;
-            } else {
-                terminalFrameLayout.setVisibility(View.GONE);
-                stus = false;
-            }
+            checkTerminal();
         }
 
     }
-
+public void checkTerminal(){
+    if (terminalFrameLayout.getVisibility()==View.GONE) {
+        terminalFrameLayout.setVisibility(View.VISIBLE);
+        terminal.setDirectory(DIRECTORY);
+        terminal.setFile(fileName);
+        terminal.compileTerminal();
+    } else {
+        terminalFrameLayout.setVisibility(View.GONE);
+    }
+}
     public void setEdit(String text) {
         editText.getText().insert(editText.getSelectionStart(), text);
     }
@@ -339,13 +347,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
      * https://javarush.ru/groups/posts/regulyarnye-vyrazheniya-v-java регулятор віражения
      */
     public void setResult(String message) {
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+
         if (message.equals("Excellent")) {
 
         } else {
+            message=message.replaceAll("SyntaxError\\(\"expected","");
             Pattern pattern = Pattern.compile("line(([^\\n+',']+))");
             Matcher matcher = pattern.matcher(message);
             while (matcher.find()) {
                 String[] line = message.substring(matcher.start(), matcher.end()).split(" ");
+                Toast.makeText(this, ""+line, Toast.LENGTH_SHORT).show();
+
                 try {
                     int l = Integer.parseInt(String.valueOf(new Scanner(line[1]).useDelimiter("[^\\d]+").nextInt()));
                     if (l > 0) {
