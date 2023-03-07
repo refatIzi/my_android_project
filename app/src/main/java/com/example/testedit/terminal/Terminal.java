@@ -20,7 +20,6 @@ import com.example.testedit.MainInterface;
 import com.example.testedit.R;
 import com.example.testedit.pythonInpreter.PythonThread;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -68,6 +67,7 @@ public class Terminal extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.terminal_mode, container, false);
         listView = v.findViewById(R.id.consoleList);
         consoleEdit = v.findViewById(R.id.console);
+        consoleEdit.addTextChangedListener(new EditWatcher(this));
         Button button = v.findViewById(R.id.button);
         button.setOnClickListener(this);
         listView.setNestedScrollingEnabled(true);
@@ -89,8 +89,7 @@ public class Terminal extends Fragment implements View.OnClickListener {
             case R.id.button:
                 String command = consoleEdit.getText().toString();
              //runA();
-               // coom();
-                compileTerminal();
+                //compileTerminal();
         }
     }
     public void runA(){
@@ -111,23 +110,10 @@ public class Terminal extends Fragment implements View.OnClickListener {
     }
 
 
-    public void coom(){
-        Intent intent = new Intent("com.termux.app.execute");
-        intent.setPackage("com.termux");
-        intent.putExtra("com.termux.execute.EXTRA_COMMAND", "ls");
-        startActivity(intent);
+    public void clearEdit(){
+        consoleEdit.setText("");
     }
-    public void runS(){
-        String command = "pwd";
-        try {
-            Process process = Runtime.getRuntime().exec(new String[]{"termux-exec", "-c", command});
-            process.waitFor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+
     public void compileTerminal() {
         consoleList.clear();
         listView.setAdapter(null);

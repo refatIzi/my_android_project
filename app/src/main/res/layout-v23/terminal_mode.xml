@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
+    android:background="#04324B"
+
     android:orientation="vertical">
 
     <ListView
@@ -19,6 +21,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
         android:gravity="right|bottom"
         android:orientation="horizontal">
 
@@ -27,11 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="30dp"
-            android:background="#dfd6cf"
+            android:background="#04324B"
             android:hint="terminal"
             android:inputType="textMultiLine"
             android:singleLine="false"
-            android:textColor="#263046"
+            android:textColor="#fff"
             android:textSize="13dp"
             android:textStyle="bold"
             android:typeface="monospace" />

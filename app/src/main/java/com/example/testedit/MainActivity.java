@@ -6,13 +6,9 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextWatcher;
-import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.testedit.date.Febo_Data;
 import com.example.testedit.dialogwindows.DialogSetting;
 import com.example.testedit.dialogwindows.Information;
 import com.example.testedit.dialogwindows.NewFile;
@@ -32,9 +29,7 @@ import com.example.testedit.dialogwindows.NewProject;
 import com.example.testedit.dialogwindows.Open;
 import com.example.testedit.helpinfo.Help;
 import com.example.testedit.permission.Permission;
-import com.example.testedit.date.Febo_Data;
 import com.example.testedit.terminal.Terminal;
-import com.example.testedit.visualization.Visualization;
 import com.example.testedit.visualization.Watch;
 
 import java.util.Scanner;
@@ -90,40 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         new Febo_Data().checkDirectory(ONION_DIR);
         new Open(MainActivity.this, DIRECTORY);
 
-        editText.addTextChangedListener(new TextWatcher() {
-            //до изменении текста
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            /**при изменении текста и добавлениии текста и переходе на новую строку*/
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                numberOfConstruction(0);
-            }
-
-            // после изменении текста
-            @Override
-            public void afterTextChanged(Editable s) {
-                removeSpans(s, ForegroundColorSpan.class);
-                for (Visualization.TextColor tetxtColor : Visualization.getColors()) {
-                    for (Matcher m = tetxtColor.pattern.matcher(s); m.find(); ) {
-                        s.setSpan(new ForegroundColorSpan(tetxtColor.color),
-                                m.start(),
-                                m.end(),
-                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }
-                }
-            }
-
-            void removeSpans(Editable e, Class<? extends CharacterStyle> type) {
-                CharacterStyle[] spans = e.getSpans(0, e.length(), type);
-                for (CharacterStyle span : spans) {
-                    e.removeSpan(span);
-                }
-            }
-
-
-        });
+        editText.addTextChangedListener(new ActivityTextWatcher(this));
 
         /**следим за вводом текста
          * Метод для подсказки */

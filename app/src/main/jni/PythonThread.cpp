@@ -25,8 +25,6 @@ void startStdOutLogging();
 
 static int mErrFile[2];
 static int mOutFile[2];
-char inbuf[MSGSIZE];
-int pid, nbytes;
 static pthread_t mErrThread = -1;
 static pthread_t mOutThread = -1;
 
