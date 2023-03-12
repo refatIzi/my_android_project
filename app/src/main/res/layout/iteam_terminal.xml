@@ -13,6 +13,8 @@
         android:layout_marginTop="5dp"
         android:layout_toStartOf="@+id/butt"
         android:background="#04324B"
+        android:hint="terminal"
+
         android:inputType="textMultiLine"
         android:textColor="#CDCDCD"
         android:textSize="13dp"
@@ -24,6 +26,6 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
-        android:background="#000" />
+        android:background="#04324B" />
 
 </LinearLayout>

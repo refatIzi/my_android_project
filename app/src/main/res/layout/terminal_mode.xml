@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#04324B"
+    android:gravity="top"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/textLine"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/consoleTerminal"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/consoleTerminal"
+        android:layout_toEndOf="@+id/textLine">
+
+        <ListView
+            android:id="@+id/consoleList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#04324B"
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/consoleTerminal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_jetbrainstoolbox" />
+
+        <EditText
+            android:id="@+id/console"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:background="#04324B"
+            android:fillViewport="true"
+            android:hint="terminal"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textColor="#fff"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

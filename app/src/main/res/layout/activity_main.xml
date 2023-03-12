@@ -1,116 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#191919"
-    tools:context=".MainActivity"
-    >
-   <!--androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/recyclerView"
-       android:gravity="center"
-       android:layout_width="match_parent"
-       android:layout_height="38dp"
-       android:background="#191919"
-       /!-->
+    tools:context=".MainActivity">
+    <!--androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="#191919"
+        /!-->
 
-   <ScrollView
-       android:id="@+id/scroll"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_marginStart="0dp"
-       android:layout_marginBottom="60dp"
-       android:layout_toEndOf="@+id/terminalMode">
-
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="horizontal"
-          android:windowSoftInputMode="adjustResize">
-
-         <TextView
-             android:id="@+id/numberCode"
-             android:layout_width="30dp"
-             android:layout_height="fill_parent"
-             android:layout_alignParentStart="true"
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="60dp"
+        android:layout_toEndOf="@+id/terminalMode">
 
 
-             android:layout_alignParentLeft="true"
-             android:background="#191919"
-             android:gravity="center_horizontal"
-             android:scrollbars="none"
-             android:textColor="#0260e8"
-             android:textSize="13dp"
-             android:typeface="monospace"
-             android:windowSoftInputMode="adjustResize" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:windowSoftInputMode="adjustResize">
 
-         <HorizontalScrollView
+            <TextView
+                android:id="@+id/numberCode"
+                android:layout_width="30dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentStart="true"
 
-             android:id="@+id/scrol"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#191919"
-             android:fillViewport="true"
-             android:scrollbars="none">
 
-            <LinearLayout
+                android:layout_alignParentLeft="true"
+                android:background="#191919"
+                android:gravity="center_horizontal"
+                android:scrollbars="none"
+                android:textColor="#0260e8"
+                android:textSize="13dp"
+                android:typeface="monospace"
+                android:windowSoftInputMode="adjustResize" />
+
+            <HorizontalScrollView
+
+                android:id="@+id/scrol"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:background="#191919"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
 
-               <EditText
-                   android:id="@+id/txtCode"
-                   android:layout_width="2000dp"
-                   android:layout_height="match_parent"
-                   android:layout_alignParentEnd="true"
-                   android:layout_alignParentRight="true"
-                   android:layout_marginEnd="0dp"
-                   android:layout_marginRight="0dp"
-                   android:background="#191919"
-                   android:fastScrollEnabled="true"
-                   android:fillViewport="true"
+                    <EditText
+                        android:id="@+id/txtCode"
+                        android:layout_width="2000dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginRight="0dp"
+                        android:background="#191919"
+                        android:fastScrollEnabled="true"
+                        android:fillViewport="true"
 
-                   android:gravity="top"
-                   android:hyphenationFrequency="none"
-                   android:inputType="textMultiLine"
-                   android:scrollbars="vertical"
-                   android:scrollHorizontally="true"
-                   android:singleLine="false"
-                   android:textColor="#dfd6cf"
-                   android:textSize="13dp"
-                   android:textStyle="bold"
-                   android:typeface="monospace" />
+                        android:gravity="top"
+                        android:hyphenationFrequency="none"
+                        android:inputType="textMultiLine"
+                        android:scrollbars="vertical"
+                        android:scrollHorizontally="true"
+                        android:singleLine="false"
+                        android:textColor="#dfd6cf"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        android:typeface="monospace" />
 
-            </LinearLayout>
-         </HorizontalScrollView>
-      </LinearLayout>
-   </ScrollView>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
 
-   <FrameLayout
-       android:id="@+id/terminalMode"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_above="@+id/liner"
-       android:layout_marginBottom="0dp"
-       android:background="#dfd6cf"
-       android:gravity="center"
-       android:orientation="horizontal">
-
-
-   </FrameLayout>
-   <FrameLayout
-       android:id="@+id/liner"
-       android:layout_width="match_parent"
-       android:layout_height="60dp"
-       android:layout_alignParentBottom="true"
-       android:background="#191919"
-       android:gravity="center"
-       android:orientation="horizontal">
+    <FrameLayout
+        android:id="@+id/terminalMode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/liner"
+        android:layout_marginBottom="0dp"
+        android:background="#dfd6cf"
+        android:gravity="center"
+        android:orientation="horizontal">
 
 
-   </FrameLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/liner"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#191919"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+    </FrameLayout>
 </RelativeLayout>

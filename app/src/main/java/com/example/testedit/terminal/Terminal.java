@@ -2,11 +2,13 @@ package com.example.testedit.terminal;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,8 @@ import androidx.annotation.RequiresApi;
 
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.pythonInpreter.PythonThread;
+import com.termux.shared.termux.TermuxConstants;
+import com.termux.shared.termux.TermuxConstants.TERMUX_APP.RUN_COMMAND_SERVICE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +74,7 @@ public class Terminal extends Fragment implements View.OnClickListener {
         Button button = v.findViewById(R.id.button);
         button.setOnClickListener(this);
         listView.setNestedScrollingEnabled(true);
+
         return v;
     }
 
@@ -88,25 +92,72 @@ public class Terminal extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.button:
                 String command = consoleEdit.getText().toString();
-             //runA();
+                //shell(command);
+             runB();
                 //compileTerminal();
         }
     }
     public void runA(){
         String termuxPackageName = "com.termux";
-        String termuxActivityName = termuxPackageName + ".app.TermuxActivity";
+        String termuxActivityName = termuxPackageName + ".com.termux.app.RunCommandService";
         String command = "echo 'Hello, World!'";
 
-        Intent intent = new Intent("com.termux.app.execute");
-        intent.setClassName(termuxPackageName, termuxActivityName);
+        Intent intent = new Intent();
+        intent.setClassName("com.termux", "com.termux.app.RunCommandService");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(Intent.ACTION_VIEW);
+        intent.setAction("com.termux.RUN_COMMAND");
         intent.putExtra("com.termux.execute.EXTRA_COMMAND", command);
         intent.setPackage("com.termux");
 
-        startActivity(intent);
+        //startActivity(intent);
+        getActivity().startService(intent);
+        getActivity().startActivity(intent);
         //context.sendBroadcast(intent);
 
+    }
+    public void runB(){
+
+
+        String LOG_TAG = "MainActivity";
+
+        Intent intent = new Intent();
+        intent.setClassName(TermuxConstants.TERMUX_PACKAGE_NAME, TermuxConstants.TERMUX_APP.RUN_COMMAND_SERVICE_NAME);
+        intent.setAction(RUN_COMMAND_SERVICE.ACTION_RUN_COMMAND);
+        intent.putExtra(RUN_COMMAND_SERVICE.EXTRA_COMMAND_PATH, "/data/data/com.termux/files/usr/bin/top");
+        intent.putExtra(RUN_COMMAND_SERVICE.EXTRA_ARGUMENTS, new String[]{"-n", "2"});
+        intent.putExtra(RUN_COMMAND_SERVICE.EXTRA_WORKDIR, "/data/data/com.termux/files/home");
+        intent.putExtra(RUN_COMMAND_SERVICE.EXTRA_BACKGROUND, false);
+        intent.putExtra(RUN_COMMAND_SERVICE.EXTRA_SESSION_ACTION, "0");
+        intent.putExtra(RUN_COMMAND_SERVICE.EXTRA_COMMAND_LABEL, "top command");
+        intent.putExtra(RUN_COMMAND_SERVICE.EXTRA_COMMAND_DESCRIPTION, "Runs the top command to show processes using the most resources.");
+
+// Create the intent for the IntentService class that should be sent the result by TermuxService
+        Intent pluginResultsServiceIntent = new Intent(context, PluginResultsService.class);
+
+// Generate a unique execution id for this execution command
+        int executionId = PluginResultsService.getNextExecutionId();
+
+// Optional put an extra that uniquely identifies the command internally for your app.
+// This can be an Intent extra as well with more extras instead of just an int.
+        pluginResultsServiceIntent.putExtra(PluginResultsService.EXTRA_EXECUTION_ID, executionId);
+
+// Create the PendingIntent that will be used by TermuxService to send result of
+// commands back to the IntentService
+// Note that the requestCode (currently executionId) must be unique for each pending
+// intent, even if extras are different, otherwise only the result of only the first
+// execution will be returned since pending intent will be cancelled by android
+// after the first result has been sent back via the pending intent and termux
+// will not be able to send more.
+        PendingIntent pendingIntent = PendingIntent.getService(context, executionId, pluginResultsServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+        intent.putExtra(TermuxConstants.TERMUX_APP.RUN_COMMAND_SERVICE.EXTRA_PENDING_INTENT, pendingIntent);
+
+        try {
+            // Send command intent for execution
+            Log.d(LOG_TAG, "Sending execution command with id " + executionId);
+            getActivity().startService(intent);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Failed to start execution command with id " + executionId + ": " + e.getMessage());
+        }
     }
 
 
@@ -117,13 +168,19 @@ public class Terminal extends Fragment implements View.OnClickListener {
     public void compileTerminal() {
         consoleList.clear();
         listView.setAdapter(null);
-        shell("Start");
-        new PythonThread(
+        //shell("");
+       /* new PythonThread(
                 context,
                 this,
                 directory,
                 pythonFile
         ).start();
+
+        */
+
+
+
+
 
 
     }
@@ -142,9 +199,13 @@ public class Terminal extends Fragment implements View.OnClickListener {
         if (matcher.find()) {
             mainInterface.setResult(line);
         }
+        setShellOut(line);
+    }
+    private void setShellOut(String line){
         consoleList.add(new Console(line));
-        adapter = new TerminalAdapter(context, R.layout.iteam_terminal, consoleList);
+        adapter = new TerminalAdapter(context,this, R.layout.iteam_terminal, consoleList);
         listView.setAdapter(adapter);
     }
+
 
 }

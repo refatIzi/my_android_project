@@ -64,8 +64,6 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
 
 JNIEXPORT jint JNICALL Java_com_example_testedit_pythonInpreter_PythonThread_initPython
         (JNIEnv *env, jobject obj, jstring aPath) {
-    jniObj.env = env;
-    jniObj.obj = obj;
     wstring lPassedPath = Utilities::getWStringFromJava(env, aPath);
 
     string lDirectory;
@@ -266,9 +264,9 @@ void startStdErrLogging() {
  * Start up our Standard Out Thread
  */
 void startStdOutLogging() {
-
+char bufff[128];
     // This will make our stderr buffer wake on newline _IOLBF instead of Nonbuffered _IONBF
-    setvbuf(stdout, nullptr, _IOLBF, 0);
+    //setvbuf(stdout, bufff, _IOLBF, 128);
     /** create the pipe and redirect stdout */
     pipe(mOutFile);
     dup2(mOutFile[1], STDOUT_FILENO);
@@ -277,6 +275,7 @@ void startStdOutLogging() {
     if (pthread_create(&mOutThread, nullptr, out_thread_func, nullptr) != 0) {
         return;
     }
+
 
     pthread_detach(mOutThread);
 

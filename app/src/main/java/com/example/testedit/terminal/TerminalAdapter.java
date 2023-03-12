@@ -16,15 +16,19 @@ import java.util.List;
 public class TerminalAdapter extends ArrayAdapter<Console> {
     private List<Console> objects;
     private Context context;
+    Terminal terminal;
     Console console;
     private int resourse;
 
-    public TerminalAdapter(@NonNull Context context, int resourse, List<Console> objects) {
+
+    public TerminalAdapter(@NonNull Context context, Terminal terminal, int resourse, List<Console> objects) {
 
         super(context, resourse, objects);
         this.objects = objects;
         this.context = context;
+        this.terminal=terminal;
         this.resourse = resourse;
+
 
     }
 

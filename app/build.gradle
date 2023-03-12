@@ -70,7 +70,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 
-
+    implementation 'com.termux:termux-shared:0.117'
+    implementation 'com.termux.termux-app:termux-shared:0.117'
+    implementation 'com.termux.termux-app:termux-shared:master-SNAPSHOT'
+    implementation 'com.termux.termux-app:termux-shared:9272a757af'
+    implementation 'com.github.termux.termux-app:termux-shared:0.117'
     implementation 'org.apache.commons:commons-lang3:3.5'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'

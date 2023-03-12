@@ -35,7 +35,6 @@ import com.example.testedit.visualization.Watch;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
     EditText editText;

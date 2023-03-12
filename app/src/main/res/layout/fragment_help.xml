@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@drawable/shape_image"
     android:orientation="vertical">
+
     <ListView
         android:id="@+id/search"
-        android:background="#263046"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:background="#263046">
+
     </ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#191919"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/linerMessage"
             android:layout_width="match_parent"
@@ -24,10 +26,12 @@
             android:background="#781919"
             android:gravity="center"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/configuration"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
                 android:background="#781919"
                 android:fastScrollEnabled="true"
                 android:fillViewport="true"
@@ -35,40 +39,44 @@
                 android:hyphenationFrequency="none"
                 android:inputType="textMultiLine"
                 android:scrollbars="vertical"
-                android:textStyle="bold"
                 android:scrollHorizontally="true"
                 android:singleLine="false"
                 android:textColor="#dfd6cf"
                 android:textSize="13dp"
+                android:textStyle="bold"
                 android:typeface="monospace" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/Table"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="40dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_tab" />
+
             <ImageButton
                 android:id="@+id/sc_1"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_caret_left" />
+
             <ImageButton
                 android:id="@+id/sc_2"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_caret_right" />
 
@@ -93,51 +101,55 @@
 
             <ImageButton
                 android:id="@+id/hashtag"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_hashtag" />
+
             <ImageButton
                 android:id="@+id/plas"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_plus" />
 
             <ImageButton
                 android:id="@+id/minus"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_minus" />
+
             <ImageButton
                 android:id="@+id/equals"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_equals" />
+
             <ImageButton
                 android:id="@+id/down_left"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_down_left" />
+
             <ImageButton
                 android:id="@+id/down_right"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_down_right" />
         </LinearLayout>

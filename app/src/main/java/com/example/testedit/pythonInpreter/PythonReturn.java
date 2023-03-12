@@ -63,7 +63,7 @@ public class PythonReturn extends Thread {
                     if (resultError().length() != 0) {
                         terminal.shell(resultError());
                         clearError();
-                      break;
+                        break;
                     }
                 }
 

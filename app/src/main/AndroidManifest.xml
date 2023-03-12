@@ -72,6 +72,8 @@
                 <action android:name="com.example.ACTION_SEND_MESSAGE" />
             </intent-filter>
         </receiver>
+        <service android:name=".terminal.PluginResultsService" />
+
     </application>
 
 </manifest>
