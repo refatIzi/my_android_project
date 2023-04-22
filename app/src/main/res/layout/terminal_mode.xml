@@ -6,42 +6,38 @@
     android:gravity="top"
     android:orientation="vertical">
 
+
     <ListView
-        android:id="@+id/textLine"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
-
-        android:layout_above="@+id/consoleTerminal"
-        android:layout_alignParentTop="true" />
-
-    <LinearLayout
+        android:id="@+id/consoleList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/consoleTerminal"
-        android:layout_toEndOf="@+id/textLine">
-
-        <ListView
-            android:id="@+id/consoleList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#04324B"
-            android:stackFromBottom="true"
-            android:transcriptMode="alwaysScroll" />
-    </LinearLayout>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="left"
+        android:layout_marginStart="0dp"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll" />
 
     <LinearLayout
         android:id="@+id/consoleTerminal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="right"
+        android:gravity="right|center"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="2dp"
             android:background="@drawable/ic_jetbrainstoolbox" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_caret_right" />
 
         <EditText
             android:id="@+id/console"

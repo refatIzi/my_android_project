@@ -20,9 +20,10 @@ import androidx.core.content.FileProvider;
 import com.example.testedit.BuildConfig;
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
+import com.example.testedit.date.Febo_Data;
+import com.example.testedit.search.InformationSearch;
 import com.example.testedit.search.Search;
 import com.example.testedit.search.SearchAdapter;
-import com.example.testedit.date.Febo_Data;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,9 +87,9 @@ public class Open implements AdapterView.OnItemClickListener {
             final CheckBox checkBox = view.findViewById(R.id.check);
             /**разблокировка checkBox*/
             checkBox.setVisibility(view.VISIBLE);
-            if (searchAdapter.getItem(position).getChecket() == false) {
+            if (searchAdapter.getItem(position).getCheck() == false) {
                 checkBox.setChecked(true);
-                searchAdapter.getItem(position).setChecket(true);
+                searchAdapter.getItem(position).setCheck(true);
                 /**При выделении проверяем на состояния checkBox ListView
                  * если оно ложное меняем его состояние на истинное
                  * потом меняем состояние кнопок*/
@@ -96,7 +97,7 @@ public class Open implements AdapterView.OnItemClickListener {
                 delete.setVisibility(View.VISIBLE);
             } else {
                 checkBox.setChecked(false);
-                searchAdapter.getItem(position).setChecket(false);
+                searchAdapter.getItem(position).setCheck(false);
                 sendFile.setVisibility(View.GONE);
                 delete.setVisibility(View.GONE);
             }
@@ -114,8 +115,8 @@ public class Open implements AdapterView.OnItemClickListener {
         int k = arrayList.size();
         int s = 0;
         while (s != k) {
-            if (arrayList.get(s).getChecket() == true) {
-                new Febo_Data().deleteDir(directory + arrayList.get(s).getNomber());
+            if (arrayList.get(s).getCheck() == true) {
+                new Febo_Data().deleteDir(directory + arrayList.get(s).getNumber());
             }
             s++;
         }
@@ -155,17 +156,22 @@ public class Open implements AdapterView.OnItemClickListener {
         for (int i = 0; i < sDirList.length; i++) {
             String file = analogDir + sDirList[i];
             String time = new Febo_Data().getTime(file);
-            String about = new Febo_Data().about(file);
+            //String time = "time";
+            // String about = "about";
             if (new Febo_Data().checkFile(file)) {
                 if (sDirList[i].endsWith(".py")) {
+                    String about = new Febo_Data().aboutFile(file);
                     arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_filepython, false));
                 } else {
                 }
             } else {
-                if (sDirList[i].endsWith("project"))
+                String[] files = new Febo_Data().arrayDir(file);
+                String about = new InformationSearch().infoProject(files);
+                if (sDirList[i].endsWith("project")) {
                     arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_python_prog, false));
-                else
+                } else {
                     arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_folder_python_3, false));
+                }
             }
         }
         searchAdapter = new SearchAdapter(context, R.layout.iteam_row, arrayList);
@@ -185,8 +191,8 @@ public class Open implements AdapterView.OnItemClickListener {
         for (int i = 0; i != size; i++) {
             if (i != size) {
                 try {
-                    if (searchAdapter.getItem(i).getChecket() == true) {
-                        Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, new File(directory + arrayList.get(i).getNomber()));
+                    if (searchAdapter.getItem(i).getCheck() == true) {
+                        Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, new File(directory + arrayList.get(i).getNumber()));
                         uriList.add(uri);
                     }
                 } catch (Exception e) {
@@ -202,13 +208,13 @@ public class Open implements AdapterView.OnItemClickListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (new Febo_Data().checkFile(directory + searchAdapter.getItem(position).getNomber())) {
-            mainInterface.setEditText(new Febo_Data().readFile(directory + searchAdapter.getItem(position).getNomber()));
-            mainInterface.setFileName(searchAdapter.getItem(position).getNomber());
+        if (new Febo_Data().checkFile(directory + searchAdapter.getItem(position).getNumber())) {
+            mainInterface.setEditText(new Febo_Data().readFile(directory + searchAdapter.getItem(position).getNumber()));
+            mainInterface.setFileName(searchAdapter.getItem(position).getNumber());
             mainInterface.setDIRECTORY(directory);
             alertDialog.cancel();
         } else {
-            directory = directory + searchAdapter.getItem(position).getNomber();
+            directory = directory + searchAdapter.getItem(position).getNumber();
             // project_Name = mAdapter.getItem(position).getNomber();
             showDirectory(directory + "/");
         }

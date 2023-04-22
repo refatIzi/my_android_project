@@ -7,35 +7,36 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
-
 import com.example.testedit.R;
 
 import java.util.List;
 
-public class TerminalAdapter extends ArrayAdapter<Console> {
-    private List<Console> objects;
-    private Context context;
+public class LineAdapter extends ArrayAdapter<Line> {
+
+    Context context;
     Terminal terminal;
-    Console console;
     private int resource;
+    List<Line> lines;
+    Line line;
 
-
-    public TerminalAdapter(@NonNull Context context, Terminal terminal, int resource, List<Console> objects) {
-        super(context, resource, objects);
-        this.objects = objects;
+    public LineAdapter( Context context, Terminal terminal, int resource, List<Line> lines) {
+        super(context, resource,lines);
+        this.lines = lines;
         this.context = context;
         this.terminal = terminal;
         this.resource = resource;
+
+
+
     }
 
     public View getView(final int position, View convertView, final ViewGroup parent) {
         View view = convertView;
         if (view == null)
             view = LayoutInflater.from(context).inflate(resource, null);
-        console = objects.get(position);
-        EditText consoleEdit = view.findViewById(R.id.console);
-        consoleEdit.setText(console.getConsole());
+        line = lines.get(position);
+        EditText consoleEdit = view.findViewById(R.id.lineConsole);
+        consoleEdit.setText(line.getLine());
         return view;
     }
 }

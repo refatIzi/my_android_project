@@ -264,7 +264,6 @@ void startStdErrLogging() {
  * Start up our Standard Out Thread
  */
 void startStdOutLogging() {
-char bufff[128];
     // This will make our stderr buffer wake on newline _IOLBF instead of Nonbuffered _IONBF
     //setvbuf(stdout, bufff, _IOLBF, 128);
     /** create the pipe and redirect stdout */
@@ -284,6 +283,7 @@ char bufff[128];
 void *out_thread_func(void *pVoid) {
     ssize_t lReadSize;
     char lReadBuffer[2048];
+
     // This is what we have left to send
     string lUnProcessedBuffer;
 
@@ -301,6 +301,8 @@ void *out_thread_func(void *pVoid) {
 #pragma ide diagnostic ignored "EndlessLoop"
     while (true) {
         lReadSize = read(mOutFile[0], lReadBuffer, sizeof lReadBuffer - 1);
+        //__android_log_write(ANDROID_LOG_DEBUG, __FUNCTION__, lReadBuffer);
+
         if (lReadSize <= 0) {
             // We found nothing, wait to keep the CPU usage down
             usleep(250000); // 250ms
@@ -322,7 +324,10 @@ void *out_thread_func(void *pVoid) {
             mymessage = lWriteBuffer;
             status = true;
             usleep(2000);
+
         }
+        mOutFile[0]=0;
+
         statusResult = true;
 
     }

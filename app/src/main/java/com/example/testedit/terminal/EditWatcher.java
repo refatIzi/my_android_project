@@ -26,12 +26,12 @@ public class EditWatcher implements TextWatcher {
         } else {
             Log.e("TAG", "Первая строка: " + s.toString().startsWith("\n"));
             if (s.toString().startsWith("\n")) {
-               terminal.shell("");
+               terminal.shell("\n");
                 terminal.clearEdit();
 
             } else {
                 String[] str = s.toString().split("\n");
-                terminal.shell(str[0]);
+                terminal.shell(str[0]+"\n");
                 terminal.clearEdit();
             }
 

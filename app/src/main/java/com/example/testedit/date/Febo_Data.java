@@ -214,7 +214,7 @@ public class Febo_Data {
         }
     }
 
-    public String about(String FileName) {
+    public String aboutFile(String FileName) {
         String about = "";
         File sdFile = new File(FileName);
         try {

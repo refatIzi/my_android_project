@@ -19,33 +19,33 @@ public class SearchAdapter extends ArrayAdapter<Search> {
     private List<Search> mList;
     private Context mContext;
     Search search;
-    private int resourseLayoute;
-    public SearchAdapter(@NonNull Context context, int resourse, List<Search> objects){
+    private int resourceLayout;
+    public SearchAdapter(@NonNull Context context, int resource, List<Search> objects){
 
-        super(context,resourse,objects);
+        super(context,resource,objects);
         this.mList=objects;
         this.mContext=context;
-        this.resourseLayoute=resourse;
+        this.resourceLayout =resource;
 
     }
     public View getView(final int position, View convertView, final ViewGroup parent)
     {
         View view=convertView;
         if(view==null)
-            view= LayoutInflater.from(mContext).inflate(resourseLayoute,null);
+            view= LayoutInflater.from(mContext).inflate(resourceLayout,null);
            search =mList.get(position);
         ImageView image=view.findViewById(R.id.imageView);
         image.setImageResource(search.getImage());
         TextView textNomber=view.findViewById(R.id.txtNomber);
-        textNomber.setText(search.getNomber());
+        textNomber.setText(search.getNumber());
         TextView textEdad=view.findViewById(R.id.txtViewEdad);
-        textEdad.setText(search.getEdad());
+        textEdad.setText(search.getTime());
         TextView infirmation=view.findViewById(R.id.inform);
         infirmation.setText(search.getInformation());
 
         final CheckBox checkBox=view.findViewById(R.id.check);
         // пока Чек бокс мы не будет задействовать он нам будет нужен попоже
-        if(mList.get(position).getChecket()==false) { //закріваем все чекбоксы так как будут мешать для кликабельности
+        if(mList.get(position).getCheck()==false) { //закріваем все чекбоксы так как будут мешать для кликабельности
 
             checkBox.setVisibility(view.INVISIBLE);//block checkBox
             checkBox.setChecked(false);
@@ -63,10 +63,10 @@ public class SearchAdapter extends ArrayAdapter<Search> {
             public void onClick(View view) {
 
                 //   checked = read.isChecked();
-                if(mList.get(position).getChecket()==false) {
+                if(mList.get(position).getCheck()==false) {
                     //   checkBox.setVisibility(view.INVISIBLE);//block checkBox
                     //  checkBox.setChecked(true);
-                    mList.get(position).setChecket(true);
+                    mList.get(position).setCheck(true);
 
 
                 }
@@ -74,7 +74,7 @@ public class SearchAdapter extends ArrayAdapter<Search> {
                     //   checkBox.setVisibility(view.VISIBLE);//block checkBox
                     //  checkBox.setChecked(false);
 
-                    mList.get(position).setChecket(false);
+                    mList.get(position).setCheck(false);
                     checkBox.setVisibility(view.INVISIBLE);//block checkBox
                 }
             }
