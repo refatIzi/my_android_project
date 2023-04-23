@@ -3,7 +3,6 @@ package com.example.testedit.dialogwindows;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -41,8 +40,9 @@ public class Open implements AdapterView.OnItemClickListener {
     ImageButton delete;
     ImageButton back;
     ImageButton cancel;
-    String ONION_DIR = new Febo_Data().FEB_ONION_DIR;
-    String DIR = new Febo_Data().DIR;
+    Febo_Data fData=new Febo_Data();
+    String ONION_DIR = fData.FEB_ONION_DIR;
+    String DIR = fData.DIR;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Open(Activity context, String directory) {
@@ -70,7 +70,7 @@ public class Open implements AdapterView.OnItemClickListener {
         });
         sendFile.setOnClickListener(v -> {
             /**Отпровляем фаилы и скрываем кнопки*/
-            Send();
+            send();
             sendFile.setVisibility(View.GONE);
             delete.setVisibility(View.GONE);
             alertDialog.cancel();
@@ -108,7 +108,6 @@ public class Open implements AdapterView.OnItemClickListener {
 
     /**
      * метот в котором буду выпольнятьса основные операции удаление
-     * метот удаления https://javadevblog.com/kak-udalit-fajl-ili-papku-v-java.html
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void delete() {
@@ -116,7 +115,7 @@ public class Open implements AdapterView.OnItemClickListener {
         int s = 0;
         while (s != k) {
             if (arrayList.get(s).getCheck() == true) {
-                new Febo_Data().deleteDir(directory + arrayList.get(s).getNumber());
+                fData.deleteDir(directory + arrayList.get(s).getNumber());
             }
             s++;
         }
@@ -156,8 +155,6 @@ public class Open implements AdapterView.OnItemClickListener {
         for (int i = 0; i < sDirList.length; i++) {
             String file = analogDir + sDirList[i];
             String time = new Febo_Data().getTime(file);
-            //String time = "time";
-            // String about = "about";
             if (new Febo_Data().checkFile(file)) {
                 if (sDirList[i].endsWith(".py")) {
                     String about = new Febo_Data().aboutFile(file);
@@ -182,12 +179,9 @@ public class Open implements AdapterView.OnItemClickListener {
      * Метод с помошью которого мы отпровляем фаилы на другое приложение
      */
 
-    public void Send() {
+    public void send() {
         ArrayList<Uri> uriList = new ArrayList();
-        Intent intent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-        intent.setType("*/*");
-        int size = new Febo_Data().arrayFile(directory).length;
-
+        int size = fData.arrayFile(directory).length;
         for (int i = 0; i != size; i++) {
             if (i != size) {
                 try {
@@ -199,10 +193,8 @@ public class Open implements AdapterView.OnItemClickListener {
 
                 }
             }
-
         }
-        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
-        context.startActivity(Intent.createChooser(intent, "Share Image:"));
+        fData.sendFile(context, uriList);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

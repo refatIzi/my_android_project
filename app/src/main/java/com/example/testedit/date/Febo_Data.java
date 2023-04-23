@@ -1,7 +1,9 @@
 package com.example.testedit.date;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
@@ -27,6 +29,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -37,7 +40,7 @@ import java.util.zip.ZipInputStream;
 public class Febo_Data {
     private static final String TAG = "FEBO Work with Date";
 
-    private static final Logger  mLogger = Logger.getLogger(TAG);
+    private static final Logger mLogger = Logger.getLogger(TAG);
     public final String DIR = Environment.getExternalStorageDirectory().toString();
     public final String FEB_ONION_DIR = Environment.getExternalStorageDirectory().toString() + "/python/";
 
@@ -232,6 +235,13 @@ public class Febo_Data {
         return "There is no information in the code. Probably someone forgot to write it.";
     }
 
+    public  void sendFile(Context context, ArrayList<Uri> uriList) {
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
+        intent.setType("*/*");
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
+        context.startActivity(Intent.createChooser(intent, "Share Image:"));
+    }
+
     public File[] arrayFile(String directory) {
         File listFile = new File(directory);
         return listFile.listFiles();
@@ -262,7 +272,8 @@ public class Febo_Data {
         }
         return "";
     }
-    public boolean checkProject(String directory){
+
+    public boolean checkProject(String directory) {
         String[] ProgramName = directory.replace(FEB_ONION_DIR, "").split("/");
         return ProgramName[0].endsWith("_project");
     }
@@ -298,7 +309,8 @@ public class Febo_Data {
             out.write(buffer, 0, read);
         }
     }
-    public static void unzipFileFromAssets(Context mContext,String aSourceFile) {
+
+    public static void unzipFileFromAssets(Context mContext, String aSourceFile) {
         AssetManager assetManager = mContext.getAssets();
 
         InputStream lInputStream = null;
