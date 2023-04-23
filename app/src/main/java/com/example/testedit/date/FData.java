@@ -285,16 +285,12 @@ public class FData {
 
     public static void copyFilesFromAssets(Context context, String aFileName) {
         AssetManager assetManager = context.getAssets();
-
         InputStream lInputStream;
         OutputStream lOutputStream;
         try {
             lInputStream = assetManager.open(aFileName, AssetManager.ACCESS_BUFFER);
-
             String outDir = Common.getEngineRootDirectory(context);
-
             File outFile = new File(outDir, aFileName);
-
             lOutputStream = new FileOutputStream(outFile);
             copyFile(lInputStream, lOutputStream);
             lInputStream.close();
@@ -317,7 +313,6 @@ public class FData {
 
     public static void unzipFileFromAssets(Context mContext, String aSourceFile) {
         AssetManager assetManager = mContext.getAssets();
-
         InputStream lInputStream = null;
         try {
             lInputStream = assetManager.open(aSourceFile, AssetManager.ACCESS_BUFFER);
@@ -325,10 +320,8 @@ public class FData {
             e.printStackTrace();
         }
 
-
 //        String lDestinationFile = mContext.getExternalFilesDir(null) + \"\\\\Python" + aSourceFile;
         String lDestinationFile = Common.getEngineRootDirectory(mContext);
-
         ZipInputStream zis;
         try {
             // ensure the destination directory exists
