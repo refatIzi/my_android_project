@@ -15,7 +15,7 @@ import com.example.testedit.MainInterface;
 import com.example.testedit.R;
 import com.example.testedit.connect.Connect;
 import com.example.testedit.connect.Protocol;
-import com.example.testedit.date.Febo_Data;
+import com.example.testedit.date.FData;
 import com.example.testedit.date.DataSetting;
 import com.example.testedit.setting.Setting;
 
@@ -43,7 +43,7 @@ public class DialogSetting {
         final SeekBar textSizeBar = linearlayout.findViewById(R.id.TextSizeBar);
         final TextView textSize = linearlayout.findViewById(R.id.textSize);
         final TextView Information = linearlayout.findViewById(R.id.Information);
-        dataSaving = new Febo_Data().readData();
+        dataSaving = new FData().readData();
 
         textSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -102,7 +102,7 @@ public class DialogSetting {
                         .setConnect(connect)
                         .setSetting(setting)
                         .accept();
-                new Febo_Data().writeData(dataSaving);
+                new FData().writeData(dataSaving);
                        alertDialog.cancel();
             }
         });

@@ -6,7 +6,7 @@ import android.content.Context;
 import android.system.ErrnoException;
 import android.system.Os;
 
-import com.example.testedit.date.Febo_Data;
+import com.example.testedit.date.FData;
 import com.example.testedit.terminal.Terminal;
 
 import java.io.File;
@@ -59,14 +59,14 @@ public class PythonThread extends Thread {
         // Unzip the right folder for he processor
         if (Common.isEmulator()) {
             // Extract our 64bit zip
-            Febo_Data.unzipFileFromAssets(mContext, "Pythonx86_64.zip");
+            FData.unzipFileFromAssets(mContext, "Pythonx86_64.zip");
             lTempPath += "Pythonx86_64";
         } else if (Common.is64bitProcessor()) {
             // Extract our 64bit zip
-            Febo_Data.unzipFileFromAssets(mContext, "Python64.zip");
+            FData.unzipFileFromAssets(mContext, "Python64.zip");
             lTempPath += "Python64";
         } else {
-            Febo_Data.unzipFileFromAssets(mContext, "Python32.zip");
+            FData.unzipFileFromAssets(mContext, "Python32.zip");
             lTempPath += "Python32";
         }
 

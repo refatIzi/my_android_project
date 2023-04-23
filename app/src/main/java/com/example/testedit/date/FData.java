@@ -9,7 +9,9 @@ import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 
+import com.example.testedit.BuildConfig;
 import com.example.testedit.connect.Connect;
 import com.example.testedit.connect.Protocol;
 import com.example.testedit.pythonInpreter.Common;
@@ -37,14 +39,14 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class Febo_Data {
+public class FData {
     private static final String TAG = "FEBO Work with Date";
 
     private static final Logger mLogger = Logger.getLogger(TAG);
     public final String DIR = Environment.getExternalStorageDirectory().toString();
     public final String FEB_ONION_DIR = Environment.getExternalStorageDirectory().toString() + "/python/";
 
-    public Febo_Data() {
+    public FData() {
         //mLogger = null;
     }
 
@@ -235,6 +237,9 @@ public class Febo_Data {
         return "There is no information in the code. Probably someone forgot to write it.";
     }
 
+   public Uri getUriForFile(Context context,String pathFile){
+       return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, new File(pathFile));
+   }
     public  void sendFile(Context context, ArrayList<Uri> uriList) {
         Intent intent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
         intent.setType("*/*");

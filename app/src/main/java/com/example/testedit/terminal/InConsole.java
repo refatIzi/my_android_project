@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.testedit.date.Febo_Data;
+import com.example.testedit.date.FData;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class InConsole {
         new Thread(new Runnable() {
             public void run(){
                 try {
-                    String fileName ="python3 - " +new Febo_Data().FEB_ONION_DIR+ "prog_project/Alphabetic_Order.py";
+                    String fileName ="python3 - " +new FData().FEB_ONION_DIR+ "prog_project/Alphabetic_Order.py";
 
                     // Creates a ProcessBuilder
                     // doc: https://docs.oracle.com/javase/7/docs/api/java/lang/ProcessBuilder.html

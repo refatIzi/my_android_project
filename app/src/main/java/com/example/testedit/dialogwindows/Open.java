@@ -14,17 +14,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.content.FileProvider;
 
-import com.example.testedit.BuildConfig;
 import com.example.testedit.MainInterface;
 import com.example.testedit.R;
-import com.example.testedit.date.Febo_Data;
+import com.example.testedit.date.FData;
 import com.example.testedit.search.InformationSearch;
 import com.example.testedit.search.Search;
 import com.example.testedit.search.SearchAdapter;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +37,7 @@ public class Open implements AdapterView.OnItemClickListener {
     ImageButton delete;
     ImageButton back;
     ImageButton cancel;
-    Febo_Data fData=new Febo_Data();
+    FData fData = new FData();
     String ONION_DIR = fData.FEB_ONION_DIR;
     String DIR = fData.DIR;
 
@@ -70,7 +67,7 @@ public class Open implements AdapterView.OnItemClickListener {
         });
         sendFile.setOnClickListener(v -> {
             /**Отпровляем фаилы и скрываем кнопки*/
-            send();
+            sendFile();
             sendFile.setVisibility(View.GONE);
             delete.setVisibility(View.GONE);
             alertDialog.cancel();
@@ -151,18 +148,18 @@ public class Open implements AdapterView.OnItemClickListener {
     private void showDirectory(String analogDir) {
         directory = analogDir;
         arrayList.clear();
-        final String[] sDirList = new Febo_Data().arrayDir(analogDir);
+        final String[] sDirList = new FData().arrayDir(analogDir);
         for (int i = 0; i < sDirList.length; i++) {
             String file = analogDir + sDirList[i];
-            String time = new Febo_Data().getTime(file);
-            if (new Febo_Data().checkFile(file)) {
+            String time = new FData().getTime(file);
+            if (new FData().checkFile(file)) {
                 if (sDirList[i].endsWith(".py")) {
-                    String about = new Febo_Data().aboutFile(file);
+                    String about = new FData().aboutFile(file);
                     arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_filepython, false));
                 } else {
                 }
             } else {
-                String[] files = new Febo_Data().arrayDir(file);
+                String[] files = new FData().arrayDir(file);
                 String about = new InformationSearch().infoProject(files);
                 if (sDirList[i].endsWith("project")) {
                     arrayList.add(new Search(sDirList[i], time, about, R.drawable.ic_python_prog, false));
@@ -179,19 +176,16 @@ public class Open implements AdapterView.OnItemClickListener {
      * Метод с помошью которого мы отпровляем фаилы на другое приложение
      */
 
-    public void send() {
+    public void sendFile() {
         ArrayList<Uri> uriList = new ArrayList();
         int size = fData.arrayFile(directory).length;
-        for (int i = 0; i != size; i++) {
-            if (i != size) {
-                try {
-                    if (searchAdapter.getItem(i).getCheck() == true) {
-                        Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, new File(directory + arrayList.get(i).getNumber()));
-                        uriList.add(uri);
-                    }
-                } catch (Exception e) {
-
+        for (int i = 0; i < size; i++) {
+            try {
+                if (searchAdapter.getItem(i).getCheck()) {
+                    uriList.add(fData.getUriForFile(context, directory + arrayList.get(i).getNumber()));
                 }
+            } catch (Exception e) {
+
             }
         }
         fData.sendFile(context, uriList);
@@ -200,8 +194,8 @@ public class Open implements AdapterView.OnItemClickListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (new Febo_Data().checkFile(directory + searchAdapter.getItem(position).getNumber())) {
-            mainInterface.setEditText(new Febo_Data().readFile(directory + searchAdapter.getItem(position).getNumber()));
+        if (new FData().checkFile(directory + searchAdapter.getItem(position).getNumber())) {
+            mainInterface.setEditText(new FData().readFile(directory + searchAdapter.getItem(position).getNumber()));
             mainInterface.setFileName(searchAdapter.getItem(position).getNumber());
             mainInterface.setDIRECTORY(directory);
             alertDialog.cancel();

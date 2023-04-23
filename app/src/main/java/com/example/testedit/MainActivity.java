@@ -21,7 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.testedit.date.Febo_Data;
+import com.example.testedit.date.FData;
 import com.example.testedit.dialogwindows.DialogSetting;
 import com.example.testedit.dialogwindows.Information;
 import com.example.testedit.dialogwindows.NewFile;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     FragmentTransaction fragmentTerminal;
     FrameLayout terminalFrameLayout;
 
-    String ONION_DIR = new Febo_Data().FEB_ONION_DIR;
+    String ONION_DIR = new FData().FEB_ONION_DIR;
 
         /**
          * file editor. bootloader. output.
@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         fragmentTerminal.commit();
 
         DIRECTORY = ONION_DIR;
-        editText.setTextSize(new Febo_Data().setting().getTextSize());
-        numberCode.setTextSize(new Febo_Data().setting().getTextSize());
-        new Febo_Data().checkDirectory(ONION_DIR);
+        editText.setTextSize(new FData().setting().getTextSize());
+        numberCode.setTextSize(new FData().setting().getTextSize());
+        new FData().checkDirectory(ONION_DIR);
         new Open(MainActivity.this, DIRECTORY);
 
         editText.addTextChangedListener(new ActivityTextWatcher(this));
@@ -183,13 +183,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void download() {
         if (fileName == null || fileName.equals("")) {
-            if (new Febo_Data().checkProject(DIRECTORY)) {
+            if (new FData().checkProject(DIRECTORY)) {
                 new NewFile(MainActivity.this, DIRECTORY);
             } else {
                 new NewProject(MainActivity.this);
             }
         } else {
-            new Febo_Data().createFile(fileName, editText.getText().toString(), DIRECTORY);
+            new FData().createFile(fileName, editText.getText().toString(), DIRECTORY);
             Toast.makeText(this, ""+DIRECTORY+fileName, Toast.LENGTH_SHORT).show();
             //terminal = new Terminal(MainActivity.this);
             // terminal.setSetting(DIRECTORY + ":" + fileName + ":" + project_Name + ":" + help.getConfiguration());

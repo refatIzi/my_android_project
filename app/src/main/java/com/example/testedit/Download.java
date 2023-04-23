@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.testedit.date.Febo_Data;
+import com.example.testedit.date.FData;
 import com.example.testedit.terminal.Loading;
 
 import java.util.List;
@@ -169,7 +169,7 @@ public class Download extends AppCompatActivity implements View.OnClickListener 
     private void Start() {
     //    NewDir = Incoming_Data[0].split("python");
         String[] Connection_Data;
-        String info = new Febo_Data().readFile( Environment.getExternalStorageDirectory().toString() + "/python/connect.txt");
+        String info = new FData().readFile( Environment.getExternalStorageDirectory().toString() + "/python/connect.txt");
         Connection_Data = info.split(":");
         /** Connection_Data[0]=ipadress
          * Connection_Data[1]=port
@@ -253,7 +253,7 @@ public class Download extends AppCompatActivity implements View.OnClickListener 
                  * КОпируем команду в буфер и открываем SSH клиент и вставляем команду из буфера чтобы самим не писать
                  */
                 String[] sepread;
-                String info = new Febo_Data().readFile( Environment.getExternalStorageDirectory().toString() + "/python/connect.txt");
+                String info = new FData().readFile( Environment.getExternalStorageDirectory().toString() + "/python/connect.txt");
                 sepread = info.split(":");
                 Uri location = null;
                 try {
