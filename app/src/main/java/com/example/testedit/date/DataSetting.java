@@ -24,20 +24,20 @@ public class DataSetting {
         return setting;
     }
 
-    public static Setting_use newSetting() {
-        return new DataSetting().new Setting_use();
+    public static Setting_for_use newSetting() {
+        return new DataSetting().new Setting_for_use();
     }
 
-    public class Setting_use {
-        Setting_use() {
+    public class Setting_for_use {
+        Setting_for_use() {
         }
 
-        public Setting_use setConnect(Connect connect) {
+        public Setting_for_use setConnect(Connect connect) {
             DataSetting.this.connect = connect;
             return this;
         }
 
-        public Setting_use setSetting(Setting setting) {
+        public Setting_for_use setSetting(Setting setting) {
             DataSetting.this.setting = setting;
             return this;
         }
